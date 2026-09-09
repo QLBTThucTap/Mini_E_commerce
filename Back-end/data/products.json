@@ -1,0 +1,962 @@
+[
+  {
+    "id": 1,
+    "title": "Laptop Apple MacBook Air M2 13.6 inch",
+    "price": 1099,
+    "description": "Thế hệ MacBook Air mới sở hữu chip M2 cực kỳ mạnh mẽ, thiết kế siêu mỏng nhẹ, màn hình c.",
+    "category": "laptop",
+    "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800",
+    "rating": {
+      "rate": 4.8,
+      "count": 240
+    }
+  },
+  {
+    "id": 2,
+    "title": "Điện thoại Apple iPhone 15 Pro Max 256GB",
+    "price": 1199,
+    "description": "Khung vỏ Titanium siêu bền nhẹ, chip A17 Pro đỉnh cao, nút Action Button tùy chỉnh linh hoạt và hệ thống camera zoom quang học 5x sắc nét.",
+    "category": "phone",
+    "image": "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800",
+    "rating": {
+      "rate": 4.9,
+      "count": 512
+    }
+  },
+  {
+    "id": 3,
+    "title": "Tai nghe Chống Ồn Sony WH-1000XM5",
+    "price": 398,
+    "description": "Công nghệ chống ồn hàng đầu thế giới với 8 micro và chip HD QN1. Âm thanh chất lượng cao, thiết kế siêu nhẹ mang lại cảm giác đeo thoải mái.",
+    "category": "headphone",
+    "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800",
+    "rating": {
+      "rate": 4.7,
+      "count": 180
+    }
+  },
+  {
+    "id": 4,
+    "title": "Chuột Không Dây Logitech MX Master 3S",
+    "price": 99.99,
+    "description": "Cảm biến 8000 DPI hoạt động trên mọi bề mặt kể cả kính, nút bấm nhấp chuột yên tĩnh hơn 90%, con lăn cuộn từ tính MagSpeed siêu nhanh.",
+    "category": "mouse",
+    "image": "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=800",
+    "rating": {
+      "rate": 4.9,
+      "count": 320
+    }
+  },
+  {
+    "id": 5,
+    "title": "Bàn Phím Cơ Không Dây Keychron K2 Pro",
+    "price": 89,
+    "description": "Layout 75% gọn gàng, hỗ trợ QMK/VIA tùy chỉnh phím bấm linh hoạt, kết nối cùng lúc 3 thiết bị qua Bluetooth 5.1 và tương thích tốt cả macOS.",
+    "category": "keyboard",
+    "image": "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800",
+    "rating": {
+      "rate": 4.6,
+      "count": 150
+    }
+  },
+  {
+    "id": 6,
+    "title": "Laptop Gaming ASUS ROG Zephyrus G16",
+    "price": 1499.99,
+    "description": "Màn hình OLED 240Hz siêu mượt, vi xử lý Intel Core Ultra 9 kết hợp card đồ họa RTX 4070 mang lại hiệu năng chiến game đỉnh cao.",
+    "category": "laptop",
+    "image": "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=800",
+    "rating": {
+      "rate": 4.8,
+      "count": 95
+    }
+  },
+  {
+    "id": 7,
+    "title": "Điện thoại Samsung Galaxy S24 Ultra 5G",
+    "price": 1299.99,
+    "description": "Tích hợp công nghệ Galaxy AI thông minh, bút S Pen tiện lợi, màn hình Dynamic AMOLED 2X sáng rực rỡ và camera 200MP bắt trọn khoảnh khắc.",
+    "category": "phone",
+    "image": "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=800",
+    "rating": {
+      "rate": 4.7,
+      "count": 410
+    }
+  },
+  {
+    "id": 8,
+    "title": "Tai nghe Apple AirPods Pro Gen 2 USB-C",
+    "price": 249,
+    "description": "Chip H2 nâng cấp khả năng chống ồn chủ động gấp 2 lần, chế độ Xuyên âm linh hoạt và tính năng Âm thanh Không gian cá nhân hóa.",
+    "category": "headphone",
+    "image": "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=800",
+    "rating": {
+      "rate": 4.8,
+      "count": 620
+    }
+  },
+  {
+    "id": 9,
+    "title": "Chuột Gaming Logitech G Pro X Superlight 2",
+    "price": 159,
+    "description": "Trọng lượng siêu nhẹ chỉ 60g, công tắc Hybrid LIGHTFORCE kết hợp quang học và cơ học, cảm biến HERO 2 chính xác cho game thủ chuyên nghiệp.",
+    "category": "mouse",
+    "image": "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=800",
+    "rating": {
+      "rate": 4.9,
+      "count": 210
+    }
+  },
+  {
+    "id": 10,
+    "title": "Bàn Phím Cơ Logitech MX Keys S",
+    "price": 109.99,
+    "description": "Thiết kế phím gõ lõm ôm đầu ngón tay, đèn nền thông minh tự động sáng khi đưa tay lại gần, hành trình phím êm ái tối ưu công việc văn phòng.",
+    "category": "keyboard",
+    "image": "https://mygear.io.vn/media/product/5004-mx-keys-mechanical-1.jpg",
+    "rating": {
+      "rate": 4.5,
+      "count": 130
+    }
+  },
+  {
+    "id": 11,
+    "title": "Laptop Dell XPS 13 9340 Core Ultra 7",
+    "price": 1399,
+    "description": "Thiết kế vỏ nhôm nguyên khối sang trọng, màn hình 13.4 inch FHD+ mỏng tràn viền, hiệu năng cao tích hợp AI giúp xử lý đa nhiệm mượt mà.",
+    "category": "laptop",
+    "image": "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=800",
+    "rating": {
+      "rate": 4.6,
+      "count": 88
+    }
+  },
+  {
+    "id": 12,
+    "title": "Điện thoại Google Pixel 8 Pro 128GB",
+    "price": 999,
+    "description": "Chip Google Tensor G3 tối ưu cho AI, cụm camera nhiếp ảnh thuật toán đỉnh cao, màn hình Super Actua mượt mà rực rỡ dưới ánh sáng mặt trời.",
+    "category": "phone",
+    "image": "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800",
+    "rating": {
+      "rate": 4.6,
+      "count": 175
+    }
+  },
+  {
+    "id": 13,
+    "title": "Tai nghe Gaming Razer BlackShark V2 Pro",
+    "price": 199.99,
+    "description": "Micro HyperClear Super Wideband chất lượng phòng thu, màng loa TriForce Titanium 50mm cho âm thanh sống động, cách âm thụ động vượt trội.",
+    "category": "headphone",
+    "image": "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=800",
+    "rating": {
+      "rate": 4.4,
+      "count": 140
+    }
+  },
+  {
+    "id": 14,
+    "title": "Chuột Không Dây Razer DeathAdder V3 Pro",
+    "price": 149.99,
+    "description": "Form cầm Ergonomic công thần kinh điển, trọng lượng siêu nhẹ 63g, công tắc quang học Gen-3 chống nhấp đôi vô tình.",
+    "category": "mouse",
+    "image": "https://bizweb.dktcdn.net/100/329/122/products/chuot-gaming-khong-day-razer-deathadder-v3-pro-5.jpg?v=1775011722380",
+    "rating": {
+      "rate": 4.8,
+      "count": 190
+    }
+  },
+  {
+    "id": 15,
+    "title": "Bàn Phím Cơ Gaming Razer Huntsman V3 Pro",
+    "price": 249.99,
+    "description": "Sử dụng switch quang học Analog Gen-2 cho phép điều chỉnh điểm kích hoạt phím (Rapid Trigger) cực nhạy, tối ưu thi đấu FPS.",
+    "category": "keyboard",
+    "image": "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=800",
+    "rating": {
+      "rate": 4.7,
+      "count": 95
+    }
+  },
+  {
+    "id": 16,
+    "title": "Laptop Lenovo ThinkPad X1 Carbon Gen 11",
+    "price": 1569.99,
+    "description": "Dòng laptop doanh nhân siêu bền bỉ đạt tiêu chuẩn quân đội, bàn phím gõ êm vượt trội, tích hợp nhiều tính năng bảo mật sinh trắc học.",
+    "category": "laptop",
+    "image": "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=800",
+    "rating": {
+      "rate": 4.8,
+      "count": 110
+    }
+  },
+  {
+    "id": 17,
+    "title": "Điện thoại Xiaomi 14 Ultra 512GB",
+    "price": 1140,
+    "description": "Cụm 4 camera ống kính Leica đẳng cấp chuyên nghiệp, chip Snapdragon 8 Gen 3 cực mạnh, màn hình AMOLED WQHD+ 120Hz siêu nét.",
+    "category": "phone",
+    "image": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800",
+    "rating": {
+      "rate": 4.8,
+      "count": 210
+    }
+  },
+  {
+    "id": 18,
+    "title": "Tai nghe Bluetooth Marshall Major IV",
+    "price": 149.99,
+    "description": "Thời lượng pin cực khủng lên đến 80 giờ chơi nhạc liên tục, hỗ trợ sạc không dây, âm thanh đặc trưng mạnh mẽ chuẩn phong cách Marshall.",
+    "category": "headphone",
+    "image": "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=800",
+    "rating": {
+      "rate": 4.6,
+      "count": 185
+    }
+  },
+  {
+    "id": 19,
+    "title": "Chuột Không Dây Silent Logitech M330",
+    "price": 19.95,
+    "description": "Giảm hơn 90% tiếng ồn khi nhấp chuột, kết nối không dây ổn định trong phạm vi 10m, thời lượng sử dụng pin lên đến 24 tháng.",
+    "category": "mouse",
+    "image": "https://images.unsplash.com/photo-1629429408209-1f912961dbd8?w=800",
+    "rating": {
+      "rate": 4.5,
+      "count": 310
+    }
+  },
+  {
+    "id": 20,
+    "title": "Bàn Phím Cơ Akko 3087 V2 Silent",
+    "price": 65,
+    "description": "Layout Tenkeyless gọn gàng, bộ keycap PBT Double-Shot siêu bền chống bám mồ hôi, trang bị switch gõ êm không gây tiếng ồn.",
+    "category": "keyboard",
+    "image": "https://images.unsplash.com/photo-1595225476474-87563907a212?w=800",
+    "rating": {
+      "rate": 4.7,
+      "count": 145
+    }
+  },
+  {
+    "id": 21,
+    "title": "Laptop HP Spectre x360 14 inch",
+    "price": 1450,
+    "description": "Màn hình OLED 2.8K xoay gập 360 độ linh hoạt, đi kèm bút cảm ứng, trang bị vi xử lý Intel Core Ultra mới nhất mượt mà mọi tác vụ.",
+    "category": "laptop",
+    "image": "https://images.unsplash.com/photo-1544731612-de7f96afe55f?w=800",
+    "rating": {
+      "rate": 4.7,
+      "count": 92
+    }
+  },
+  {
+    "id": 22,
+    "title": "Điện thoại OnePlus 12 5G 256GB",
+    "price": 799,
+    "description": "Sạc siêu nhanh SUPERVOOC 100W, màn hình ProXDR 120Hz sắc nét, vi xử lý Snapdragon 8 Gen 3 và camera hợp tác cùng Hasselblad.",
+    "category": "phone",
+    "image": "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?w=800",
+    "rating": {
+      "rate": 4.6,
+      "count": 130
+    }
+  },
+  {
+    "id": 23,
+    "title": "Tai nghe Chống Ồn Bose QuietComfort Ultra",
+    "price": 429,
+    "description": "Công nghệ Bose Immersive Audio mang đến âm thanh sống động chân thực, khả năng chống ồn đỉnh cao cùng đệm tai bọc da êm ái.",
+    "category": "headphone",
+    "image": "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=800",
+    "rating": {
+      "rate": 4.8,
+      "count": 165
+    }
+  },
+  {
+    "id": 24,
+    "title": "Chuột Gaming SteelSeries Rival 3 Wireless",
+    "price": 49.99,
+    "description": "Kết nối không dây kép Quantum 2.0 (2.4GHz và Bluetooth 5.0), thời lượng pin lên đến 400 giờ, cảm biến TrueMove Air độ chính xác cao.",
+    "category": "mouse",
+    "image": "https://images.unsplash.com/photo-1563298723-dcfebaa392e3?w=800",
+    "rating": {
+      "rate": 4.4,
+      "count": 210
+    }
+  },
+  {
+    "id": 25,
+    "title": "Bàn Phím Cơ Không Dây NuPhy Air75 V2",
+    "price": 119.95,
+    "description": "Thiết kế siêu mỏng Low-Profile, kết nối không dây 2.4GHz độ trễ thấp 1000Hz, keycap PBT cao cấp tương thích hoàn hảo cho Mac và Windows.",
+    "category": "keyboard",
+    "image": "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=800",
+    "rating": {
+      "rate": 4.8,
+      "count": 175
+    }
+  },
+  {
+    "id": 26,
+    "title": "Laptop Acer Swift Go 14 OLED",
+    "price": 849,
+    "description": "Màn hình OLED 2.8K rực rỡ chuẩn màu 100% DCI-P3, trọng lượng siêu nhẹ 1.3kg, trang bị webcam 1440p nét căng cho các buổi họp trực tuyến.",
+    "category": "laptop",
+    "image": "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=800",
+    "rating": {
+      "rate": 4.5,
+      "count": 115
+    }
+  },
+  {
+    "id": 27,
+    "title": "Điện thoại iPhone 13 128GB",
+    "price": 599,
+    "description": "Màn hình Super Retina XDR sắc nét, chip A15 Bionic vẫn vô cùng mượt mà, hệ thống camera đôi chụp đêm ấn tượng và thời lượng pin lâu dài.",
+    "category": "phone",
+    "image": "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=800",
+    "rating": {
+      "rate": 4.8,
+      "count": 890
+    }
+  },
+  {
+    "id": 28,
+    "title": "Tai nghe True Wireless Sennheiser Momentum True Wireless 4",
+    "price": 299.95,
+    "description": "Âm thanh chuẩn Audiophile với hệ thống màng loa TrueResponse 7mm, hỗ trợ Lossless Audio, chống ồn thích ứng thế hệ mới.",
+    "category": "headphone",
+    "image": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=800",
+    "rating": {
+      "rate": 4.7,
+      "count": 98
+    }
+  },
+  {
+    "id": 29,
+    "title": "Chuột Gaming Pulsar X2V2 Wireless",
+    "price": 99.95,
+    "description": "Trọng lượng siêu nhẹ chỉ 53g, công tắc quang học chống nhấp đôi, cảm biến PixArt PAW3395 mượt mà tối ưu cho các tựa game Esport.",
+    "category": "mouse",
+    "image": "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=800",
+    "rating": {
+      "rate": 4.6,
+      "count": 120
+    }
+  },
+  {
+    "id": 30,
+    "title": "Bàn Phím Cơ Custom MonsGeek M1W V3",
+    "price": 95,
+    "description": "Vỏ nhôm nguyên khối CNC cao cấp, kết nối 3 chế độ (Type-C, 2.4GHz, Bluetooth), Mạch ngược Hot-swap dễ dàng thay thế switch.",
+    "category": "keyboard",
+    "image": "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800",
+    "rating": {
+      "rate": 4.9,
+      "count": 210
+    }
+  },
+  {
+    "id": 31,
+    "title": "Laptop MacBook Pro 16 inch M3 Max",
+    "price": 3499,
+    "description": "Hiệu năng đồ họa đỉnh cao với chip M3 Max, màn hình Liquid Retina XDR 120Hz rực rỡ, bộ nhớ RAM lên đến 36GB chuyên xử lý video 8K.",
+    "category": "laptop",
+    "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800",
+    "rating": {
+      "rate": 4.9,
+      "count": 150
+    }
+  },
+  {
+    "id": 32,
+    "title": "Điện thoại Samsung Galaxy Z Fold5 512GB",
+    "price": 1699.99,
+    "description": "Màn hình gập cực lớn 7.6 inch Dynamic AMOLED 2X, bản lề Flex cải tiến gập khít hoàn hảo, hỗ trợ đa nhiệm 3 ứng dụng cùng lúc.",
+    "category": "phone",
+    "image": "https://images.unsplash.com/photo-1580910051074-3eb694886505?w=800",
+    "rating": {
+      "rate": 4.6,
+      "count": 140
+    }
+  },
+  {
+    "id": 33,
+    "title": "Tai nghe Gaming HyperX Cloud III Wireless",
+    "price": 169.99,
+    "description": "Thời lượng pin huyền thoại lên tới 120 giờ, đệm tai bọt nhớ phủ da nhân tạo siêu êm, màng loa 53mm được tinh chỉnh góc nghiêng sắc nét.",
+    "category": "headphone",
+    "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800",
+    "rating": {
+      "rate": 4.7,
+      "count": 230
+    }
+  },
+  {
+    "id": 34,
+    "title": "Chuột Không Dây Ergonomic Anker Vertical",
+    "price": 27.99,
+    "description": "Thiết kế đứng Ergonomic giúp cổ tay ở trạng thái tự nhiên, giảm áp lực lên gân cơ khi làm việc văn phòng suốt cả ngày dài.",
+    "category": "mouse",
+    "image": "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=800",
+    "rating": {
+      "rate": 4.3,
+      "count": 450
+    }
+  },
+  {
+    "id": 35,
+    "title": "Bàn Phím Cơ EPOMAKER EK68 Gasket Mount",
+    "price": 89.99,
+    "description": "Cấu trúc Gasket Mount mang lại cảm giác gõ êm ái và âm thanh trầm ấm, tích hợp núm xoay âm lượng kim loại và đèn LED RGB tùy chỉnh.",
+    "category": "keyboard",
+    "image": "https://m.media-amazon.com/images/I/71wwUoBpinL._AC_UY327_FMwebp_QL65_.jpg",
+    "rating": {
+      "rate": 4.7,
+      "count": 160
+    }
+  },
+  {
+    "id": 36,
+    "title": "Laptop MSI Katana 15 Gaming",
+    "price": 999,
+    "description": "Trang bị chip Intel Core i7 thế hệ 13, card đồ họa NVIDIA RTX 4060, màn hình 144Hz tối ưu cho mọi tựa game Esport và AAA.",
+    "category": "laptop",
+    "image": "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=800",
+    "rating": {
+      "rate": 4.5,
+      "count": 180
+    }
+  },
+  {
+    "id": 37,
+    "title": "Điện thoại Sony Xperia 1 VI 256GB",
+    "price": 1399.99,
+    "description": "Ống kính quang học zoom liên tục 85-170mm từ Zeiss, màn hình OLED FHD+ 120Hz chuẩn tỉ lệ điện ảnh, chip Snapdragon 8 Gen 3 đỉnh cao.",
+    "category": "phone",
+    "image": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800",
+    "rating": {
+      "rate": 4.4,
+      "count": 75
+    }
+  },
+  {
+    "id": 38,
+    "title": "Tai nghe Studio Audio-Technica ATH-M50xBT2",
+    "price": 198,
+    "description": "Chất âm chuẩn kiểm âm chuyên nghiệp, kết nối Bluetooth 5.0 hỗ trợ codec LDAC truyền tải âm thanh độ phân giải cao không dây.",
+    "category": "headphone",
+    "image": "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=800",
+    "rating": {
+      "rate": 4.8,
+      "count": 310
+    }
+  },
+  {
+    "id": 39,
+    "title": "Chuột Gaming Zowie EC2-CW Wireless",
+    "price": 149,
+    "description": "Form cầm Ergonomic chuyên dụng thi đấu FPS, đi kèm trạm thu phát sóng dock sạc chống nhiễu tín hiệu tuyệt đối cho game thủ chuyên nghiệp.",
+    "category": "mouse",
+    "image": "https://images.unsplash.com/photo-1626218174358-7769486c4b79?w=800",
+    "rating": {
+      "rate": 4.7,
+      "count": 115
+    }
+  },
+  {
+    "id": 40,
+    "title": "Bàn Phím Cơ Corsair K70 MAX RGB Magnetic",
+    "price": 229.99,
+    "description": "Sử dụng switch từ tính Corsair MGX tùy chỉnh điểm nhận phím từ 0.4mm đến 3.6mm, tần số truy vấn lên đến 8000Hz cực nhanh.",
+    "category": "keyboard",
+    "image": "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=800",
+    "rating": {
+      "rate": 4.6,
+      "count": 90
+    }
+  },
+  {
+    "id": 41,
+    "title": "Laptop LG Gram Pro 16 Ultralight",
+    "price": 1599,
+    "description": "Trọng lượng siêu nhẹ chỉ 1.19kg cho chiếc laptop màn hình 16 inch OLED 120Hz, viên pin dung lượng lớn 77Wh hoạt động bền bỉ cả ngày.",
+    "category": "laptop",
+    "image": "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=800",
+    "rating": {
+      "rate": 4.7,
+      "count": 82
+    }
+  },
+  {
+    "id": 42,
+    "title": "Điện thoại ASUS ROG Phone 8 Pro 512GB",
+    "price": 1199.99,
+    "description": "Điện thoại chuyên game màn hình Samsung E6 AMOLED 165Hz, nút siêu âm AirTrigger nhạy bén, hệ thống tản nhiệt khí GameCool 8 tiên tiến.",
+    "category": "phone",
+    "image": "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?w=800",
+    "rating": {
+      "rate": 4.8,
+      "count": 105
+    }
+  },
+  {
+    "id": 43,
+    "title": "Tai nghe Cổ Ngỗng Shure SE215 Pro In-Ear",
+    "price": 99,
+    "description": "Tai nghe nhét tai kiểm âm sân khấu với khả năng cách âm thụ động lên tới 37dB, dây cáp tháo rời connector MMCX độ bền cao.",
+    "category": "headphone",
+    "image": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=800",
+    "rating": {
+      "rate": 4.6,
+      "count": 520
+    }
+  },
+  {
+    "id": 44,
+    "title": "Chuột Không Dây Rapoo MT750S Multi-mode",
+    "price": 39.99,
+    "description": "Kết nối thông minh chuyển đổi giữa 4 thiết bị cùng lúc, có con lăn phụ cuộn ngang màn hình tiện lợi khi xử lý bảng tính Excel.",
+    "category": "mouse",
+    "image": "https://images.unsplash.com/photo-1629429408209-1f912961dbd8?w=800",
+    "rating": {
+      "rate": 4.3,
+      "count": 140
+    }
+  },
+  {
+    "id": 45,
+    "title": "Bàn Phím Cơ Filco Majestouch 3 Tenkeyless",
+    "price": 149,
+    "description": "Thương hiệu bàn phím cơ huyền thoại Nhật Bản, độ bền cực cao, sử dụng Cherry MX Switch cho cảm giác gõ chính xác và trường tồn.",
+    "category": "keyboard",
+    "image": "https://images.unsplash.com/photo-1595225476474-87563907a212?w=800",
+    "rating": {
+      "rate": 4.9,
+      "count": 195
+    }
+  },
+  {
+    "id": 46,
+    "title": "Laptop Microsoft Surface Laptop 6",
+    "price": 1299,
+    "description": "Màn hình cảm ứng PixelSense sắc nét tỉ lệ 3:2 tối ưu văn bản, vỏ nhôm nguyên khối sang trọng cùng vi xử lý tích hợp AI NPU mới.",
+    "category": "laptop",
+    "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800",
+    "rating": {
+      "rate": 4.6,
+      "count": 70
+    }
+  },
+  {
+    "id": 47,
+    "title": "Điện thoại Samsung Galaxy A55 5G 128GB",
+    "price": 449,
+    "description": "Khung kim loại sang trọng, màn hình Super AMOLED 120Hz mượt mà, vi xử lý Exynos 1480 mạnh mẽ cùng chuẩn kháng nước bụi IP67.",
+    "category": "phone",
+    "image": "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=800",
+    "rating": {
+      "rate": 4.5,
+      "count": 340
+    }
+  },
+  {
+    "id": 48,
+    "title": "Tai nghe Earbuds Nothing Ear (a)",
+    "price": 99,
+    "description": "Thiết kế trong suốt độc đáo, hỗ trợ chống ồn chủ động ANC 45dB, chất âm sống động hỗ trợ Hi-Res Audio LDAC.",
+    "category": "headphone",
+    "image": "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=800",
+    "rating": {
+      "rate": 4.5,
+      "count": 160
+    }
+  },
+  {
+    "id": 49,
+    "title": "Chuột Gaming Glorious Model O 2 Wireless",
+    "price": 99.99,
+    "description": "Thiết kế vỏ lỗ tổ ong siêu nhẹ 68g, đèn LED RGB rực rỡ, cảm biến BAMF 2.0 chuẩn xác mang lại khả năng di chuột lướt mượt mà.",
+    "category": "mouse",
+    "image": "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=800",
+    "rating": {
+      "rate": 4.4,
+      "count": 130
+    }
+  },
+  {
+    "id": 50,
+    "title": "Bàn Phím Cơ Royal Kludge RK61 Tri-Mode",
+    "price": 49.99,
+    "description": "Layout 60% siêu nhỏ gọn, hỗ trợ Hot-swap mạch 3/5 pin, kết nối 3 chế độ (Bluetooth, 2.4G, Type-C) giá thành cực kỳ dễ tiếp cận.",
+    "category": "keyboard",
+    "image": "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800",
+    "rating": {
+      "rate": 4.6,
+      "count": 680
+    }
+  },
+  {
+    "id": 51,
+    "title": "Laptop Asus Zenbook 14 OLED UX3405",
+    "price": 1049,
+    "description": "Màn hình 3K OLED 120Hz chuẩn màu điện ảnh, vi xử lý Intel Core Ultra 7 tích hợp AI, viên pin 75Wh siêu trâu trong một thân máy mỏng 14.9mm.",
+    "category": "laptop",
+    "image": "https://images.unsplash.com/photo-1544731612-de7f96afe55f?w=800",
+    "rating": {
+      "rate": 4.8,
+      "count": 125
+    }
+  },
+  {
+    "id": 52,
+    "title": "Điện thoại Vivo X100 Pro 512GB",
+    "price": 1099,
+    "description": "Cảm biến camera 1-inch ZEISS APO telephoto xuất sắc, chip Dimensity 9300 siêu mạnh, công nghệ sạc nhanh 100W nạp đầy pin trong tích tắc.",
+    "category": "phone",
+    "image": "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800",
+    "rating": {
+      "rate": 4.7,
+      "count": 90
+    }
+  },
+  {
+    "id": 53,
+    "title": "Tai nghe Chống Ồn JBL Tour ONE M2",
+    "price": 299.95,
+    "description": "Công nghệ chống ồn thích ứng True Adaptive ANC, màng loa 40mm được tinh chỉnh bởi JBL Pro Sound cho âm dải trầm sâu lắng.",
+    "category": "headphone",
+    "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800",
+    "rating": {
+      "rate": 4.5,
+      "count": 110
+    }
+  },
+  {
+    "id": 54,
+    "title": "Chuột Không Dây Microsoft Bluetooth Ergonomic",
+    "price": 39.99,
+    "description": "Thiết kế nâng đỡ bàn tay tự nhiên, vòm ngón tay cái êm ái, kết nối Bluetooth nhanh chóng không cần đầu thu USB tiện lợi.",
+    "category": "mouse",
+    "image": "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=800",
+    "rating": {
+      "rate": 4.2,
+      "count": 210
+    }
+  },
+  {
+    "id": 55,
+    "title": "Bàn Phím Cơ Custom Varmilo VA87M Summit",
+    "price": 169,
+    "description": "Thiết kế chủ đề núi tuyết đỉnh cao, Keycap PBT V-Silk sờ cực thích tay, cảm giác gõ đầm chắc chuẩn mực bàn phím cao cấp.",
+    "category": "keyboard",
+    "image": "https://images.unsplash.com/photo-1541140532154-b024d705b909?w=800",
+    "rating": {
+      "rate": 4.9,
+      "count": 140
+    }
+  },
+  {
+    "id": 56,
+    "title": "Laptop Gigabyte AORUS 16X Gaming",
+    "price": 1799,
+    "description": "Màn hình 16 inch QHD+ 165Hz chuẩn màu Pantone, trang bị RTX 4070 và công nghệ làm mát WINDFORCE Infinity vượt trội.",
+    "category": "laptop",
+    "image": "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=800",
+    "rating": {
+      "rate": 4.6,
+      "count": 65
+    }
+  },
+  {
+    "id": 57,
+    "title": "Điện thoại RealMe GT 5 Pro 256GB",
+    "price": 650,
+    "description": "Sức mạnh Snapdragon 8 Gen 3 mức giá hấp dẫn, màn hình AMOLED 4500 nits siêu sáng, sạc nhanh 100W cùng camera periscope Sony IMX890.",
+    "category": "phone",
+    "image": "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?w=800",
+    "rating": {
+      "rate": 4.6,
+      "count": 115
+    }
+  },
+  {
+    "id": 58,
+    "title": "Tai nghe Gaming Corsair Virtuoso RGB Wireless SE",
+    "price": 229.99,
+    "description": "Âm thanh vòm giả lập 7.1 độ phân giải cao, khung nhôm phay xước cao cấp, micro thu âm tháo rời chất lượng broadcast.",
+    "category": "headphone",
+    "image": "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=800",
+    "rating": {
+      "rate": 4.5,
+      "count": 175
+    }
+  },
+  {
+    "id": 59,
+    "title": "Chuột Gaming Endgame Gear OP1we Wireless",
+    "price": 89.9,
+    "description": "Form cầm bấm claw grip siêu chuẩn, sử dụng công tắc quang học Kailh GO cảm giác nhấn nảy đầm tay, cảm biến PAW3370 ổn định.",
+    "category": "mouse",
+    "image": "https://images.unsplash.com/photo-1626218174358-7769486c4b79?w=800",
+    "rating": {
+      "rate": 4.8,
+      "count": 95
+    }
+  },
+  {
+    "id": 60,
+    "title": "Bàn Phím Cơ Custom Zoom75 Special Edition",
+    "price": 249,
+    "description": "Bàn phím cơ kit nhôm phay cao cấp, tích hợp màn hình LCD nhỏ góc phải hiển thị thời gian/GIF, cấu trúc Gasket mount gõ cực êm.",
+    "category": "keyboard",
+    "image": "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=800",
+    "rating": {
+      "rate": 4.9,
+      "count": 85
+    }
+  },
+  {
+    "id": 61,
+    "title": "Laptop HP Pavilion Plus 14 OLED",
+    "price": 799,
+    "description": "Thiết kế vỏ nhôm mỏng nhẹ, màn hình OLED 2.8K rực rỡ, chip Intel Core i5 Gen 13 đáp ứng hoàn hảo các nhu cầu học tập và làm việc.",
+    "category": "laptop",
+    "image": "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=800",
+    "rating": {
+      "rate": 4.5,
+      "count": 140
+    }
+  },
+  {
+    "id": 62,
+    "title": "Điện thoại POCO F6 Pro 512GB",
+    "price": 499,
+    "description": "Màn hình AMOLED WQHD+ 120Hz siêu nét, chip Snapdragon 8 Gen 2, sạc cực nhanh HyperCharge 120W nạp đầy pin chỉ trong 19 phút.",
+    "category": "phone",
+    "image": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800",
+    "rating": {
+      "rate": 4.7,
+      "count": 280
+    }
+  },
+  {
+    "id": 63,
+    "title": "Tai nghe Không Dây Beats Fit Pro True Wireless",
+    "price": 199.95,
+    "description": "Cánh gài tai thể thao mềm mại cố định chắc chắn khi vận động, chip Apple H1 kết nối nhanh, hỗ trợ chống ồn ANC chủ động.",
+    "category": "headphone",
+    "image": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=800",
+    "rating": {
+      "rate": 4.6,
+      "count": 310
+    }
+  },
+  {
+    "id": 64,
+    "title": "Chuột Gaming BenQ Zowie FK2-C Cáp Dù",
+    "price": 69,
+    "description": "Thiết kế đối xứng thấp phù hợp kiểu cầm đối xứng, cáp siêu mềm giảm ma sát mặt bàn, không cần cài driver cắm là chạy ngay.",
+    "category": "mouse",
+    "image": "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=800",
+    "rating": {
+      "rate": 4.7,
+      "count": 160
+    }
+  },
+  {
+    "id": 65,
+    "title": "Bàn Phím Cơ SteelSeries Apex Pro TKL Wireless",
+    "price": 249.99,
+    "description": "Switch từ tính OmniPoint 2.0 tùy chỉnh độ nhạy từng phím bấm, màn hình thông minh OLED hiển thị thông số và logo game tùy biến.",
+    "category": "keyboard",
+    "image": "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800",
+    "rating": {
+      "rate": 4.7,
+      "count": 130
+    }
+  },
+  {
+    "id": 66,
+    "title": "Laptop Acer Nitro 16 Gaming",
+    "price": 1120,
+    "description": "Màn hình 16 inch WQXGA 165Hz chuẩn màu 100% sRGB, trang bị chip Ryzen 7 kết hợp RTX 4060 tản nhiệt kim loại lỏng cực mát.",
+    "category": "laptop",
+    "image": "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=800",
+    "rating": {
+      "rate": 4.6,
+      "count": 190
+    }
+  },
+  {
+    "id": 67,
+    "title": "Điện thoại Samsung Galaxy Z Flip5 256GB",
+    "price": 999.99,
+    "description": "Màn hình ngoài Flex Window 3.4 inch thao tác tiện lợi không cần mở máy, thiết kế gập vỏ sò thời trang nhỏ gọn trong lòng bàn tay.",
+    "category": "phone",
+    "image": "https://images.unsplash.com/photo-1580910051074-3eb694886505?w=800",
+    "rating": {
+      "rate": 4.6,
+      "count": 220
+    }
+  },
+  {
+    "id": 68,
+    "title": "Tai nghe Chống Ồn Anker Soundcore Life Q30",
+    "price": 79.99,
+    "description": "Chống ồn chủ động đa chế độ (Trong nhà, Ngoài trời, Giao thông), màng loa 40mm âm bass uy lực, thời lượng pin lên đến 40 giờ.",
+    "category": "headphone",
+    "image": "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=800",
+    "rating": {
+      "rate": 4.6,
+      "count": 750
+    }
+  },
+  {
+    "id": 69,
+    "title": "Chuột Không Dây Cherry MW 8C Advanced",
+    "price": 55,
+    "description": "Khung nhôm chắc chắn sang trọng, cảm biến laser làm việc mượt mà ngay cả trên mặt kính, kết nối Bluetooth và 2.4GHz tiện lợi.",
+    "category": "mouse",
+    "image": "https://images.unsplash.com/photo-1629429408209-1f912961dbd8?w=800",
+    "rating": {
+      "rate": 4.4,
+      "count": 60
+    }
+  },
+  {
+    "id": 70,
+    "title": "Bàn Phím Cơ IQUNIX OG80 Wormhole RGB",
+    "price": 199,
+    "description": "Thiết kế góc nghiêng Ergo độc đáo, Layout 80% lạ mắt, hỗ trợ Hot-swap switch và kết nối không dây 3 chế độ ổn định.",
+    "category": "keyboard",
+    "image": "https://images.unsplash.com/photo-1595225476474-87563907a212?w=800",
+    "rating": {
+      "rate": 4.8,
+      "count": 105
+    }
+  },
+  {
+    "id": 71,
+    "title": "Laptop Dell Alienware m16 R2 Gaming",
+    "price": 1899,
+    "description": "Thiết kế hầm hố chuẩn phi thuyền, màn hình QHD+ 240Hz siêu tốc, tản nhiệt Cryo-tech độc quyền cho hiệu năng duy trì ổn định.",
+    "category": "laptop",
+    "image": "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=800",
+    "rating": {
+      "rate": 4.7,
+      "count": 80
+    }
+  },
+  {
+    "id": 72,
+    "title": "Điện thoại Honor Magic6 Pro 512GB",
+    "price": 1199,
+    "description": "Màn hình bảo vệ mắt LTPO OLED 5000 nits, camera Periscope Telephoto 180MP siêu khủng, pin Silicon-Carbon 5600mAh cực trâu.",
+    "category": "phone",
+    "image": "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800",
+    "rating": {
+      "rate": 4.8,
+      "count": 70
+    }
+  },
+  {
+    "id": 73,
+    "title": "Tai nghe Chống Ồn Audio-Technica ATH-ANC900BT",
+    "price": 299,
+    "description": "Công nghệ chống ồn QuietPoint số hóa cao cấp, kết nối Bluetooth 5.0, thời lượng pin ấn tượng lên đến 35 giờ liên tục.",
+    "category": "headphone",
+    "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800",
+    "rating": {
+      "rate": 4.4,
+      "count": 85
+    }
+  },
+  {
+    "id": 74,
+    "title": "Chuột Gaming Logitech G502 X LIGHTSPEED",
+    "price": 139.99,
+    "description": "Phiên bản nâng cấp của dòng chuột bán chạy nhất thế giới, trang bị switch quang cơ LIGHTFORCE, nút cuộn cuộn cuộn kép vô cấp.",
+    "category": "mouse",
+    "image": "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=800",
+    "rating": {
+      "rate": 4.8,
+      "count": 420
+    }
+  },
+  {
+    "id": 75,
+    "title": "Bàn Phím Cơ Custom CIDOO V65 V2 Via",
+    "price": 129,
+    "description": "Vỏ nhôm nguyên khối nhám mịn, kết nối Bluetooth/Type-C, tùy chỉnh phím linh hoạt qua phần mềm VIA, switch gõ siêu êm mượt sẵn.",
+    "category": "keyboard",
+    "image": "https://images.unsplash.com/photo-1541140532154-b024d705b909?w=800",
+    "rating": {
+      "rate": 4.8,
+      "count": 110
+    }
+  },
+  {
+    "id": 76,
+    "title": "Laptop Asus TUF Gaming A15",
+    "price": 899,
+    "description": "Đạt chuẩn độ bền quân đội MIL-STD-810H, cấu hình Ryzen 5 kết hợp RTX 4050, pin 90Wh hoạt động thoải mái cả ngày dài.",
+    "category": "laptop",
+    "image": "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=800",
+    "rating": {
+      "rate": 4.6,
+      "count": 310
+    }
+  },
+  {
+    "id": 77,
+    "title": "Điện thoại Motorola Razr 40 Ultra",
+    "price": 899.99,
+    "description": "Màn hình ngoài 3.6 inch tràn viền lớn nhất dòng gập dọc, màn hình chính pOLED 165Hz siêu mượt, thiết kế mỏng nhẹ siêu thời trang.",
+    "category": "phone",
+    "image": "https://images.unsplash.com/photo-1580910051074-3eb694886505?w=800",
+    "rating": {
+      "rate": 4.5,
+      "count": 95
+    }
+  },
+  {
+    "id": 78,
+    "title": "Tai nghe Gaming SteelSeries Arctis Nova Pro Wireless",
+    "price": 349.99,
+    "description": "Hệ thống thay pin nóng liên tục không ngắt đứt quãng, trạm điều khiển DAC không dây kết nối đồng thời PC và Consoles.",
+    "category": "headphone",
+    "image": "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=800",
+    "rating": {
+      "rate": 4.8,
+      "count": 210
+    }
+  },
+  {
+    "id": 79,
+    "title": "Chuột Không Dây Kensington Pro Fit Ergo Vertical",
+    "price": 49.99,
+    "description": "Thiết kế góc nghiêng 60 độ giữ cổ tay ở vị trí công sinh học tự nhiên, tích hợp khoang chứa đầu thu USB và nút bấm siêu êm.",
+    "category": "mouse",
+    "image": "https://images.unsplash.com/photo-1629429408209-1f912961dbd8?w=800",
+    "rating": {
+      "rate": 4.3,
+      "count": 80
+    }
+  },
+  {
+    "id": 80,
+    "title": "Bàn Phím Cơ Corsair K100 RGB Optical-Mechanical",
+    "price": 229.99,
+    "description": "Bàn phím flagship cao cấp nhất với Switch quang học OPX tốc độ siêu tốc, bánh xe điều khiển iCUE multifunction và kê tay đệm bọt nhớ.",
+    "category": "keyboard",
+    "image": "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=800",
+    "rating": {
+      "rate": 4.7,
+      "count": 180
+    }
+  }
+]

@@ -1,0 +1,282 @@
+[
+  {
+    "id": 1,
+    "fullName": "Huyen",
+    "gender": "Female",
+    "dateOfBirth": "1995-03-15",
+    "phoneNumber": "0912345678",
+    "email": "langochuyen@gmail.com",
+    "address": {
+      "city": "Hanoi",
+      "district": "Cau Giay"
+    },
+    "password": "123456",
+    "role": "admin"
+  },
+  {
+    "id": 2,
+    "fullName": "Tran Thi Minh Anh",
+    "gender": "Female",
+    "dateOfBirth": "1998-07-22",
+    "phoneNumber": "0987654321",
+    "email": "minhanh.tran98@gmail.com",
+    "address": {
+      "city": "Ho Chi Minh City",
+      "district": "District 1"
+    },
+    "password": "123456",
+    "role": "user"
+  },
+  {
+    "id": 3,
+    "fullName": "Le Hoang Nam",
+    "gender": "Male",
+    "dateOfBirth": "2000-11-05",
+    "phoneNumber": "0903123456",
+    "email": "nam.lehoang2000@gmail.com",
+    "address": {
+      "city": "Da Nang",
+      "district": "Hai Chau"
+    },
+    "password": "1",
+    "role": "user"
+  },
+  {
+    "id": 4,
+    "fullName": "Pham Phuong Thao",
+    "gender": "Female",
+    "dateOfBirth": "2002-01-30",
+    "phoneNumber": "0934567890",
+    "email": "thaopp2002@gmail.com",
+    "address": {
+      "city": "Hai Phong",
+      "district": "Hong Bang"
+    },
+    "password": "1",
+    "role": "user"
+  },
+  {
+    "id": 5,
+    "fullName": "Hoang Quoc Bao",
+    "gender": "Male",
+    "dateOfBirth": "1997-09-12",
+    "phoneNumber": "0978123456",
+    "email": "baohq.it97@gmail.com",
+    "address": {
+      "city": "Can Tho",
+      "district": "Ninh Kieu"
+    },
+    "password": "1",
+    "role": "user"
+  },
+  {
+    "id": 6,
+    "fullName": "Vu Khanh Linh",
+    "gender": "Female",
+    "dateOfBirth": "2001-05-18",
+    "phoneNumber": "0965432187",
+    "email": "linh.vk2001@gmail.com",
+    "address": {
+      "city": "Hanoi",
+      "district": "Thanh Xuan"
+    },
+    "password": "1",
+    "role": "user"
+  },
+  {
+    "id": 7,
+    "fullName": "Dang Duc Huy",
+    "gender": "Male",
+    "dateOfBirth": "1996-12-08",
+    "phoneNumber": "0923456789",
+    "email": "duchuy.dang96@gmail.com",
+    "address": {
+      "city": "Ho Chi Minh City",
+      "district": "Binh Thanh"
+    },
+    "password": "1",
+    "role": "user"
+  },
+  {
+    "id": 8,
+    "fullName": "Nong Thao Nhi",
+    "gender": "Female",
+    "dateOfBirth": "2003-04-02",
+    "phoneNumber": "0945678901",
+    "email": "nhinong2003@gmail.com",
+    "address": {
+      "city": "Da Nang",
+      "district": "Son Tra"
+    },
+    "password": "1",
+    "role": "user"
+  },
+  {
+    "id": 9,
+    "fullName": "Bui Duc Tuan",
+    "gender": "Male",
+    "dateOfBirth": "1994-08-25",
+    "phoneNumber": "0918273645",
+    "email": "tuanbui1994@gmail.com",
+    "address": {
+      "city": "Hanoi",
+      "district": "Hai Ba Trung"
+    },
+    "password": "1",
+    "role": "user"
+  },
+  {
+    "id": 10,
+    "fullName": "Do Thu Trang",
+    "gender": "Female",
+    "dateOfBirth": "1999-10-14",
+    "phoneNumber": "0981122334",
+    "email": "trangdo99@gmail.com",
+    "address": {
+      "city": "Ho Chi Minh City",
+      "district": "Tan Binh"
+    },
+    "password": "1",
+    "role": "user"
+  },
+  {
+    "id": 11,
+    "fullName": "Ngo Tien Dung",
+    "gender": "Male",
+    "dateOfBirth": "1993-02-10",
+    "phoneNumber": "0933445566",
+    "email": "dungngo.dev@gmail.com",
+    "address": {
+      "city": "Hai Phong",
+      "district": "Le Chan"
+    },
+    "password": "1",
+    "role": "user"
+  },
+  {
+    "id": 12,
+    "fullName": "Duong My Uyen",
+    "gender": "Female",
+    "dateOfBirth": "2004-06-21",
+    "phoneNumber": "0977889900",
+    "email": "uyen.duong2004@gmail.com",
+    "address": {
+      "city": "Can Tho",
+      "district": "Cai Rang"
+    },
+    "password": "1",
+    "role": "user"
+  },
+  {
+    "id": 13,
+    "fullName": "Ly Thanh Hai",
+    "gender": "Male",
+    "dateOfBirth": "1992-09-03",
+    "phoneNumber": "0909112233",
+    "email": "haily92@gmail.com",
+    "address": {
+      "city": "Da Nang",
+      "district": "Thanh Khe"
+    },
+    "password": "1",
+    "role": "user"
+  },
+  {
+    "id": 14,
+    "fullName": "Ho Quynh Chi",
+    "gender": "Female",
+    "dateOfBirth": "2000-12-19",
+    "phoneNumber": "0966554433",
+    "email": "quynhchi.ho@gmail.com",
+    "address": {
+      "city": "Hanoi",
+      "district": "Dong Da"
+    },
+    "password": "1",
+    "role": "user"
+  },
+  {
+    "id": 15,
+    "fullName": "Vo Minh Tri",
+    "gender": "Male",
+    "dateOfBirth": "1997-01-07",
+    "phoneNumber": "0922334455",
+    "email": "trivo.dev97@gmail.com",
+    "address": {
+      "city": "Ho Chi Minh City",
+      "district": "District 7"
+    },
+    "password": "1",
+    "role": "user"
+  },
+  {
+    "id": 16,
+    "fullName": "Mai Bich Ngoc",
+    "gender": "Female",
+    "dateOfBirth": "2002-08-11",
+    "phoneNumber": "0944112233",
+    "email": "ngocmai2002@gmail.com",
+    "address": {
+      "city": "Hai Phong",
+      "district": "Ngo Quyen"
+    },
+    "password": "1",
+    "role": "user"
+  },
+  {
+    "id": 17,
+    "fullName": "Trinh Duy Hung",
+    "gender": "Male",
+    "dateOfBirth": "1998-04-29",
+    "phoneNumber": "0911998877",
+    "email": "hungtrinh98@gmail.com",
+    "address": {
+      "city": "Hanoi",
+      "district": "Nam Tu Liem"
+    },
+    "password": "1",
+    "role": "user"
+  },
+  {
+    "id": 18,
+    "fullName": "Cao Anh Nguyet",
+    "gender": "Female",
+    "dateOfBirth": "2001-02-14",
+    "phoneNumber": "0988776655",
+    "email": "nguyetcao2001@gmail.com",
+    "address": {
+      "city": "Ho Chi Minh City",
+      "district": "Thu Duc"
+    },
+    "password": "1",
+    "role": "user"
+  },
+  {
+    "id": 19,
+    "fullName": "Luong Van Tam",
+    "gender": "Male",
+    "dateOfBirth": "1995-10-09",
+    "phoneNumber": "0933221100",
+    "email": "tamluong95@gmail.com",
+    "address": {
+      "city": "Can Tho",
+      "district": "Binh Thuy"
+    },
+    "password": "1",
+    "role": "user"
+  },
+  {
+    "id": 20,
+    "fullName": "Phan Ngoc Bao Chau",
+    "gender": "Female",
+    "dateOfBirth": "2003-07-27",
+    "phoneNumber": "0977665544",
+    "email": "chao.phan2003@gmail.com",
+    "address": {
+      "city": "Da Nang",
+      "district": "Cam Le"
+    },
+    "password": "1",
+    "role": "user"
+  }
+]

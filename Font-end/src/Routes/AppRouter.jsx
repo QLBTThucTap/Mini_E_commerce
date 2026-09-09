@@ -1,0 +1,34 @@
+import { Routes, Route, Navigate } from "react-router-dom";
+
+import HomePage from "../Pages/home/HomePage";
+import LoginPage from "../Pages/auth/LoginPage";
+import RegisterPage from "../Pages/auth/RegisterPage";
+import ProductDetailPage from "../Pages/products/ProductDetailPage";
+import CartPage from "../Pages/cart/CartPage";
+
+import AdminRoute from "./AdminRoute";
+import AdminLayout from "../Layouts/AdminLayout";
+import ProductManagementPage from "../Pages/admin/products/ProductManagementPage";
+function AppRouter() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
+      <Route path="/product/:productId" element={<ProductDetailPage />} />
+      <Route path="/cart" element={<CartPage />} />
+
+      <Route element={<AdminRoute />}>
+        <Route element={<AdminLayout />}>
+          <Route
+            path="/admin"
+            element={<Navigate to="/admin/products" replace />}
+          />
+          <Route path="/admin/products" element={<ProductManagementPage />} />
+        </Route>
+      </Route>
+    </Routes>
+  );
+}
+
+export default AppRouter;

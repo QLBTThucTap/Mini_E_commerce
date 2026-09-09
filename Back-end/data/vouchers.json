@@ -1,0 +1,6 @@
+[
+  { "code": "SALE10", "discountPercent": 10 },
+  { "code": "SALE20", "discountPercent": 20 },
+  { "code": "VIP25", "discountPercent": 25 },
+  { "code": "BLACKFRIDAY50", "discountPercent": 50 }
+]

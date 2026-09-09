@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "userId": 2,
+    "products": [
+      {
+        "productId": 1,
+        "quantity": 1
+      }
+    ],
+    "shippingInfo": {
+      "fullName": "Lã Ngọc Huyền",
+      "phone": "1-570-236-7033",
+      "address": "dktu7gjdykguuij"
+    },
+    "paymentMethod": "cod",
+    "status": "pending",
+    "createdAt": "2026-09-06T11:40:43.149Z"
+  }
+]
