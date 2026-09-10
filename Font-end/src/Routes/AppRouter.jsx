@@ -9,6 +9,8 @@ import CartPage from "../Pages/cart/CartPage";
 import AdminRoute from "./AdminRoute";
 import AdminLayout from "../Layouts/AdminLayout";
 import ProductManagementPage from "../Pages/admin/products/ProductManagementPage";
+import DashboardPage from "../Pages/admin/dashboard/DashboardPage";
+import OrderManagementPage from "../Pages/admin/orders/OrderManagementPage";
 function AppRouter() {
   return (
     <Routes>
@@ -22,8 +24,10 @@ function AppRouter() {
         <Route element={<AdminLayout />}>
           <Route
             path="/admin"
-            element={<Navigate to="/admin/products" replace />}
+            element={<Navigate to="/admin/dashboard" replace />}
           />
+          <Route path="/admin/dashboard" element={<DashboardPage />} />
+          <Route path="/admin/orders" element={<OrderManagementPage />} />
           <Route path="/admin/products" element={<ProductManagementPage />} />
         </Route>
       </Route>

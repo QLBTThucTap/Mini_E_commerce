@@ -34,6 +34,36 @@ function AdminLayout() {
           </NavLink>
 
           <NavLink
+            to="/admin/dashboard"
+            className={({ isActive }) =>
+              [
+                "block whitespace-nowrap rounded-lg px-4 py-3 text-sm font-semibold",
+                isActive
+                  ? "bg-emerald-600 text-white"
+                  : "text-slate-300 hover:bg-slate-800",
+              ].join(" ")
+            }
+          >
+            <i className="fa-solid fa-chart-line mr-3" />
+            Thống kê
+          </NavLink>
+
+          <NavLink
+            to="/admin/orders"
+            className={({ isActive }) =>
+              [
+                "block whitespace-nowrap rounded-lg px-4 py-3 text-sm font-semibold",
+                isActive
+                  ? "bg-emerald-600 text-white"
+                  : "text-slate-300 hover:bg-slate-800",
+              ].join(" ")
+            }
+          >
+            <i className="fa-solid fa-file-invoice mr-3" />
+            Quản lý đơn hàng
+          </NavLink>
+
+          <NavLink
             to="/admin/products"
             className={({ isActive }) =>
               [
