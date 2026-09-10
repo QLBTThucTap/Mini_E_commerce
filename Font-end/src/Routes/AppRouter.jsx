@@ -11,6 +11,8 @@ import AdminLayout from "../Layouts/AdminLayout";
 import ProductManagementPage from "../Pages/admin/products/ProductManagementPage";
 import DashboardPage from "../Pages/admin/dashboard/DashboardPage";
 import OrderManagementPage from "../Pages/admin/orders/OrderManagementPage";
+import UserManagementPage from "../Pages/admin/users/UserManagementPage";
+
 function AppRouter() {
   return (
     <Routes>
@@ -29,6 +31,7 @@ function AppRouter() {
           <Route path="/admin/dashboard" element={<DashboardPage />} />
           <Route path="/admin/orders" element={<OrderManagementPage />} />
           <Route path="/admin/products" element={<ProductManagementPage />} />
+          <Route path="/admin/users" element={<UserManagementPage />} />
         </Route>
       </Route>
     </Routes>

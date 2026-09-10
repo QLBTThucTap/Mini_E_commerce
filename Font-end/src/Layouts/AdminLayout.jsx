@@ -77,6 +77,21 @@ function AdminLayout() {
             <i className="fa-solid fa-box mr-3" />
             Quản lý sản phẩm
           </NavLink>
+
+          <NavLink
+            to="/admin/users"
+            className={({ isActive }) =>
+              [
+                "block whitespace-nowrap rounded-lg px-4 py-3 text-sm font-semibold",
+                isActive
+                  ? "bg-emerald-600 text-white"
+                  : "text-slate-300 hover:bg-slate-800",
+              ].join(" ")
+            }
+          >
+            <i className="fa-solid fa-users mr-3" />
+            Quản lý tài khoản
+          </NavLink>
         </nav>
 
         <div className="hidden border-t border-slate-700 px-6 py-5 lg:block">
