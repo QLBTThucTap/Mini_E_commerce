@@ -7,11 +7,13 @@ import ProductDetailPage from "../Pages/products/ProductDetailPage";
 import CartPage from "../Pages/cart/CartPage";
 
 import AdminRoute from "./AdminRoute";
+import AuthRoute from "./AuthRoute";
 import AdminLayout from "../Layouts/AdminLayout";
 import ProductManagementPage from "../Pages/admin/products/ProductManagementPage";
 import DashboardPage from "../Pages/admin/dashboard/DashboardPage";
 import OrderManagementPage from "../Pages/admin/orders/OrderManagementPage";
 import UserManagementPage from "../Pages/admin/users/UserManagementPage";
+import AccountPage from "../Pages/account/AccountPage";
 
 function AppRouter() {
   return (
@@ -22,6 +24,12 @@ function AppRouter() {
       <Route path="/product/:productId" element={<ProductDetailPage />} />
       <Route path="/cart" element={<CartPage />} />
 
+      {/* Trang tài khoản cá nhân — yêu cầu đăng nhập */}
+      <Route element={<AuthRoute />}>
+        <Route path="/account" element={<AccountPage />} />
+      </Route>
+
+      {/* Trang admin — yêu cầu role admin */}
       <Route element={<AdminRoute />}>
         <Route element={<AdminLayout />}>
           <Route
@@ -39,3 +47,4 @@ function AppRouter() {
 }
 
 export default AppRouter;
+

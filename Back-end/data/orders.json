@@ -9,13 +9,14 @@
       }
     ],
     "shippingInfo": {
-      "fullName": "Lã Ngọc Huyền",
+      "fullName": "Trần Thị Minh Anh",
       "phone": "1-570-236-7033",
       "address": "dktu7gjdykguuij"
     },
     "paymentMethod": "cod",
-    "status": "pending",
-    "createdAt": "2026-09-06T11:40:43.149Z"
+    "status": "delivered",
+    "createdAt": "2026-09-06T11:40:43.149Z",
+    "total": 1099
   },
   {
     "id": 2,
@@ -196,7 +197,7 @@
       "address": "234 Cầu Giấy, Phường Quan Hoa, Quận Cầu Giấy, Hà Nội"
     },
     "paymentMethod": "cod",
-    "status": "pending",
+    "status": "delivered",
     "createdAt": "2026-09-09T08:05:19.410Z",
     "total": 649.97
   }

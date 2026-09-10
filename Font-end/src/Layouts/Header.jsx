@@ -101,7 +101,7 @@ export default function Header({ onSearch }) {
             {user ? (
               <>
                 <Link
-                  to="/account"
+                  to={user.role === "admin" ? "/admin/dashboard" : "/account"}
                   className="flex items-center gap-3 cursor-pointer group"
                 >
                   <div className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 group-hover:bg-emerald-50 group-hover:text-emerald-600 transition-colors">
@@ -112,7 +112,12 @@ export default function Header({ onSearch }) {
                       WELCOME BACK
                     </div>
                     <div className="font-bold text-slate-800 group-hover:text-emerald-600 transition-colors">
-                      {user.name}
+                      {user.fullName ||
+                        (typeof user.name === "string"
+                          ? user.name
+                          : typeof user.name === "object"
+                            ? `${user.name?.firstname || ""} ${user.name?.lastname || ""}`.trim()
+                            : user.username || "Tài khoản")}
                     </div>
                   </div>
                 </Link>

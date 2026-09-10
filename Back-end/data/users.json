@@ -24,7 +24,7 @@
       "city": "Ho Chi Minh City",
       "district": "District 1"
     },
-    "password": "123456",
+    "password": "111111",
     "role": "user",
     "isLocked": false
   },
@@ -279,21 +279,5 @@
     },
     "password": "1",
     "role": "user"
-  },
-  {
-    "id": 21,
-    "fullName": "Lã Huyền",
-    "username": "huyenxinhdep415@gmail.com",
-    "email": "huyenxinhdep415@gmail.com",
-    "phoneNumber": "0912345678",
-    "gender": "Female",
-    "dateOfBirth": "2004-05-11",
-    "address": {
-      "city": "Hà Nội",
-      "district": "Hai Bà Trưng"
-    },
-    "password": "123456",
-    "role": "user",
-    "isLocked": false
   }
 ]
