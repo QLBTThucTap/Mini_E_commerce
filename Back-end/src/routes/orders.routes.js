@@ -142,5 +142,155 @@ router.patch(
     }
   },
 );
+// Admin tạo đơn hàng thủ công (nhập tay thông tin khách, không qua giỏ hàng)
+router.post(
+  "/admin",
+  authenticateToken,
+  authorizeRoles("admin"),
+  async (req, res) => {
+    try {
+      const { shippingInfo, paymentMethod, products: items, status } = req.body;
 
+      if (
+        !shippingInfo?.fullName ||
+        !shippingInfo?.phone ||
+        !shippingInfo?.address
+      ) {
+        return res
+          .status(400)
+          .json({ message: "Thiếu thông tin khách hàng (họ tên/sđt/địa chỉ)" });
+      }
+      if (!items || !Array.isArray(items) || items.length === 0) {
+        return res
+          .status(400)
+          .json({ message: "Đơn hàng cần ít nhất 1 sản phẩm" });
+      }
+
+      const allProducts = await productsCollection.findAll();
+      const productMap = new Map(allProducts.map((p) => [p.id, p]));
+
+      let total = 0;
+      for (const item of items) {
+        const product = productMap.get(Number(item.productId));
+        if (!product) {
+          return res
+            .status(400)
+            .json({ message: `Không tìm thấy sản phẩm #${item.productId}` });
+        }
+        if (!item.quantity || item.quantity <= 0) {
+          return res
+            .status(400)
+            .json({ message: "Số lượng sản phẩm phải lớn hơn 0" });
+        }
+        total += product.price * Number(item.quantity);
+      }
+
+      const newOrder = await orders.create({
+        userId: null, // đơn tạo thủ công bởi admin, không gắn tài khoản khách
+        products: items.map((item) => ({
+          productId: Number(item.productId),
+          quantity: Number(item.quantity),
+        })),
+        total,
+        shippingInfo,
+        paymentMethod: paymentMethod || "cod",
+        status: status || "pending",
+        createdAt: new Date().toISOString(),
+      });
+
+      res.status(201).json(newOrder);
+    } catch (error) {
+      console.error("Error creating admin order:", error);
+      res.status(500).json({ message: "Lỗi hệ thống khi tạo đơn hàng" });
+    }
+  },
+);
+
+// Admin sửa toàn bộ đơn hàng (khách hàng, sản phẩm, thanh toán, trạng thái)
+router.put(
+  "/:id",
+  authenticateToken,
+  authorizeRoles("admin"),
+  async (req, res) => {
+    try {
+      const { shippingInfo, paymentMethod, products: items, status } = req.body;
+
+      if (
+        !shippingInfo?.fullName ||
+        !shippingInfo?.phone ||
+        !shippingInfo?.address
+      ) {
+        return res
+          .status(400)
+          .json({ message: "Thiếu thông tin khách hàng (họ tên/sđt/địa chỉ)" });
+      }
+      if (!items || !Array.isArray(items) || items.length === 0) {
+        return res
+          .status(400)
+          .json({ message: "Đơn hàng cần ít nhất 1 sản phẩm" });
+      }
+
+      const allProducts = await productsCollection.findAll();
+      const productMap = new Map(allProducts.map((p) => [p.id, p]));
+
+      let total = 0;
+      for (const item of items) {
+        const product = productMap.get(Number(item.productId));
+        if (!product) {
+          return res
+            .status(400)
+            .json({ message: `Không tìm thấy sản phẩm #${item.productId}` });
+        }
+        if (!item.quantity || item.quantity <= 0) {
+          return res
+            .status(400)
+            .json({ message: "Số lượng sản phẩm phải lớn hơn 0" });
+        }
+        total += product.price * Number(item.quantity);
+      }
+
+      const updated = await orders.updateById(
+        req.params.id,
+        {
+          products: items.map((item) => ({
+            productId: Number(item.productId),
+            quantity: Number(item.quantity),
+          })),
+          total,
+          shippingInfo,
+          paymentMethod: paymentMethod || "cod",
+          status: status || "pending",
+        },
+        { replace: false },
+      );
+
+      if (!updated) {
+        return res.status(404).json({ message: "Không tìm thấy đơn hàng" });
+      }
+      res.json(updated);
+    } catch (error) {
+      console.error("Error updating order:", error);
+      res.status(500).json({ message: "Lỗi hệ thống khi cập nhật đơn hàng" });
+    }
+  },
+);
+
+// Admin xóa đơn hàng
+router.delete(
+  "/:id",
+  authenticateToken,
+  authorizeRoles("admin"),
+  async (req, res) => {
+    try {
+      const deleted = await orders.deleteById(req.params.id);
+      if (!deleted) {
+        return res.status(404).json({ message: "Không tìm thấy đơn hàng" });
+      }
+      res.json(deleted);
+    } catch (error) {
+      console.error("Error deleting order:", error);
+      res.status(500).json({ message: "Lỗi hệ thống khi xóa đơn hàng" });
+    }
+  },
+);
 module.exports = router;

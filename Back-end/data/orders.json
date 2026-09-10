@@ -16,5 +16,188 @@
     "paymentMethod": "cod",
     "status": "pending",
     "createdAt": "2026-09-06T11:40:43.149Z"
+  },
+  {
+    "id": 2,
+    "userId": 5,
+    "products": [
+      {
+        "productId": 3,
+        "quantity": 2
+      },
+      {
+        "productId": 7,
+        "quantity": 1
+      }
+    ],
+    "shippingInfo": {
+      "fullName": "Nguyễn Văn An",
+      "phone": "0912345678",
+      "address": "123 Đường Lê Lợi, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh"
+    },
+    "paymentMethod": "banking",
+    "status": "delivered",
+    "createdAt": "2026-09-06T12:15:20.100Z"
+  },
+  {
+    "id": 3,
+    "userId": 12,
+    "products": [
+      {
+        "productId": 2,
+        "quantity": 1
+      }
+    ],
+    "shippingInfo": {
+      "fullName": "Trần Thị Mai",
+      "phone": "0987654321",
+      "address": "45 Phố Huế, Phường Hàng Bài, Quận Hoàn Kiếm, Hà Nội"
+    },
+    "paymentMethod": "cod",
+    "status": "pending",
+    "createdAt": "2026-09-06T14:02:11.450Z"
+  },
+  {
+    "id": 4,
+    "userId": 8,
+    "products": [
+      {
+        "productId": 10,
+        "quantity": 4
+      }
+    ],
+    "shippingInfo": {
+      "fullName": "Lê Hoàng Nam",
+      "phone": "0905123456",
+      "address": "88 Đường Nguyễn Văn Linh, Phường Nam Dương, Quận Hải Châu, Đà Nẵng"
+    },
+    "paymentMethod": "momo",
+    "status": "pending",
+    "createdAt": "2026-09-07T08:30:00.000Z"
+  },
+  {
+    "id": 5,
+    "userId": 3,
+    "products": [
+      {
+        "productId": 5,
+        "quantity": 1
+      },
+      {
+        "productId": 12,
+        "quantity": 3
+      }
+    ],
+    "shippingInfo": {
+      "fullName": "Phạm Quốc Bảo",
+      "phone": "0938112233",
+      "address": "12 Đường 30/4, Phường Xuân Khánh, Quận Ninh Kiều, Cần Thơ"
+    },
+    "paymentMethod": "banking",
+    "status": "cancelled",
+    "createdAt": "2026-09-07T09:45:12.890Z"
+  },
+  {
+    "id": 6,
+    "userId": 15,
+    "products": [
+      {
+        "productId": 1,
+        "quantity": 2
+      }
+    ],
+    "shippingInfo": {
+      "fullName": "Hoàng Thùy Linh",
+      "phone": "0971009988",
+      "address": "56 Đường Trần Phú, Phường Lộc Thọ, TP. Nha Trang, Khánh Hòa"
+    },
+    "paymentMethod": "cod",
+    "status": "shipping",
+    "createdAt": "2026-09-07T11:20:55.330Z"
+  },
+  {
+    "id": 7,
+    "userId": 7,
+    "products": [
+      {
+        "productId": 4,
+        "quantity": 1
+      },
+      {
+        "productId": 8,
+        "quantity": 1
+      },
+      {
+        "productId": 9,
+        "quantity": 2
+      }
+    ],
+    "shippingInfo": {
+      "fullName": "Vũ Minh Trí",
+      "phone": "0945667788",
+      "address": "102 Đường Quang Trung, Phường 10, Quận Gò Vấp, TP. Hồ Chí Minh"
+    },
+    "paymentMethod": "vnpay",
+    "status": "delivered",
+    "createdAt": "2026-09-08T07:10:05.120Z"
+  },
+  {
+    "id": 8,
+    "userId": 20,
+    "products": [
+      {
+        "productId": 6,
+        "quantity": 5
+      }
+    ],
+    "shippingInfo": {
+      "fullName": "Đặng Thị Hương",
+      "phone": "0963221100",
+      "address": "15 Đường Hùng Vương, Phường Tự An, TP. Buôn Ma Thuột, Đắc Lắc"
+    },
+    "paymentMethod": "cod",
+    "status": "pending",
+    "createdAt": "2026-09-08T10:00:43.600Z"
+  },
+  {
+    "id": 9,
+    "userId": 1,
+    "products": [
+      {
+        "productId": 11,
+        "quantity": 1
+      }
+    ],
+    "shippingInfo": {
+      "fullName": "Bùi Anh Tuấn",
+      "phone": "0918776655",
+      "address": "78 Đường Nguyễn Trãi, Phường 3, Quận 5, TP. Hồ Chí Minh"
+    },
+    "paymentMethod": "momo",
+    "status": "shipping",
+    "createdAt": "2026-09-08T15:33:21.000Z"
+  },
+  {
+    "id": 10,
+    "userId": 9,
+    "products": [
+      {
+        "productId": 13,
+        "quantity": 2
+      },
+      {
+        "productId": 15,
+        "quantity": 1
+      }
+    ],
+    "shippingInfo": {
+      "fullName": "Đỗ Khánh Vân",
+      "phone": "0922334455",
+      "address": "234 Cầu Giấy, Phường Quan Hoa, Quận Cầu Giấy, Hà Nội"
+    },
+    "paymentMethod": "cod",
+    "status": "pending",
+    "createdAt": "2026-09-09T08:05:19.410Z",
+    "total": 649.97
   }
 ]
