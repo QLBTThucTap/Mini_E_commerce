@@ -28,13 +28,29 @@ function signTokens(userSafe) {
 // ===== LOGIN =====
 router.post("/login", async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { username, password, name, email } = req.body;
+    const identifier = (username || name || email || "").trim().toLowerCase();
+
+    if (!identifier || !password) {
+      return res.status(400).json({ message: "Vui lòng nhập tài khoản và mật khẩu" });
+    }
 
     // Chờ đọc dữ liệu từ file users.json
     const users = await usersCollection.findAll();
-    const user = users.find(
-      (u) => u.username === username && u.password === password,
-    );
+    const user = users.find((u) => {
+      const uUsername = (u.username || "").toLowerCase();
+      const uEmail = (u.email || "").toLowerCase();
+      const uFullName = (u.fullName || "").toLowerCase();
+      const uNameStr = typeof u.name === "string" ? u.name.toLowerCase() : "";
+
+      const matchIdentifier =
+        uUsername === identifier ||
+        uEmail === identifier ||
+        uFullName === identifier ||
+        uNameStr === identifier;
+
+      return matchIdentifier && String(u.password) === String(password);
+    });
 
     if (!user) {
       return res.status(400).json({ message: "Sai tài khoản hoặc mật khẩu" });
@@ -45,6 +61,9 @@ router.post("/login", async (req, res) => {
     }
 
     const { password: _, ...userSafe } = user; // Không trả password về client
+    userSafe.isLocked = Boolean(user.isLocked);
+    userSafe.role = user.role === "admin" ? "admin" : "user";
+
     const { accessToken, refreshToken } = signTokens(userSafe);
     validRefreshTokens.push(refreshToken);
 

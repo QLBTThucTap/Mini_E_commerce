@@ -7,6 +7,7 @@ const { PORT } = require("./src/config");
 const authRoutes = require("./src/routes/auth.routes");
 const productsRoutes = require("./src/routes/products.routes");
 const ordersRoutes = require("./src/routes/orders.routes");
+const usersRoutes = require("./src/routes/users.routes");
 
 // --- TỰ ĐỘNG TẠO THƯ MỤC DATA NẾU CHƯA CÓ ---
 const dataDir = path.join(__dirname, "data");
@@ -25,6 +26,7 @@ app.use(express.json());
 app.use("/auth", authRoutes);
 app.use("/products", productsRoutes);
 app.use("/orders", ordersRoutes);
+app.use("/users", usersRoutes);
 
 app.get("/", (req, res) => {
   res.json({

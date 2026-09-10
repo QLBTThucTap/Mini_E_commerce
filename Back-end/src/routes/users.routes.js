@@ -1,6 +1,8 @@
 const express = require("express");
+const jwt = require("jsonwebtoken");
 const JsonCollection = require("../db");
 const { authenticateToken, authorizeRoles } = require("../middleware/auth");
+const { ACCESS_SECRET } = require("../config");
 
 const router = express.Router();
 const users = new JsonCollection("users.json");
@@ -8,13 +10,28 @@ const users = new JsonCollection("users.json");
 function stripPassword(user) {
   if (!user) return user;
   const { password, ...safe } = user;
-  return safe;
+  return {
+    ...safe,
+    isLocked: Boolean(user.isLocked),
+    role: user.role === "admin" ? "admin" : "user",
+  };
 }
 
-/** Cho phép nếu là admin, hoặc chính chủ tài khoản (Đã sửa lỗi so sánh khác kiểu dữ liệu) */
+function getOptionalUser(req) {
+  const authHeader = req.headers.authorization;
+  const token = authHeader?.split(" ")[1];
+  if (!token) return null;
+  try {
+    return jwt.verify(token, ACCESS_SECRET);
+  } catch {
+    return null;
+  }
+}
+
+/** Cho phép nếu là admin, hoặc chính chủ tài khoản */
 function isSelfOrAdmin(req, res, next) {
   const targetId = Number(req.params.id);
-  const currentUserId = Number(req.user.id); // Ép kiểu an toàn
+  const currentUserId = Number(req.user.id);
 
   if (req.user.role === "admin" || currentUserId === targetId) {
     return next();
@@ -52,48 +69,154 @@ router.get("/:id", authenticateToken, isSelfOrAdmin, async (req, res) => {
   }
 });
 
-// POST /users (đăng ký user mới, mặc định role "customer")
+// POST /users (Tạo user: Công khai từ Register hoặc Admin tạo)
 router.post("/", async (req, res) => {
   try {
-    const { email, username, password, name, address, phone, role } = req.body;
-    if (!email || !username || !password) {
-      return res.status(400).json({ message: "Thiếu email/username/password" });
+    const {
+      email,
+      username,
+      password,
+      name,
+      fullName,
+      address,
+      phone,
+      phoneNumber,
+      gender,
+      dateOfBirth,
+      role,
+      isLocked,
+    } = req.body;
+
+    const finalEmail = (email || "").trim().toLowerCase();
+    const finalName = (fullName || (typeof name === "string" ? name : "") || "").trim();
+    const finalPhone = (phoneNumber || phone || "").trim();
+
+    if (!finalEmail || !password) {
+      return res.status(400).json({ message: "Thiếu email hoặc mật khẩu" });
     }
 
     const allUsers = await users.findAll();
-    const existed = allUsers.some((u) => u.username === username);
-    if (existed) {
-      return res.status(409).json({ message: "Username đã tồn tại" });
+
+    // Kiểm tra email trùng
+    const emailExisted = allUsers.some(
+      (u) => (u.email || "").toLowerCase() === finalEmail,
+    );
+    if (emailExisted) {
+      return res.status(409).json({ message: "Email này đã được sử dụng" });
+    }
+
+    // Kiểm tra username trùng nếu có
+    if (username) {
+      const usernameExisted = allUsers.some(
+        (u) => (u.username || "").toLowerCase() === username.trim().toLowerCase(),
+      );
+      if (usernameExisted) {
+        return res.status(409).json({ message: "Tên đăng nhập đã tồn tại" });
+      }
+    }
+
+    const currentUser = getOptionalUser(req);
+    const isAdmin = currentUser && currentUser.role === "admin";
+
+    // Chỉ admin mới có quyền tạo tài khoản role "admin"
+    let finalRole = "user";
+    if (isAdmin && role === "admin") {
+      finalRole = "admin";
     }
 
     const newUser = await users.create({
-      email,
-      username,
-      password, // Thực tế nên hash mật khẩu bằng thư viện bcrypt trước khi lưu
-      name: name || { firstname: "", lastname: "" },
-      address: address || {},
-      phone: phone || "",
-      // Không cho client tự phong admin qua route đăng ký công khai
-      role: role === "admin" ? "customer" : role || "customer",
+      fullName: finalName || (typeof name === "object" ? `${name.firstname || ""} ${name.lastname || ""}`.trim() : "") || username || finalEmail,
+      username: username || finalEmail,
+      email: finalEmail,
+      phoneNumber: finalPhone,
+      gender: gender || "Other",
+      dateOfBirth: dateOfBirth || "",
+      address: address || { city: "", district: "" },
+      password: String(password),
+      role: finalRole,
+      isLocked: isAdmin && typeof isLocked === "boolean" ? isLocked : false,
     });
 
     res.status(201).json(stripPassword(newUser));
   } catch (error) {
     console.error("Error creating user:", error);
-    res.status(500).json({ message: "Lỗi hệ thống khi đăng ký tài khoản" });
+    res.status(500).json({ message: "Lỗi hệ thống khi tạo tài khoản" });
   }
 });
 
-// PUT /users/:id (chính chủ hoặc admin, thay toàn bộ)
+// PATCH /users/:id/lock (Khóa / mở khóa tài khoản - chỉ admin)
+router.patch(
+  "/:id/lock",
+  authenticateToken,
+  authorizeRoles("admin"),
+  async (req, res) => {
+    try {
+      const targetId = Number(req.params.id);
+      const currentUserId = Number(req.user.id);
+
+      if (targetId === currentUserId) {
+        return res
+          .status(400)
+          .json({ message: "Không thể tự khóa tài khoản của chính mình" });
+      }
+
+      const user = await users.findById(targetId);
+      if (!user) {
+        return res.status(404).json({ message: "Không tìm thấy người dùng" });
+      }
+
+      const nextLockStatus =
+        req.body.isLocked !== undefined
+          ? Boolean(req.body.isLocked)
+          : !user.isLocked;
+
+      const updated = await users.updateById(
+        targetId,
+        { isLocked: nextLockStatus },
+        { replace: false },
+      );
+
+      res.json(stripPassword(updated));
+    } catch (error) {
+      console.error("Error toggling user lock:", error);
+      res.status(500).json({ message: "Lỗi hệ thống khi đổi trạng thái khóa" });
+    }
+  },
+);
+
+// PUT /users/:id (chính chủ hoặc admin)
 router.put("/:id", authenticateToken, isSelfOrAdmin, async (req, res) => {
   try {
+    const targetId = Number(req.params.id);
+    const currentUserId = Number(req.user.id);
     const body = { ...req.body };
-    // chỉ admin mới được đổi role người khác thành admin
-    if (body.role === "admin" && req.user.role !== "admin") {
+
+    // Không cho admin tự khóa chính mình
+    if (targetId === currentUserId && body.isLocked === true) {
+      return res
+        .status(400)
+        .json({ message: "Không thể tự khóa tài khoản của chính mình" });
+    }
+
+    // Không cho admin tự hạ role của mình
+    if (targetId === currentUserId && body.role && body.role !== "admin") {
+      return res
+        .status(400)
+        .json({ message: "Không thể tự gỡ quyền admin của chính mình" });
+    }
+
+    // Chỉ admin mới có quyền đổi role
+    if (body.role && req.user.role !== "admin") {
       delete body.role;
     }
-    const updated = await users.updateById(req.params.id, body, {
-      replace: true,
+
+    // Nếu không nhập password mới khi cập nhật, giữ nguyên password cũ
+    if (!body.password) {
+      delete body.password;
+    }
+
+    const updated = await users.updateById(targetId, body, {
+      replace: false,
     });
     if (!updated)
       return res.status(404).json({ message: "Không tìm thấy user" });
@@ -103,14 +226,47 @@ router.put("/:id", authenticateToken, isSelfOrAdmin, async (req, res) => {
   }
 });
 
-// PATCH /users/:id (chính chủ hoặc admin, cập nhật 1 phần)
+// PATCH /users/:id (chính chủ hoặc admin)
 router.patch("/:id", authenticateToken, isSelfOrAdmin, async (req, res) => {
   try {
+    const targetId = Number(req.params.id);
+    const currentUserId = Number(req.user.id);
     const body = { ...req.body };
-    if (body.role === "admin" && req.user.role !== "admin") {
-      delete body.role;
+
+    // Không cho admin tự khóa chính mình
+    if (targetId === currentUserId && body.isLocked === true) {
+      return res
+        .status(400)
+        .json({ message: "Không thể tự khóa tài khoản của chính mình" });
     }
-    const updated = await users.updateById(req.params.id, body, {
+
+    // Không cho admin tự hạ role của mình
+    if (targetId === currentUserId && body.role && body.role !== "admin") {
+      return res
+        .status(400)
+        .json({ message: "Không thể tự gỡ quyền admin của chính mình" });
+    }
+
+    // Chỉ admin mới có quyền đổi role hoặc đổi trạng thái lock
+    if (req.user.role !== "admin") {
+      delete body.role;
+      delete body.isLocked;
+    }
+
+    // Nếu không nhập password mới, bỏ qua không ghi đè
+    if (!body.password) {
+      delete body.password;
+    }
+
+    // Chuẩn hóa fullName / phoneNumber nếu có
+    if (body.name && !body.fullName) {
+      body.fullName = typeof body.name === "string" ? body.name : `${body.name.firstname || ""} ${body.name.lastname || ""}`.trim();
+    }
+    if (body.phone && !body.phoneNumber) {
+      body.phoneNumber = body.phone;
+    }
+
+    const updated = await users.updateById(targetId, body, {
       replace: false,
     });
     if (!updated)
@@ -128,7 +284,16 @@ router.delete(
   authorizeRoles("admin"),
   async (req, res) => {
     try {
-      const deleted = await users.deleteById(req.params.id);
+      const targetId = Number(req.params.id);
+      const currentUserId = Number(req.user.id);
+
+      if (targetId === currentUserId) {
+        return res
+          .status(400)
+          .json({ message: "Không thể tự xóa tài khoản của chính mình" });
+      }
+
+      const deleted = await users.deleteById(targetId);
       if (!deleted)
         return res.status(404).json({ message: "Không tìm thấy user" });
       res.json(stripPassword(deleted));
@@ -139,3 +304,4 @@ router.delete(
 );
 
 module.exports = router;
+
