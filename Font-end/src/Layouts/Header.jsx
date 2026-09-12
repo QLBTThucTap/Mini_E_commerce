@@ -1,15 +1,8 @@
+import { useState } from "react";
 import useAuthStore from "../Stores/authStore";
 import useCartStore from "../Stores/cartStore";
 import TopBar from "./TopBar";
 import { Link, useNavigate } from "react-router-dom";
-const NAV_LINKS = ["HOMES", "PAGES", "PRODUCTS"];
-
-/**
- * cartCount, cartTotal, onSearch vẫn nhận qua props tuỳ theo trang.
- * Trạng thái đăng nhập (user) được đọc trực tiếp từ authStore để luôn
- * đồng bộ, không phụ thuộc việc trang cha có truyền đúng hay không.
- * Icons use Font Awesome classes.
- */
 
 export default function Header({ onSearch }) {
   const navigate = useNavigate();
@@ -20,12 +13,27 @@ export default function Header({ onSearch }) {
     navigate("/");
   };
 
+  const [searchInput, setSearchInput] = useState("");
+  const [categoryInput, setCategoryInput] = useState("all");
+
   const cartItems = useCartStore((state) => state.items);
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
   const cartTotal = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0,
   );
+
+  const handleSubmitSearch = (e) => {
+    e.preventDefault();
+    if (onSearch) {
+      onSearch(e);
+      return;
+    }
+    const params = new URLSearchParams();
+    if (searchInput.trim()) params.set("q", searchInput.trim());
+    if (categoryInput !== "all") params.set("category", categoryInput);
+    navigate(`/products?${params.toString()}`);
+  };
 
   return (
     <header className="bg-white border-b border-slate-200 sticky top-0 z-40">
@@ -34,7 +42,7 @@ export default function Header({ onSearch }) {
       <div className="max-w-[1360px] mx-auto px-4 py-4">
         <div className="flex items-center justify-between gap-8">
           <div className="flex items-center gap-8">
-            <a href="/" className="flex items-center gap-2.5 group">
+            <Link to="/" className="flex items-center gap-2.5 group">
               <div className="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white font-extrabold text-xl shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform">
                 LH
               </div>
@@ -46,18 +54,18 @@ export default function Header({ onSearch }) {
                   TECH MART
                 </div>
               </div>
-            </a>
+            </Link>
 
             <nav className="hidden xl:flex items-center gap-6 text-sm font-semibold text-slate-700">
-              {NAV_LINKS.map((link) => (
-                <div
-                  key={link}
-                  className="flex items-center gap-1 cursor-pointer hover:text-emerald-600"
-                >
-                  <span>{link}</span>
-                  <i className="fa-solid fa-chevron-down text-[10px]" />
-                </div>
-              ))}
+              <Link to="/" className="hover:text-emerald-600 transition-colors">
+                HOMES
+              </Link>
+              <Link to="/products" className="hover:text-emerald-600 transition-colors">
+                PRODUCTS
+              </Link>
+              <Link to="/cart" className="hover:text-emerald-600 transition-colors">
+                PAGES
+              </Link>
               <a
                 href="#contact"
                 className="hover:text-emerald-600 transition-colors"
@@ -69,23 +77,33 @@ export default function Header({ onSearch }) {
 
           <div className="flex-1 max-w-2xl">
             <form
-              onSubmit={onSearch}
+              onSubmit={handleSubmitSearch}
               className="flex items-center rounded-xl border-2 border-emerald-600/90 bg-white overflow-hidden focus-within:ring-2 focus-within:ring-emerald-500/30 transition-all"
             >
               <div className="relative flex items-center border-r border-slate-200 px-3.5 py-2.5 bg-slate-50/50">
-                <select className="appearance-none bg-transparent pr-7 pl-1 text-xs font-semibold text-slate-700 focus:outline-none cursor-pointer border-0">
-                  <option>All Categories</option>
+                <select
+                  value={categoryInput}
+                  onChange={(e) => setCategoryInput(e.target.value)}
+                  className="appearance-none bg-transparent pr-7 pl-1 text-xs font-semibold text-slate-700 focus:outline-none cursor-pointer border-0"
+                >
+                  <option value="all">All Categories</option>
+                  <option value="laptop">Laptops</option>
+                  <option value="phone">Smartphones</option>
+                  <option value="headphone">Audio & Visual</option>
+                  <option value="keyboard">Gaming Gear</option>
                 </select>
                 <i className="fa-solid fa-chevron-down text-[10px] text-slate-400 absolute right-3 pointer-events-none" />
               </div>
               <input
                 type="text"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
                 placeholder="Search products, brands, model numbers..."
                 className="w-full border-0 px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:ring-0 focus:outline-none"
               />
               <button
                 type="submit"
-                className="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 transition-colors"
+                className="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 transition-colors cursor-pointer"
               >
                 <i className="fa-solid fa-magnifying-glass text-sm" />
               </button>

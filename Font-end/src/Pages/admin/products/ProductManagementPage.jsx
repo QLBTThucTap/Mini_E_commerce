@@ -37,7 +37,7 @@ function ProductManagementPage() {
     placeholderData: keepPreviousData,
   });
 
-  const products = data?.items ?? [];
+  const products = useMemo(() => data?.items ?? [], [data]);
   const totalPages = data?.totalPages ?? 1;
   const total = data?.total ?? 0;
 
@@ -93,6 +93,7 @@ function ProductManagementPage() {
 
   const updateFilter = (field, value) => {
     setFilters((current) => ({ ...current, [field]: value }));
+    setPage(1);
   };
 
   const handleSaved = () => {

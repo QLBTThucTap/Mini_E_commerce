@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import HomePage from "../Pages/home/HomePage";
+import ProductListPage from "../Pages/products/ProductListPage";
 import LoginPage from "../Pages/auth/LoginPage";
 import RegisterPage from "../Pages/auth/RegisterPage";
 import ProductDetailPage from "../Pages/products/ProductDetailPage";
@@ -20,6 +21,7 @@ function AppRouter() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
+      <Route path="/products" element={<ProductListPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/product/:productId" element={<ProductDetailPage />} />
@@ -49,4 +51,3 @@ function AppRouter() {
 }
 
 export default AppRouter;
-
