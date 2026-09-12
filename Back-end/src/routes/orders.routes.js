@@ -9,71 +9,122 @@ const orders = new JsonCollection("orders.json");
 const carts = new JsonCollection("carts.json");
 const productsCollection = new JsonCollection("products.json");
 
-// Tạo đơn hàng từ giỏ hàng active hiện tại
-router.post("/", authenticateToken, async (req, res) => {
-  try {
-    const { shippingInfo, paymentMethod } = req.body;
+const jwt = require("jsonwebtoken");
+const { ACCESS_SECRET } = require("../config");
 
-    // Đồng nhất kiểu dữ liệu của userId
-    const currentUserId = Number(req.user.id);
-
-    // Chờ lấy toàn bộ giỏ hàng từ file (bất đồng bộ)
-    const allCarts = await carts.findAll();
-    const activeCart = allCarts.find(
-      (c) => Number(c.userId) === currentUserId && c.status === "active",
-    );
-
-    if (
-      !activeCart ||
-      !activeCart.products ||
-      activeCart.products.length === 0
-    ) {
-      return res
-        .status(400)
-        .json({ message: "Giỏ hàng đang trống hoặc không tồn tại" });
+function optionalAuth(req, res, next) {
+  const authHeader = req.headers.authorization;
+  const token = authHeader?.split(" ")[1];
+  if (token) {
+    try {
+      const payload = jwt.verify(token, ACCESS_SECRET);
+      req.user = payload;
+    } catch (err) {
+      // Bỏ qua lỗi token hết hạn/không hợp lệ, tiếp tục xử lý như khách
     }
+  }
+  next();
+}
 
-    // --- TỐI ƯU HIỆU NĂNG TÍNH TỔNG TIỀN (Lookup Map) ---
+// Tạo đơn hàng từ giỏ hàng client hoặc giỏ hàng active hiện tại
+router.post("/", optionalAuth, async (req, res) => {
+  try {
+    const { shippingInfo, paymentMethod, products: clientProducts, total: clientTotal } = req.body;
+
+    const currentUserId = req.user
+      ? Number(req.user.id)
+      : req.body.userId
+        ? Number(req.body.userId)
+        : null;
+
     const allProducts = await productsCollection.findAll();
     const productMap = new Map(allProducts.map((p) => [p.id, p]));
 
-    const total = activeCart.products.reduce((sum, item) => {
-      const product = productMap.get(item.productId);
-      return sum + (product?.price || 0) * item.quantity;
-    }, 0);
-    // ----------------------------------------------------
+    let orderProducts = [];
+    let calculatedTotal = 0;
 
-    // Đóng giỏ hàng ngay lập tức để chặn Race Conditions (ngăn bấm đặt hàng 2 lần)
-    const updatedCart = await carts.updateById(
-      activeCart.id,
-      { status: "ordered" },
-      { replace: false },
-    );
+    // 1. Nếu client truyền trực tiếp danh sách sản phẩm trong giỏ
+    if (Array.isArray(clientProducts) && clientProducts.length > 0) {
+      orderProducts = clientProducts.map((item) => {
+        const pId = Number(item.productId || item.id);
+        const p = productMap.get(pId);
+        const qty = Math.max(1, Number(item.quantity) || 1);
+        const price = p ? Number(p.price) : Number(item.price) || 0;
+        calculatedTotal += price * qty;
+        return {
+          productId: pId,
+          quantity: qty,
+          title: item.title || p?.title || `Sản phẩm #${pId}`,
+          price: price,
+          image: item.image || p?.image || "",
+        };
+      });
+    } else if (currentUserId) {
+      // 2. Ngược lại nếu không truyền products, tìm trong giỏ active trên database
+      const allCarts = await carts.findAll();
+      const activeCart = allCarts.find(
+        (c) => Number(c.userId) === currentUserId && c.status === "active",
+      );
 
-    // Nếu vì lý do nào đó không update được giỏ hàng (bị can thiệp song song), hủy quy trình
-    if (!updatedCart) {
+      if (
+        !activeCart ||
+        !activeCart.products ||
+        activeCart.products.length === 0
+      ) {
+        return res
+          .status(400)
+          .json({ message: "Giỏ hàng đang trống hoặc không tồn tại" });
+      }
+
+      orderProducts = activeCart.products.map((item) => {
+        const pId = Number(item.productId);
+        const p = productMap.get(pId);
+        const qty = Number(item.quantity) || 1;
+        const price = p?.price || 0;
+        calculatedTotal += price * qty;
+        return {
+          productId: pId,
+          quantity: qty,
+          title: p?.title || `Sản phẩm #${pId}`,
+          price: price,
+          image: p?.image || "",
+        };
+      });
+
+      await carts.updateById(
+        activeCart.id,
+        { status: "ordered" },
+        { replace: false },
+      );
+
+      await carts.create({
+        userId: currentUserId,
+        status: "active",
+        products: [],
+        date: new Date().toISOString(),
+      });
+    } else {
       return res
         .status(400)
-        .json({ message: "Xử lý giỏ hàng thất bại, vui lòng thử lại" });
+        .json({ message: "Giỏ hàng đang trống hoặc không có sản phẩm" });
     }
+
+    const shippingFee =
+      calculatedTotal >= 199 || calculatedTotal === 0 ? 0 : 9.5;
+    const finalTotal =
+      clientTotal !== undefined
+        ? Number(clientTotal)
+        : Number((calculatedTotal + shippingFee).toFixed(2));
 
     // Tạo đơn hàng mới
     const newOrder = await orders.create({
       userId: currentUserId,
-      products: activeCart.products,
-      total,
-      shippingInfo,
-      paymentMethod,
+      products: orderProducts,
+      total: finalTotal,
+      shippingInfo: shippingInfo || {},
+      paymentMethod: paymentMethod || "cod",
       status: "pending",
       createdAt: new Date().toISOString(),
-    });
-
-    // Tạo một giỏ hàng active mới hoàn toàn trống cho người dùng
-    await carts.create({
-      userId: currentUserId,
-      status: "active",
-      products: [],
-      date: new Date().toISOString(),
     });
 
     res.status(201).json(newOrder);
