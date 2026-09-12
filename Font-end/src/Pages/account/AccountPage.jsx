@@ -3,7 +3,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import useAuthStore from "../../Stores/authStore";
 import { updateUser } from "../../Services/userService";
 import { getOrdersByUser } from "../../Services/orderService";
@@ -95,8 +95,12 @@ export default function AccountPage() {
   const loginAction = useAuthStore((state) => state.login);
   const accessToken = useAuthStore((state) => state.accessToken);
   const refreshToken = useAuthStore((state) => state.refreshToken);
-
-  const [activeTab, setActiveTab] = useState("info");
+  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = searchParams.get("tab") || location.state?.tab || "info";
+  const setActiveTab = (tabKey) => {
+    setSearchParams({ tab: tabKey });
+  };
   const [saveSuccess, setSaveSuccess] = useState("");
 
   // Lấy họ tên hiển thị linh hoạt
@@ -455,7 +459,7 @@ export default function AccountPage() {
 
                   {!loadingOrders && sortedOrders.length > 0 && (
                     <div className="space-y-4">
-                      {sortedOrders.map((order) => {
+                      {sortedOrders.map((order, idx) => {
                         const status = order.status || "pending";
                         const statusStyle =
                           STATUS_STYLES[status] || STATUS_STYLES.pending;
@@ -464,7 +468,7 @@ export default function AccountPage() {
 
                         return (
                           <div
-                            key={order.id}
+                            key={order.id || idx}
                             className="rounded-xl border border-slate-200 overflow-hidden hover:border-slate-300 transition-colors"
                           >
                             {/* Order header */}
@@ -492,15 +496,22 @@ export default function AccountPage() {
                                 const product = productMap.get(
                                   Number(item.productId),
                                 );
+                                const title =
+                                  item.title ||
+                                  product?.title ||
+                                  `Sản phẩm #${item.productId}`;
+                                const image = item.image || product?.image;
+                                const price = item.price ?? product?.price;
+
                                 return (
                                   <div
                                     key={idx}
                                     className="flex items-center gap-3 px-4 py-3"
                                   >
-                                    {product?.image ? (
+                                    {image ? (
                                       <img
-                                        src={product.image}
-                                        alt={product.title}
+                                        src={image}
+                                        alt={title}
                                         className="w-12 h-12 rounded-lg object-contain border border-slate-100 bg-slate-50 shrink-0"
                                       />
                                     ) : (
@@ -510,24 +521,21 @@ export default function AccountPage() {
                                     )}
                                     <div className="flex-1 min-w-0">
                                       <p className="text-sm font-semibold text-slate-800 truncate">
-                                        {product?.title ||
-                                          `Sản phẩm #${item.productId}`}
+                                        {title}
                                       </p>
                                       <p className="text-xs text-slate-400 mt-0.5">
                                         Số lượng: {item.quantity}
-                                        {product?.price && (
+                                        {price !== undefined && (
                                           <span className="ml-2 text-slate-500">
-                                            · {formatCurrency(product.price)}
+                                            · {formatCurrency(price)}
                                             /cái
                                           </span>
                                         )}
                                       </p>
                                     </div>
-                                    {product?.price && (
+                                    {price !== undefined && (
                                       <p className="text-sm font-bold text-slate-800 shrink-0">
-                                        {formatCurrency(
-                                          product.price * item.quantity,
-                                        )}
+                                        {formatCurrency(price * item.quantity)}
                                       </p>
                                     )}
                                   </div>

@@ -1,5 +1,11 @@
 import Instance from "./http";
 
+// Khách hàng hoặc người dùng tạo đơn hàng
+export async function createOrder(data) {
+  const response = await Instance.post("/orders", data);
+  return response.data;
+}
+
 // Admin lấy toàn bộ đơn hàng trong hệ thống
 export async function getAllOrders() {
   const response = await Instance.get("/orders");

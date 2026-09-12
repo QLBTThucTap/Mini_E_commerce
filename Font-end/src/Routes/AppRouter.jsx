@@ -5,6 +5,7 @@ import LoginPage from "../Pages/auth/LoginPage";
 import RegisterPage from "../Pages/auth/RegisterPage";
 import ProductDetailPage from "../Pages/products/ProductDetailPage";
 import CartPage from "../Pages/cart/CartPage";
+import CheckoutPage from "../Pages/checkout/CheckoutPage";
 
 import AdminRoute from "./AdminRoute";
 import AuthRoute from "./AuthRoute";
@@ -23,6 +24,7 @@ function AppRouter() {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/product/:productId" element={<ProductDetailPage />} />
       <Route path="/cart" element={<CartPage />} />
+      <Route path="/checkout" element={<CheckoutPage />} />
 
       {/* Trang tài khoản cá nhân — yêu cầu đăng nhập */}
       <Route element={<AuthRoute />}>
