@@ -11,45 +11,7 @@ import ProductCard from "../../Components/product/ProductCard";
 import Card from "../../Components/ui/Card";
 import Button from "../../Components/ui/Button";
 
-const FOOTER_BRAND = {
-  name: "LH - 1ST NYC TECH ONLINE MARKET",
-  hotline: "0824781531",
-  address: "273 phố Bạch Mai, quận Hai Bà Trưng, Hà Nội",
-  email: "contact@swootechmart.com",
-};
-
-const FOOTER_COLUMNS = [
-  {
-    title: "Top Categories",
-    links: [
-      { label: "Laptops", href: "#laptops" },
-      { label: "PC & Computers", href: "#pc" },
-      { label: "Cell Phones", href: "#phones" },
-    ],
-  },
-  {
-    title: "Company",
-    links: [
-      { label: "About me", href: "#about" },
-      { label: "Contact", href: "#contact" },
-    ],
-  },
-  {
-    title: "Help Center",
-    links: [
-      { label: "Customer Service", href: "#service" },
-      { label: "FAQs", href: "#faqs" },
-    ],
-  },
-  {
-    title: "Partner",
-    links: [
-      { label: "Become a Seller", href: "#become-seller" },
-      { label: "Affiliate Program", href: "#affiliate" },
-      { label: "Wholesale", href: "#wholesale" },
-    ],
-  },
-];
+import { FOOTER_BRAND, FOOTER_COLUMNS } from "../home/_constants/footer";
 
 const CATEGORIES = [
   { key: "all", label: "Tất cả sản phẩm" },
@@ -58,9 +20,6 @@ const CATEGORIES = [
   { key: "headphone", label: "Tai nghe & Âm thanh" },
   { key: "keyboard", label: "Bàn phím" },
   { key: "mouse", label: "Chuột & Phụ kiện" },
-  { key: "watch", label: "Đồng hồ thông minh" },
-  { key: "camera", label: "Máy ảnh & Quay phim" },
-  { key: "monitor", label: "Màn hình máy tính" },
 ];
 
 const PAGE_SIZE = 8;

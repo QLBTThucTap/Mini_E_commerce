@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import Header from "../../Layouts/Header";
 import Button from "../../Components/ui/Button";
 import useCartStore from "../../Stores/cartStore";
+import { FOOTER_BRAND, FOOTER_COLUMNS } from "../home/_constants/footer";
+import Footer from "../../Layouts/Footer";
 
 function formatMoney(value) {
   return new Intl.NumberFormat("en-US", {
@@ -168,6 +170,8 @@ function CartPage() {
           </div>
         )}
       </main>
+
+      <Footer columns={FOOTER_COLUMNS} brand={FOOTER_BRAND} />
     </div>
   );
 }
