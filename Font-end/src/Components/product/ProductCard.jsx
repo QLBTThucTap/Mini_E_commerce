@@ -2,7 +2,7 @@ import Card from "../ui/Card";
 import Badge from "../ui/Badge";
 import PriceTag from "../ui/PriceTag";
 import StockStatus from "../ui/StockStatus";
-
+import Button from "../ui/Button";
 /**
  * product: {
  *   id, name, image, reviewCount,
@@ -13,7 +13,12 @@ import StockStatus from "../ui/StockStatus";
  *   isWishlisted: boolean,
  * }
  */
-export default function ProductCard({ product, onAddToWishlist, onClick }) {
+export default function ProductCard({
+  product,
+  onAddToWishlist,
+  onAddToCart,
+  onClick,
+}) {
   const {
     name,
     image,
@@ -30,35 +35,17 @@ export default function ProductCard({ product, onAddToWishlist, onClick }) {
   return (
     <Card
       hoverable
-      className="flex flex-col justify-between group cursor-pointer"
+      className="flex flex-col justify-between group cursor-pointer h-full"
       onClick={onClick}
     >
       <div>
-        <div className="relative bg-slate-50 rounded-xl p-4 flex items-center justify-center min-h-[160px] mb-3">
+        <div className="relative bg-slate-50 rounded-xl p-4 flex items-center justify-center min-h-[160px] mb-3 overflow-hidden">
           {badge && (
-            <span className="absolute top-2 left-2">
+            <span className="absolute top-2 left-2 z-10 pointer-events-none">
               <Badge tone={badge.tone}>{badge.label}</Badge>
             </span>
           )}
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              onAddToWishlist?.(product);
-            }}
-            className={[
-              "absolute top-2 right-2 transition-colors",
-              isWishlisted
-                ? "text-red-500"
-                : "text-slate-400 hover:text-red-500",
-            ].join(" ")}
-          >
-            <i
-              className={
-                isWishlisted ? "fa-solid fa-heart" : "fa-regular fa-heart"
-              }
-            />
-          </button>
+
           {image ? (
             <img
               src={image}
@@ -77,17 +64,42 @@ export default function ProductCard({ product, onAddToWishlist, onClick }) {
             ({reviewCount})
           </div>
         )}
-        <h5 className="text-xs font-bold text-slate-800 line-clamp-2 leading-snug group-hover:text-emerald-600 transition-colors">
+        <h5 className=" min-h-[2.5rem] text-xs font-bold text-slate-800 line-clamp-2 leading-snug group-hover:text-emerald-600 transition-colors">
           {name}
         </h5>
       </div>
 
       <div className="mt-4 pt-3 border-t border-slate-100 space-y-2">
-        <PriceTag
-          price={price}
-          compareAtPrice={compareAtPrice}
-          priceMax={priceMax}
-        />
+        <div className="flex items-center justify-between gap-2">
+          <PriceTag
+            price={price}
+            compareAtPrice={compareAtPrice}
+            priceMax={priceMax}
+          />
+
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onAddToWishlist?.(product);
+            }}
+            className={[
+              "p-1.5 rounded-full hover:bg-slate-100 transition-colors cursor-pointer",
+              isWishlisted
+                ? "text-red-500"
+                : "text-slate-400 hover:text-red-500",
+            ].join(" ")}
+            title="Thêm vào danh sách yêu thích"
+          >
+            <i
+              className={[
+                "text-base",
+                isWishlisted ? "fa-solid fa-heart" : "fa-regular fa-heart",
+              ].join(" ")}
+            />
+          </button>
+        </div>
+
         {tags.length > 0 && (
           <div className="flex items-center gap-1.5 flex-wrap">
             {tags.map((tag) => (
@@ -99,6 +111,20 @@ export default function ProductCard({ product, onAddToWishlist, onClick }) {
         )}
         <StockStatus status={stockStatus} />
       </div>
+
+      <Button
+        variant="primary"
+        size="sm"
+        className="w-full mt-2 cursor-pointer"
+        icon="fa-solid fa-cart-shopping"
+        iconPosition="left"
+        onClick={(e) => {
+          e.stopPropagation();
+          onAddToCart?.(product);
+        }}
+      >
+        Add to Cart
+      </Button>
     </Card>
   );
 }

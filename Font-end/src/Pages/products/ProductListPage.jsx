@@ -1,15 +1,15 @@
 import { useState, useMemo } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
+
 import Header from "../../Layouts/Header";
 import Footer from "../../Layouts/Footer";
-import Card from "../../Components/ui/Card";
-import PriceTag from "../../Components/ui/PriceTag";
-import RatingStars from "../../Components/ui/RatingStars";
-import StockStatus from "../../Components/ui/StockStatus";
-import Button from "../../Components/ui/Button";
 import useCartStore from "../../Stores/cartStore";
 import { getProducts } from "../../Services/productService";
+
+import ProductCard from "../../Components/product/ProductCard";
+import Card from "../../Components/ui/Card";
+import Button from "../../Components/ui/Button";
 
 const FOOTER_BRAND = {
   name: "LH - 1ST NYC TECH ONLINE MARKET",
@@ -66,6 +66,7 @@ const CATEGORIES = [
 const PAGE_SIZE = 8;
 
 export default function ProductListPage() {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
   // Read URL query params
@@ -75,9 +76,33 @@ export default function ProductListPage() {
   const currentSort = searchParams.get("sort") || "newest";
 
   const [addprId, setAddprId] = useState(null);
+  const [wishlist, setWishlist] = useState([]);
   const addItem = useCartStore((state) => state.addItem);
 
-  // Fetch products from server with pagination & filters
+  // Sửa lại hàm handleAddToCart nhận product trực tiếp từ ProductCard
+  const handleAddToCart = (product) => {
+    const itemData = product.original || product;
+
+    // Thêm vào giỏ hàng theo đúng cấu trúc cartStore
+    addItem(
+      {
+        id: itemData.id,
+        title: itemData.title || itemData.name,
+        price: itemData.price,
+        image: itemData.image,
+      },
+      1,
+    );
+
+    // Lưu ID để hiển thị thông báo thành công dưới card vừa bấm
+    setAddprId(itemData.id);
+
+    setTimeout(() => {
+      setAddprId((curr) => (curr === itemData.id ? null : curr));
+    }, 2500);
+  };
+
+  // Fetch products từ API server
   const { data, isLoading, error } = useQuery({
     queryKey: [
       "products-list",
@@ -100,6 +125,26 @@ export default function ProductListPage() {
   const products = useMemo(() => data?.items ?? [], [data]);
   const totalPages = data?.totalPages ?? 1;
   const total = data?.total ?? 0;
+
+  // Chuẩn hóa danh sách sản phẩm theo prop của ProductCard
+  const mappedProducts = useMemo(() => {
+    return products.map((p) => ({
+      id: p.id,
+      name: p.title,
+      image: p.image,
+      reviewCount: p.rating?.count ?? 20,
+      price: p.price,
+      compareAtPrice: p.price ? p.price * 1.25 : null,
+      badge: {
+        tone: "sale",
+        label: (p.category || "CHÍNH HÃNG").toUpperCase(),
+      },
+      tags: ["FREESHIP"],
+      stockStatus: "in_stock",
+      isWishlisted: wishlist.includes(p.id),
+      original: p,
+    }));
+  }, [products, wishlist]);
 
   // Pagination helper
   const setPage = (page) => {
@@ -129,20 +174,18 @@ export default function ProductListPage() {
     setSearchParams(nextParams);
   };
 
-  // Add to cart handler
-  const handleAddToCart = (event, product) => {
-    event.preventDefault();
-    event.stopPropagation();
-    addItem(product, 1);
-    setAddprId(product.id);
-
-    setTimeout(() => {
-      setAddprId((curr) => (curr === product.id ? null : curr));
-    }, 2500);
+  // Handle Wishlist toggle
+  const handleToggleWishlist = (product) => {
+    setWishlist((prev) => {
+      const exists = prev.includes(product.id);
+      return exists
+        ? prev.filter((id) => id !== product.id)
+        : [...prev, product.id];
+    });
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
+    <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
       <Header />
 
       {/* Breadcrumb Navigation */}
@@ -176,7 +219,7 @@ export default function ProductListPage() {
 
       <main className="max-w-[1360px] mx-auto px-4 py-8 flex-1 w-full space-y-6">
         {/* Category Pills Bar */}
-        <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs">
+        <Card className="shadow-xs">
           <div className="flex items-center justify-between gap-4 flex-wrap pb-3 border-b border-slate-100">
             <div>
               <h2 className="text-xs text-slate-500 mt-0.5">
@@ -185,7 +228,7 @@ export default function ProductListPage() {
               </h2>
             </div>
 
-            {/* Sort & Display options */}
+            {/* Sort options */}
             <div className="flex items-center gap-3">
               <label className="text-xs font-bold text-slate-600">
                 Sắp xếp:
@@ -222,7 +265,7 @@ export default function ProductListPage() {
               );
             })}
           </div>
-        </div>
+        </Card>
 
         {/* Search query notice if filtered */}
         {currentSearch && (
@@ -258,108 +301,63 @@ export default function ProductListPage() {
 
         {/* Error state */}
         {error && (
-          <div className="py-16 text-center bg-white rounded-2xl border border-red-200 p-6">
+          <Card className="py-16 text-center border-red-200 p-6">
             <i className="fa-solid fa-circle-exclamation text-3xl text-red-500 mb-2 block" />
             <p className="text-sm font-bold text-red-700">
               {error.response?.data?.message ||
                 "Không thể tải sản phẩm lúc này. Vui lòng thử lại!"}
             </p>
-          </div>
+          </Card>
         )}
 
         {/* Empty state */}
         {!isLoading && !error && products.length === 0 && (
-          <div className="py-20 text-center bg-white rounded-2xl border border-slate-200 p-8">
+          <Card className="py-20 text-center p-8">
             <i className="fa-solid fa-box-open text-5xl text-slate-300 mb-3 block" />
             <h3 className="text-base font-bold text-slate-800">
               Không tìm thấy sản phẩm nào
             </h3>
 
-            <button
-              type="button"
+            <Button
+              variant="primary"
+              size="sm"
+              className="mt-4"
               onClick={() => setSearchParams({ page: "1" })}
-              className="mt-4 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition-colors cursor-pointer"
             >
               Xem tất cả sản phẩm
-            </button>
-          </div>
+            </Button>
+          </Card>
         )}
 
-        {/* Products Grid */}
-        {!isLoading && !error && products.length > 0 && (
+        {/* Danh sách sản phẩm và thông báo thành công */}
+        {!isLoading && !error && mappedProducts.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-            {products.map((product) => (
-              <Card
-                key={product.id}
-                hoverable
-                className="flex flex-col justify-between h-full group"
-              >
-                <div>
-                  <Link
-                    to={`/product/${product.id}`}
-                    className="block relative overflow-hidden rounded-xl"
-                  >
-                    <img
-                      src={product.image}
-                      alt={product.title}
-                      className="w-full h-52 object-contain p-2 rounded-xl bg-slate-50 group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <span className="absolute top-2 left-2 bg-emerald-600 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full">
-                      CHÍNH HÃNG
-                    </span>
-                  </Link>
+            {mappedProducts.map((prod) => (
+              <div key={prod.id} className="flex flex-col gap-2">
+                <ProductCard
+                  product={prod}
+                  onAddToWishlist={handleToggleWishlist}
+                  onAddToCart={handleAddToCart}
+                  onClick={() => navigate(`/product/${prod.id}`)}
+                />
 
-                  <div className="mt-4 space-y-2.5">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="font-bold text-emerald-600 uppercase text-[11px] bg-emerald-50 px-2 py-0.5 rounded">
-                        {product.category}
-                      </span>
-                      <StockStatus status="in_stock" />
-                    </div>
-
-                    <h2 className="font-bold text-sm text-slate-900 line-clamp-2 leading-snug">
-                      <Link
-                        to={`/product/${product.id}`}
-                        className="hover:text-emerald-600 transition-colors"
-                      >
-                        {product.title}
-                      </Link>
-                    </h2>
-
-                    <div className="pt-0.5">
-                      <RatingStars
-                        value={Math.round(product.rating?.rate ?? 5)}
-                        count={product.rating?.count ?? 20}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-4 pt-3 border-t border-slate-100 space-y-3">
-                  <PriceTag price={product.price} />
-
-                  <Button
-                    className="w-full cursor-pointer"
-                    icon="fa-solid fa-cart-shopping"
-                    onClick={(event) => handleAddToCart(event, product)}
-                  >
-                    Thêm vào giỏ
-                  </Button>
-
-                  {addprId === product.id && (
-                    <p className="text-center text-xs font-bold text-emerald-700 bg-emerald-50 py-1.5 rounded-lg animate-fade-in">
-                      ✓ Đã thêm vào giỏ hàng thành công!
-                    </p>
-                  )}
-                </div>
-              </Card>
+                {/* Đã sửa lỗi: kiểm tra chính xác ID của sản phẩm trong vòng lặp */}
+                {addprId === prod.id && (
+                  <p className="text-center text-[11px] font-bold text-emerald-700 bg-emerald-50 py-1.5 px-2 rounded-lg border border-emerald-200 animate-in fade-in duration-200">
+                    ✓ Đã thêm vào giỏ hàng thành công!
+                  </p>
+                )}
+              </div>
             ))}
           </div>
         )}
 
         {/* Pagination Section */}
         {!isLoading && !error && totalPages > 1 && (
-          <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4 mt-8">
+          <Card
+            padding="p-4 sm:p-5"
+            className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-8 shadow-xs"
+          >
             <p className="text-xs font-medium text-slate-500">
               Hiển thị{" "}
               <strong className="text-slate-800 font-bold">
@@ -372,18 +370,17 @@ export default function ProductListPage() {
             </p>
 
             <div className="flex items-center gap-1.5 flex-wrap">
-              {/* Previous Page Button */}
-              <button
-                type="button"
-                onClick={() => setPage(currentPage - 1)}
+              <Button
+                variant="outline"
+                size="sm"
+                icon="fa-solid fa-chevron-left"
+                iconPosition="left"
                 disabled={currentPage <= 1}
-                className="px-3.5 py-2 rounded-xl text-xs font-bold border border-slate-200 text-slate-700 hover:bg-slate-50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center gap-1.5 cursor-pointer"
+                onClick={() => setPage(currentPage - 1)}
               >
-                <i className="fa-solid fa-chevron-left text-[10px]" />
-                <span>Trước</span>
-              </button>
+                Trước
+              </Button>
 
-              {/* Numbered Page Buttons */}
               {Array.from({ length: totalPages }, (_, i) => i + 1).map(
                 (pageNumber) => (
                   <button
@@ -401,18 +398,18 @@ export default function ProductListPage() {
                 ),
               )}
 
-              {/* Next Page Button */}
-              <button
-                type="button"
-                onClick={() => setPage(currentPage + 1)}
+              <Button
+                variant="outline"
+                size="sm"
+                icon="fa-solid fa-chevron-right"
+                iconPosition="right"
                 disabled={currentPage >= totalPages}
-                className="px-3.5 py-2 rounded-xl text-xs font-bold border border-slate-200 text-slate-700 hover:bg-slate-50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center gap-1.5 cursor-pointer"
+                onClick={() => setPage(currentPage + 1)}
               >
-                <span>Sau</span>
-                <i className="fa-solid fa-chevron-right text-[10px]" />
-              </button>
+                Sau
+              </Button>
             </div>
-          </div>
+          </Card>
         )}
       </main>
 

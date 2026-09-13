@@ -8,6 +8,10 @@ export default function CategoryLink({
   active = false,
   className = "",
 }) {
+  //cho phép biến icon nhận cả icon và link ảnh
+  const isImageIcon =
+    typeof icon === "string" && (icon.includes("/") || icon.includes("."));
+
   return (
     <a
       href={href}
@@ -20,10 +24,24 @@ export default function CategoryLink({
       ].join(" ")}
     >
       <span className="flex items-center gap-2.5">
-        {icon && <i className={[icon, "text-sm", active ? "" : "text-slate-400"].join(" ")} />}
+        {icon &&
+          (isImageIcon ? (
+            <img src={icon} alt={label} className="w-4 h-4 object-contain" />
+          ) : (
+            <i
+              className={[icon, "text-sm", active ? "" : "text-slate-400"].join(
+                " ",
+              )}
+            />
+          ))}
         {label}
       </span>
-      <i className={["fa-solid fa-chevron-right text-xs", active ? "text-red-400" : "text-slate-400"].join(" ")} />
+      <i
+        className={[
+          "fa-solid fa-chevron-right text-xs",
+          active ? "text-red-400" : "text-slate-400",
+        ].join(" ")}
+      />
     </a>
   );
 }

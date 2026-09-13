@@ -8,6 +8,47 @@ import RatingStars from "../../Components/ui/RatingStars";
 import StockStatus from "../../Components/ui/StockStatus";
 
 import { getProductById } from "../../Services/productService";
+import Footer from "../../Layouts/Footer";
+
+const FOOTER_BRAND = {
+  name: "LH - 1ST NYC TECH ONLINE MARKET",
+  hotline: "0824781531",
+  address: "273 phố Bạch Mai, quận Hai Bà Trưng, Hà Nội",
+  email: "contact@swootechmart.com",
+};
+
+const FOOTER_COLUMNS = [
+  {
+    title: "Top Categories",
+    links: [
+      { label: "Laptops", href: "#laptops" },
+      { label: "PC & Computers", href: "#pc" },
+      { label: "Cell Phones", href: "#phones" },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      { label: "About me", href: "#about" },
+      { label: "Contact", href: "#contact" },
+    ],
+  },
+  {
+    title: "Help Center",
+    links: [
+      { label: "Customer Service", href: "#service" },
+      { label: "FAQs", href: "#faqs" },
+    ],
+  },
+  {
+    title: "Partner",
+    links: [
+      { label: "Become a Seller", href: "#become-seller" },
+      { label: "Affiliate Program", href: "#affiliate" },
+      { label: "Wholesale", href: "#wholesale" },
+    ],
+  },
+];
 
 function ProductDetailPage() {
   const { productId } = useParams();
@@ -52,6 +93,9 @@ function ProductDetailPage() {
 
   const handleAddToCart = () => {
     addItem(product, quantity);
+    setTimeout(() => {
+      setMessage("");
+    }, 1000);
     setMessage(`Đã thêm ${quantity} sản phẩm vào giỏ hàng`);
   };
   return (
@@ -168,6 +212,8 @@ function ProductDetailPage() {
           </section>
         )}
       </main>
+
+      <Footer brand={FOOTER_BRAND} columns={FOOTER_COLUMNS} />
     </div>
   );
 }

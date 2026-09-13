@@ -60,18 +60,24 @@ export default function Header({ onSearch }) {
               <Link to="/" className="hover:text-emerald-600 transition-colors">
                 HOMES
               </Link>
-              <Link to="/products" className="hover:text-emerald-600 transition-colors">
+              <Link
+                to="/products"
+                className="hover:text-emerald-600 transition-colors"
+              >
                 PRODUCTS
               </Link>
-              <Link to="/cart" className="hover:text-emerald-600 transition-colors">
+              <Link
+                to="/cart"
+                className="hover:text-emerald-600 transition-colors"
+              >
                 PAGES
               </Link>
-              <a
+              {/* <a
                 href="#contact"
                 className="hover:text-emerald-600 transition-colors"
               >
                 CONTACT
-              </a>
+              </a> */}
             </nav>
           </div>
 
