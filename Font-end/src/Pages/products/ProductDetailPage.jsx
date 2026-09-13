@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import useCartStore from "../../Stores/cartStore";
+import useWishlistStore from "../../Stores/wishlistStore";
 import Header from "../../Layouts/Header";
 import Button from "../../Components/ui/Button";
 import PriceTag from "../../Components/ui/PriceTag";
@@ -21,6 +22,23 @@ function ProductDetailPage() {
   const [message, setMessage] = useState("");
 
   const addItem = useCartStore((state) => state.addItem);
+  const toggleWishlist = useWishlistStore((state) => state.toggleItem);
+  const isWishlisted = useWishlistStore((state) =>
+    product ? state.items.some((item) => item.id === product.id) : false,
+  );
+
+  const handleToggleWishlist = () => {
+    if (!product) return;
+    const added = toggleWishlist(product);
+    setMessage(
+      added
+        ? "Đã thêm sản phẩm vào danh sách yêu thích!"
+        : "Đã gỡ sản phẩm khỏi danh sách yêu thích!",
+    );
+    setTimeout(() => {
+      setMessage("");
+    }, 2500);
+  };
 
   useEffect(() => {
     async function loadProduct() {
@@ -156,13 +174,36 @@ function ProductDetailPage() {
                 </div>
               </div>
 
-              <Button
-                className="w-full mt-8"
-                icon="fa-solid fa-cart-shopping"
-                onClick={handleAddToCart}
-              >
-                Thêm vào giỏ hàng
-              </Button>
+              <div className="flex items-center gap-3 mt-8">
+                <Button
+                  className="flex-1 cursor-pointer"
+                  icon="fa-solid fa-cart-shopping"
+                  onClick={handleAddToCart}
+                >
+                  Thêm vào giỏ hàng
+                </Button>
+
+                <button
+                  type="button"
+                  onClick={handleToggleWishlist}
+                  className={`px-4 py-3 rounded-xl border transition-all cursor-pointer flex items-center justify-center ${
+                    isWishlisted
+                      ? "bg-rose-50 border-rose-200 text-rose-600 shadow-sm"
+                      : "bg-white border-slate-200 text-slate-500 hover:text-rose-500 hover:border-rose-200 hover:bg-rose-50/50"
+                  }`}
+                  title={
+                    isWishlisted
+                      ? "Gỡ khỏi danh sách yêu thích"
+                      : "Thêm vào danh sách yêu thích"
+                  }
+                >
+                  <i
+                    className={`text-lg ${
+                      isWishlisted ? "fa-solid fa-heart" : "fa-regular fa-heart"
+                    }`}
+                  />
+                </button>
+              </div>
 
               {message && (
                 <p className="mt-4 text-center text-sm font-semibold text-emerald-600">

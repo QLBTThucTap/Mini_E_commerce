@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useAuthStore from "../Stores/authStore";
 import useCartStore from "../Stores/cartStore";
+import useWishlistStore from "../Stores/wishlistStore";
 import TopBar from "./TopBar";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -22,6 +23,9 @@ export default function Header({ onSearch }) {
     (total, item) => total + item.price * item.quantity,
     0,
   );
+
+  const wishlistItems = useWishlistStore((state) => state.items);
+  const wishlistCount = wishlistItems.length;
 
   const handleSubmitSearch = (e) => {
     e.preventDefault();
@@ -117,10 +121,24 @@ export default function Header({ onSearch }) {
           </div>
 
           <div className="flex items-center gap-6">
-            <button className="relative p-2 text-slate-700 hover:text-emerald-600 transition-colors rounded-full hover:bg-slate-100">
-              <i className="fa-regular fa-heart text-xl" />
-              <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-emerald-600" />
-            </button>
+            <Link
+              to="/wishlist"
+              className="relative p-2 text-slate-700 hover:text-emerald-600 transition-colors rounded-full hover:bg-slate-100 cursor-pointer group"
+              title="Danh sách yêu thích"
+            >
+              <i
+                className={`text-xl transition-transform group-hover:scale-110 ${
+                  wishlistCount > 0
+                    ? "fa-solid fa-heart text-rose-500"
+                    : "fa-regular fa-heart"
+                }`}
+              />
+              {wishlistCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] font-extrabold w-4 h-4 rounded-full flex items-center justify-center border-2 border-white shadow-xs">
+                  {wishlistCount}
+                </span>
+              )}
+            </Link>
 
             {user ? (
               <>

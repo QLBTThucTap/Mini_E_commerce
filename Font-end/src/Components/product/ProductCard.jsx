@@ -3,6 +3,8 @@ import Badge from "../ui/Badge";
 import PriceTag from "../ui/PriceTag";
 import StockStatus from "../ui/StockStatus";
 import Button from "../ui/Button";
+import useWishlistStore from "../../Stores/wishlistStore";
+
 /**
  * product: {
  *   id, name, image, reviewCount,
@@ -19,6 +21,11 @@ export default function ProductCard({
   onAddToCart,
   onClick,
 }) {
+  const toggleWishlist = useWishlistStore((state) => state.toggleItem);
+  const isInWishlistStore = useWishlistStore((state) =>
+    state.items.some((item) => item.id === product.id),
+  );
+
   const {
     name,
     image,
@@ -29,8 +36,10 @@ export default function ProductCard({
     badge,
     tags = [],
     stockStatus = "in_stock",
-    isWishlisted = false,
+    isWishlisted,
   } = product;
+
+  const isFav = isWishlisted !== undefined ? isWishlisted : isInWishlistStore;
 
   return (
     <Card
@@ -81,20 +90,26 @@ export default function ProductCard({
             type="button"
             onClick={(e) => {
               e.stopPropagation();
-              onAddToWishlist?.(product);
+              if (onAddToWishlist) {
+                onAddToWishlist(product);
+              } else {
+                toggleWishlist(product.original || product);
+              }
             }}
             className={[
               "p-1.5 rounded-full hover:bg-slate-100 transition-colors cursor-pointer",
-              isWishlisted
-                ? "text-red-500"
-                : "text-slate-400 hover:text-red-500",
+              isFav ? "text-rose-500" : "text-slate-400 hover:text-rose-500",
             ].join(" ")}
-            title="Thêm vào danh sách yêu thích"
+            title={
+              isFav
+                ? "Xóa khỏi danh sách yêu thích"
+                : "Thêm vào danh sách yêu thích"
+            }
           >
             <i
               className={[
-                "text-base",
-                isWishlisted ? "fa-solid fa-heart" : "fa-regular fa-heart",
+                "text-base transition-transform active:scale-125",
+                isFav ? "fa-solid fa-heart" : "fa-regular fa-heart",
               ].join(" ")}
             />
           </button>

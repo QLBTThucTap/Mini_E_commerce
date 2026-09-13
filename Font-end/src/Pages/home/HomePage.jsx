@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../../Layouts/Header";
 import Footer from "../../Layouts/Footer";
 import useCartStore from "../../Stores/cartStore";
+import useWishlistStore from "../../Stores/wishlistStore";
 import { getProducts } from "../../Services/productService";
 
 import HeroShowcase from "./_components/HeroShowcase";
@@ -22,7 +23,8 @@ export default function HomePage() {
   const addItem = useCartStore((s) => s.addItem);
 
   const [toastMessage, setToastMessage] = useState(null);
-  const [wishlist, setWishlist] = useState([]);
+  const wishlistItems = useWishlistStore((s) => s.items);
+  const toggleWishlist = useWishlistStore((s) => s.toggleItem);
   const [timeLeft, setTimeLeft] = useState({
     days: 12,
     hours: 8,
@@ -80,10 +82,10 @@ export default function HomePage() {
       badge: { tone: "sale", label: (p.category || "TECH").toUpperCase() },
       tags: ["FREESHIP"],
       stockStatus: "in_stock",
-      isWishlisted: wishlist.includes(p.id),
+      isWishlisted: wishlistItems.some((item) => item.id === p.id),
       original: p,
     }));
-  }, [allProducts, wishlist]);
+  }, [allProducts, wishlistItems]);
 
   const handleAddToCart = (product) => {
     const item = product.original || product;
@@ -101,11 +103,14 @@ export default function HomePage() {
   };
 
   const handleToggleWishlist = (product) => {
-    setWishlist((prev) =>
-      prev.includes(product.id)
-        ? prev.filter((id) => id !== product.id)
-        : [...prev, product.id],
+    const item = product.original || product;
+    const added = toggleWishlist(item);
+    setToastMessage(
+      added
+        ? `Đã thêm "${item.title || item.name}" vào danh sách yêu thích`
+        : `Đã xóa "${item.title || item.name}" khỏi danh sách yêu thích`,
     );
+    setTimeout(() => setToastMessage(null), 3000);
   };
 
   return (

@@ -8,6 +8,7 @@ const authRoutes = require("./src/routes/auth.routes");
 const productsRoutes = require("./src/routes/products.routes");
 const ordersRoutes = require("./src/routes/orders.routes");
 const usersRoutes = require("./src/routes/users.routes");
+const favoritesRoutes = require("./src/routes/favorites.routes");
 
 // --- TỰ ĐỘNG TẠO THƯ MỤC DATA NẾU CHƯA CÓ ---
 const dataDir = path.join(__dirname, "data");
@@ -27,6 +28,7 @@ app.use("/auth", authRoutes);
 app.use("/products", productsRoutes);
 app.use("/orders", ordersRoutes);
 app.use("/users", usersRoutes);
+app.use("/favorites", favoritesRoutes);
 
 app.get("/", (req, res) => {
   res.json({

@@ -5,6 +5,7 @@ import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import Header from "../../Layouts/Header";
 import Footer from "../../Layouts/Footer";
 import useCartStore from "../../Stores/cartStore";
+import useWishlistStore from "../../Stores/wishlistStore";
 import { getProducts } from "../../Services/productService";
 
 import ProductCard from "../../Components/product/ProductCard";
@@ -35,7 +36,8 @@ export default function ProductListPage() {
   const currentSort = searchParams.get("sort") || "newest";
 
   const [addprId, setAddprId] = useState(null);
-  const [wishlist, setWishlist] = useState([]);
+  const wishlistItems = useWishlistStore((state) => state.items);
+  const toggleWishlist = useWishlistStore((state) => state.toggleItem);
   const addItem = useCartStore((state) => state.addItem);
 
   // Sửa lại hàm handleAddToCart nhận product trực tiếp từ ProductCard
@@ -100,10 +102,10 @@ export default function ProductListPage() {
       },
       tags: ["FREESHIP"],
       stockStatus: "in_stock",
-      isWishlisted: wishlist.includes(p.id),
+      isWishlisted: wishlistItems.some((item) => item.id === p.id),
       original: p,
     }));
-  }, [products, wishlist]);
+  }, [products, wishlistItems]);
 
   // Pagination helper
   const setPage = (page) => {
@@ -135,12 +137,7 @@ export default function ProductListPage() {
 
   // Handle Wishlist toggle
   const handleToggleWishlist = (product) => {
-    setWishlist((prev) => {
-      const exists = prev.includes(product.id);
-      return exists
-        ? prev.filter((id) => id !== product.id)
-        : [...prev, product.id];
-    });
+    toggleWishlist(product.original || product);
   };
 
   return (
