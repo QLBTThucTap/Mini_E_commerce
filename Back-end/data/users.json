@@ -17,43 +17,67 @@
     "id": 2,
     "fullName": "Tran Thi Minh Anh",
     "gender": "Female",
-    "dateOfBirth": "1998-07-22",
+    "dateOfBirth": "1998-07-10",
     "phoneNumber": "0987654321",
     "email": "minhanh.tran98@gmail.com",
     "address": {
-      "city": "Ho Chi Minh City",
-      "district": "District 1"
+      "city": "District 1, Ho Chi Minh City",
+      "district": ""
     },
-    "password": "111111",
+    "password": "123456",
     "role": "user",
-    "isLocked": false
+    "isLocked": false,
+    "addresses": [
+      {
+        "id": 1,
+        "name": "Tran Thi Minh Anh",
+        "phone": "0987654321",
+        "street": "Địa chỉ hiện tại",
+        "city": "District 1, Ho Chi Minh City",
+        "country": "Việt Nam",
+        "type": "Home",
+        "isDefault": true
+      }
+    ]
   },
   {
     "id": 3,
-    "fullName": "Le Hoang Nam",
+    "fullName": "Tran Anh Duc",
     "gender": "Male",
     "dateOfBirth": "2000-11-05",
     "phoneNumber": "0903123456",
-    "email": "nam.lehoang2000@gmail.com",
+    "email": "tranhanhduc2000@gmail.com",
     "address": {
-      "city": "Da Nang",
-      "district": "Hai Chau"
+      "city": "Hai Chau, Da Nang",
+      "district": ""
     },
-    "password": "1",
-    "role": "user"
+    "password": "123456",
+    "role": "user",
+    "addresses": [
+      {
+        "id": 1,
+        "name": "Tran Anh Duc",
+        "phone": "0903123456",
+        "street": "Địa chỉ hiện tại",
+        "city": "Hai Chau, Da Nang",
+        "country": "Việt Nam",
+        "type": "Home",
+        "isDefault": true
+      }
+    ]
   },
   {
     "id": 4,
-    "fullName": "Pham Phuong Thao",
+    "fullName": "Dam Thu Trang",
     "gender": "Female",
     "dateOfBirth": "2002-01-30",
     "phoneNumber": "0934567890",
-    "email": "thaopp2002@gmail.com",
+    "email": "damthutrang2002@gmail.com",
     "address": {
       "city": "Hai Phong",
       "district": "Hong Bang"
     },
-    "password": "1",
+    "password": "123456",
     "role": "user"
   },
   {
@@ -67,7 +91,7 @@
       "city": "Can Tho",
       "district": "Ninh Kieu"
     },
-    "password": "1",
+    "password": "123456",
     "role": "user"
   },
   {
@@ -81,7 +105,7 @@
       "city": "Hanoi",
       "district": "Thanh Xuan"
     },
-    "password": "1",
+    "password": "123456",
     "role": "user"
   },
   {
@@ -95,7 +119,7 @@
       "city": "Ho Chi Minh City",
       "district": "Binh Thanh"
     },
-    "password": "1",
+    "password": "123456",
     "role": "user"
   },
   {
@@ -109,7 +133,7 @@
       "city": "Da Nang",
       "district": "Son Tra"
     },
-    "password": "1",
+    "password": "123456",
     "role": "user"
   },
   {
@@ -123,7 +147,7 @@
       "city": "Hanoi",
       "district": "Hai Ba Trung"
     },
-    "password": "1",
+    "password": "123456",
     "role": "user"
   },
   {
@@ -137,7 +161,7 @@
       "city": "Ho Chi Minh City",
       "district": "Tan Binh"
     },
-    "password": "1",
+    "password": "123456",
     "role": "user"
   },
   {
@@ -151,7 +175,7 @@
       "city": "Hai Phong",
       "district": "Le Chan"
     },
-    "password": "1",
+    "password": "123456",
     "role": "user"
   },
   {
@@ -165,7 +189,7 @@
       "city": "Can Tho",
       "district": "Cai Rang"
     },
-    "password": "1",
+    "password": "123456",
     "role": "user"
   },
   {
@@ -179,7 +203,7 @@
       "city": "Da Nang",
       "district": "Thanh Khe"
     },
-    "password": "1",
+    "password": "123456",
     "role": "user"
   },
   {
@@ -193,7 +217,7 @@
       "city": "Hanoi",
       "district": "Dong Da"
     },
-    "password": "1",
+    "password": "123456",
     "role": "user"
   },
   {
@@ -207,7 +231,7 @@
       "city": "Ho Chi Minh City",
       "district": "District 7"
     },
-    "password": "1",
+    "password": "123456",
     "role": "user"
   },
   {
@@ -221,7 +245,7 @@
       "city": "Hai Phong",
       "district": "Ngo Quyen"
     },
-    "password": "1",
+    "password": "123456",
     "role": "user"
   },
   {
@@ -235,7 +259,7 @@
       "city": "Hanoi",
       "district": "Nam Tu Liem"
     },
-    "password": "1",
+    "password": "123456",
     "role": "user"
   },
   {
@@ -249,7 +273,7 @@
       "city": "Ho Chi Minh City",
       "district": "Thu Duc"
     },
-    "password": "1",
+    "password": "123456",
     "role": "user"
   },
   {
@@ -263,7 +287,7 @@
       "city": "Can Tho",
       "district": "Binh Thuy"
     },
-    "password": "1",
+    "password": "123456",
     "role": "user"
   },
   {
@@ -277,7 +301,7 @@
       "city": "Da Nang",
       "district": "Cam Le"
     },
-    "password": "1",
+    "password": "123456",
     "role": "user"
   }
 ]

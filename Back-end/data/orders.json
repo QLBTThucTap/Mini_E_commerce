@@ -316,5 +316,78 @@
     "paymentMethod": "bank",
     "status": "pending",
     "createdAt": "2026-09-12T10:16:47.664Z"
+  },
+  {
+    "id": 15,
+    "userId": 4,
+    "products": [
+      {
+        "productId": 13,
+        "quantity": 1
+      },
+      {
+        "productId": 15,
+        "quantity": 1
+      }
+    ],
+    "total": 449.98,
+    "shippingInfo": {
+      "fullName": "Dam Thu Trang",
+      "phone": "0934567890",
+      "address": "123, 123, Hà Nội, Hai Phong, Việt Nam"
+    },
+    "paymentMethod": "cod",
+    "status": "delivered",
+    "createdAt": "2026-09-13T16:09:53.612Z"
+  },
+  {
+    "id": 16,
+    "userId": 4,
+    "products": [
+      {
+        "productId": 71,
+        "quantity": 1,
+        "title": "Laptop Dell Alienware m16 R2 Gaming",
+        "price": 1899,
+        "image": "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=800"
+      }
+    ],
+    "total": 1899,
+    "shippingInfo": {
+      "fullName": "Dam Thu Trang",
+      "firstName": "Dam",
+      "lastName": "Thu Trang",
+      "company": "12",
+      "phone": "0934567890",
+      "email": "damthutrang2002@gmail.com",
+      "address": "273 Bạch Mai, 1023, Hà Nội, Hai Phong, Việt Nam",
+      "city": "Hai Phong",
+      "state": "Hà Nội",
+      "zipCode": "100000",
+      "country": "VN",
+      "notes": ""
+    },
+    "paymentMethod": "bank",
+    "status": "pending",
+    "createdAt": "2026-09-13T16:11:56.312Z"
+  },
+  {
+    "id": 17,
+    "userId": 4,
+    "products": [
+      {
+        "productId": 77,
+        "quantity": 1
+      }
+    ],
+    "total": 899.99,
+    "shippingInfo": {
+      "fullName": "Dam Thu Trang",
+      "phone": "0934567890",
+      "address": "12, 1, Hà Nội, Hai Phong, Việt Nam"
+    },
+    "paymentMethod": "cod",
+    "status": "cancelled",
+    "createdAt": "2026-09-13T16:12:23.271Z"
   }
 ]
