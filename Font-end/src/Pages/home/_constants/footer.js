@@ -21,7 +21,7 @@ export const FOOTER_COLUMNS = [
     title: "COMPANY",
     links: [
       { label: "About Swoo", href: "#about" },
-      { label: "Contact", href: "#contact" },
+      { label: "Contact", href: "/contact" },
       { label: "Career", href: "#career" },
     ],
   },

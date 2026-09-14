@@ -40,202 +40,243 @@ export default function Header({ onSearch }) {
   };
 
   return (
-    <header className="bg-white border-b border-slate-200 sticky top-0 z-40">
+    <header className="w-full bg-white shadow-sm border-b border-slate-200 sticky top-0 z-40">
+      {/* Top Micro Bar */}
       <TopBar />
 
-      <div className="max-w-[1360px] mx-auto px-4 py-4">
-        <div className="flex items-center justify-between gap-8">
-          <div className="flex items-center gap-8">
-            <Link to="/" className="flex items-center gap-2.5 group">
-              {/* <div className="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white font-extrabold text-xl shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform">
-                LH
-              </div> */}
-              <img src="./public/brand.ico" className="w-20 h-20"></img>
-              <div>
-                <div className="text-2xl font-extrabold tracking-tight text-slate-900 leading-none">
-                  Lã Ngọc Huyền
-                </div>
-                <div className="text-[10px] tracking-widest font-bold text-emerald-600 uppercase mt-0.5">
-                  TECH MART
-                </div>
+      {/* Main Navigation Bar */}
+      <div className="max-w-7xl mx-auto px-4 lg:px-8 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
+        {/* Top row on mobile: Logo + Actions */}
+        <div className="flex items-center justify-between w-full md:w-auto">
+          {/* Logo */}
+          <Link to="/" className="flex items-center space-x-2 group">
+            <img src="./src/assets/brand.ico" className="w-20 h-20"></img>
+            <div>
+              <div className="text-2xl font-extrabold tracking-tight text-slate-900 leading-none">
+                Lã Ngọc Huyền
               </div>
-            </Link>
+              <span className="text-[10px] tracking-widest font-semibold text-slate-500 uppercase">
+                TECH MART
+              </span>
+            </div>
+          </Link>
 
-            <nav className="hidden xl:flex items-center gap-6 text-sm font-semibold text-slate-700">
-              <Link to="/" className="hover:text-emerald-600 transition-colors">
-                HOMES
-              </Link>
-              <Link
-                to="/products"
-                className="hover:text-emerald-600 transition-colors"
-              >
-                PRODUCTS
-              </Link>
-              <Link
-                to="/cart"
-                className="hover:text-emerald-600 transition-colors"
-              >
-                PAGES
-              </Link>
-              {/* <a
-                href="#contact"
-                className="hover:text-emerald-600 transition-colors"
-              >
-                CONTACT
-              </a> */}
-            </nav>
-          </div>
-
-          <div className="flex-1 max-w-4xl">
-            <form
-              onSubmit={handleSubmitSearch}
-              className="flex items-center rounded-xl border-2 border-emerald-600/90 bg-white overflow-hidden focus-within:ring-2 focus-within:ring-emerald-500/30 transition-all"
-            >
-              <div className="relative flex items-center border-r border-slate-200 px-3.5 py-2.5 bg-slate-50/50 shrink-0">
-                <select
-                  value={categoryInput}
-                  onChange={(e) => setCategoryInput(e.target.value)}
-                  className="appearance-none bg-transparent pr-7 pl-1 text-xs font-semibold text-slate-700 focus:outline-none cursor-pointer border-0"
-                >
-                  <option value="all">All Categories</option>
-                  <option value="laptop">Laptop</option>
-                  <option value="phone">Smartphones</option>
-                  <option value="headphone">Audio & Visual</option>
-                  <option value="keyboard">Gaming Gear</option>
-                </select>
-                <i className="fa-solid fa-chevron-down text-[10px] text-slate-400 absolute right-3 pointer-events-none" />
-              </div>
-              <input
-                type="text"
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-                placeholder="Search products, brands, model numbers..."
-                className="flex-1 min-w-0 border-0 px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:ring-0 focus:outline-none"
-              />
-              <button
-                type="submit"
-                className="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 transition-colors cursor-pointer shrink-0"
-              >
-                <i className="fa-solid fa-magnifying-glass text-sm" />
-              </button>
-            </form>
-          </div>
-
-          <div className="flex items-center gap-6">
+          {/* Quick Cart on Mobile */}
+          <div className="flex items-center space-x-3 md:hidden">
             <Link
               to="/wishlist"
-              className="relative p-2 text-slate-700 hover:text-emerald-600 transition-colors rounded-full hover:bg-slate-100 cursor-pointer group"
-              title="WishList"
+              className="relative w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition"
             >
               <i
-                className={`text-xl transition-transform group-hover:scale-110 ${
+                className={`text-sm ${
                   wishlistCount > 0
                     ? "fa-solid fa-heart text-rose-500"
                     : "fa-regular fa-heart"
                 }`}
               />
               {wishlistCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] font-extrabold w-4 h-4 rounded-full flex items-center justify-center border-2 border-white shadow-xs">
+                <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
                   {wishlistCount}
                 </span>
               )}
             </Link>
 
-            {user ? (
-              <>
-                <Link
-                  to={user.role === "admin" ? "/admin/dashboard" : "/account"}
-                  className="flex items-center gap-3 cursor-pointer group"
-                >
-                  <div className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 group-hover:bg-emerald-50 group-hover:text-emerald-600 transition-colors">
-                    <i className="fa-regular fa-user text-base" />
-                  </div>
-                  <div className="hidden lg:block text-left text-xs leading-tight">
-                    <div className="text-slate-400 font-medium">
-                      WELCOME BACK
-                    </div>
-                    <div className="font-bold text-slate-800 group-hover:text-emerald-600 transition-colors">
-                      {user.fullName ||
-                        (typeof user.name === "string"
-                          ? user.name
-                          : typeof user.name === "object"
-                            ? `${user.name?.firstname || ""} ${user.name?.lastname || ""}`.trim()
-                            : user.username || "Account")}
-                    </div>
-                  </div>
-                </Link>
-
-                <button
-                  type="button"
-                  onClick={handleLogout}
-                  className="hidden lg:block text-xs font-bold text-slate-500 hover:text-emerald-600 transition-colors"
-                >
-                  Logout
-                </button>
-              </>
-            ) : (
-              <div className="flex items-center gap-4">
-                <Link
-                  to="/login"
-                  className="flex items-center gap-3 cursor-pointer group"
-                >
-                  <div className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 group-hover:bg-emerald-50 group-hover:text-emerald-600 transition-colors">
-                    <i className="fa-regular fa-user text-base" />
-                  </div>
-                  <div className="hidden lg:block text-left text-xs leading-tight">
-                    <div className="font-bold text-slate-800 group-hover:text-emerald-600 transition-colors">
-                      Login
-                    </div>
-                  </div>
-                </Link>
-
-                <Link
-                  to="/register"
-                  className="hidden lg:block text-xs font-bold text-slate-500 hover:text-emerald-600 transition-colors"
-                >
-                  Register
-                </Link>
-              </div>
-            )}
-
             <Link
               to="/cart"
-              className="flex items-center gap-3 pl-2 cursor-pointer group"
+              className="relative w-9 h-9 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow"
             >
-              <div className="relative w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center border border-emerald-200 group-hover:bg-emerald-600 group-hover:text-white transition-all">
-                <i className="fa-solid fa-bag-shopping text-base" />
-                {cartCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 bg-emerald-600 text-white text-[10px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white group-hover:bg-slate-900">
-                    {cartCount}
-                  </span>
-                )}
-              </div>
-              <div className="hidden sm:block text-left text-xs leading-tight">
-                <div className="text-slate-400 uppercase font-semibold text-[10px]">
-                  CART
-                </div>
-                <div className="font-extrabold text-slate-900 group-hover:text-emerald-600 transition-colors">
-                  ${cartTotal.toFixed(2)}
-                </div>
-              </div>
+              <i className="fa-solid fa-bag-shopping text-sm" />
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-slate-900 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+                  {cartCount}
+                </span>
+              )}
             </Link>
           </div>
         </div>
+
+        {/* Navigation Links */}
+        <nav className="flex items-center space-x-6 sm:space-x-7 text-xs font-bold tracking-wide uppercase text-slate-800 overflow-x-auto max-w-full py-1">
+          <Link
+            to="/"
+            className="flex items-center space-x-1 cursor-pointer hover:text-emerald-600 transition shrink-0"
+          >
+            <span>HOMES</span>
+            <i className="fa-solid fa-chevron-down text-[9px]" />
+          </Link>
+          <Link
+            to="/cart"
+            className="flex items-center space-x-1 cursor-pointer hover:text-emerald-600 transition shrink-0"
+          >
+            <span>PAGES</span>
+            <i className="fa-solid fa-chevron-down text-[9px]" />
+          </Link>
+          <Link
+            to="/products"
+            className="flex items-center space-x-1 cursor-pointer hover:text-emerald-600 transition shrink-0"
+          >
+            <span>PRODUCTS</span>
+            <i className="fa-solid fa-chevron-down text-[9px]" />
+          </Link>
+          <Link
+            to="/contact"
+            className="hover:text-emerald-600 transition shrink-0"
+          >
+            CONTACT
+          </Link>
+        </nav>
+
+        {/* User Actions & Cart (Desktop & Tablet) */}
+        <div className="hidden md:flex items-center space-x-5">
+          {/* Quick Actions */}
+          <div className="flex items-center space-x-3 text-slate-600">
+            <button
+              type="button"
+              className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition cursor-pointer"
+              title="Notifications"
+            >
+              <i className="fa-regular fa-bell text-sm" />
+            </button>
+            <Link
+              to="/wishlist"
+              className="relative w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition text-slate-600 cursor-pointer"
+              title="Wishlist"
+            >
+              <i
+                className={`text-sm ${
+                  wishlistCount > 0
+                    ? "fa-solid fa-heart text-rose-500"
+                    : "fa-regular fa-heart"
+                }`}
+              />
+              {wishlistCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+                  {wishlistCount}
+                </span>
+              )}
+            </Link>
+          </div>
+
+          {/* Account Greeting */}
+          {user ? (
+            <div className="text-left leading-tight flex items-center gap-2">
+              <Link
+                to={user.role === "admin" ? "/admin/dashboard" : "/account"}
+                className="cursor-pointer group"
+              >
+                <div className="text-[10px] uppercase font-semibold text-slate-400">
+                  WELCOME BACK
+                </div>
+                <div className="text-xs font-bold text-slate-900 group-hover:text-emerald-600 transition">
+                  {user.fullName ||
+                    (typeof user.name === "string"
+                      ? user.name
+                      : typeof user.name === "object"
+                        ? `${user.name?.firstname || ""} ${user.name?.lastname || ""}`.trim()
+                        : user.username || "Account")}
+                </div>
+              </Link>
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="text-xs font-bold text-slate-500 hover:text-emerald-600 transition cursor-pointer ml-1"
+                title="Logout"
+              >
+                <i className="fa-solid fa-arrow-right-from-bracket text-xs" />
+              </button>
+            </div>
+          ) : (
+            <div className="text-left leading-tight">
+              <div className="text-[10px] uppercase font-semibold text-slate-400">
+                WELCOME
+              </div>
+              <Link
+                to="/login"
+                className="text-xs font-bold text-slate-900 cursor-pointer hover:text-emerald-600 transition"
+              >
+                LOG IN / REGISTER
+              </Link>
+            </div>
+          )}
+
+          {/* Cart Box */}
+          <Link
+            to="/cart"
+            className="flex items-center space-x-2.5 pl-3 border-l border-slate-200 cursor-pointer group"
+          >
+            <div className="relative w-9 h-9 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow group-hover:bg-emerald-700 transition">
+              <i className="fa-solid fa-bag-shopping text-sm" />
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-slate-900 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+                  {cartCount}
+                </span>
+              )}
+            </div>
+            <div className="leading-tight">
+              <span className="block text-[10px] font-semibold text-slate-400 uppercase">
+                CART
+              </span>
+              <span className="font-extrabold text-sm text-slate-900 group-hover:text-emerald-600 transition">
+                ${cartTotal.toFixed(2)}
+              </span>
+            </div>
+          </Link>
+        </div>
       </div>
 
-      <div className="bg-emerald-600 text-white text-xs font-semibold py-2">
-        <div className="max-w-[1360px] mx-auto px-4 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <i className="fa-solid fa-truck text-emerald-200" />
-            <span>FREE SHIPPING OVER $199</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <i className="fa-solid fa-rotate-left text-emerald-200" />
-            <span>30 DAYS MONEY BACK GUARANTEE</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <i className="fa-solid fa-shield-halved text-emerald-200" />
-            <span>100% SECURE CHECKOUT</span>
+      {/* Green Sub-Bar with Search and Guarantees */}
+      <div className="bg-emerald-600 text-white">
+        <div className="max-w-7xl mx-auto px-4 lg:px-8 py-2.5 flex flex-col md:flex-row items-center justify-between gap-4">
+          {/* Category & Search Box */}
+          <form
+            onSubmit={handleSubmitSearch}
+            className="w-full md:w-5/12 bg-white rounded-md flex items-center overflow-hidden p-0.5 border border-white"
+          >
+            <div className="relative px-3 py-1.5 flex items-center space-x-2 text-xs font-bold text-slate-800 border-r border-slate-200 cursor-pointer bg-slate-50 shrink-0">
+              <select
+                value={categoryInput}
+                onChange={(e) => setCategoryInput(e.target.value)}
+                className="appearance-none bg-transparent pr-5 text-xs font-bold text-slate-800 focus:outline-none cursor-pointer border-none"
+              >
+                <option value="all">All Categories</option>
+                <option value="laptop">Laptop</option>
+                <option value="phone">Smartphones</option>
+                <option value="headphone">Audio & Visual</option>
+                <option value="keyboard">Gaming Gear</option>
+              </select>
+              <i className="fa-solid fa-chevron-down text-[9px] text-slate-500 absolute right-2 pointer-events-none" />
+            </div>
+
+            <input
+              type="text"
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              placeholder="Search anything..."
+              className="w-full text-xs text-slate-800 px-3 py-1.5 focus:outline-none border-none focus:ring-0"
+            />
+
+            <button
+              type="submit"
+              className="px-4 text-emerald-600 font-bold hover:text-emerald-700 transition cursor-pointer shrink-0"
+            >
+              <i className="fa-solid fa-magnifying-glass" />
+            </button>
+          </form>
+
+          {/* Feature Badges */}
+          <div className="flex flex-wrap items-center justify-center md:justify-end gap-4 sm:gap-6 text-xs font-bold tracking-wider uppercase">
+            <div className="flex items-center space-x-2">
+              <i className="fa-solid fa-truck-fast text-sm" />
+              <span>FREE SHIPPING OVER $199</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <i className="fa-solid fa-rotate-left text-sm" />
+              <span>30 DAYS MONEY BACK</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <i className="fa-solid fa-shield-halved text-sm" />
+              <span>100% SECURE PAYMENT</span>
+            </div>
           </div>
         </div>
       </div>

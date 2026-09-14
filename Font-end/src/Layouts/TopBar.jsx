@@ -1,32 +1,36 @@
-import SelectorPill from "../Components/common/SelectorPill";
-
-export default function TopBar({ hotline = "(025) 3686 25 16" }) {
+export default function TopBar({ hotline = "(025) 3886 25 16" }) {
   return (
-    <div className="border-b border-slate-200/80 bg-white text-xs text-slate-500">
-      <div className="max-w-[1360px] mx-auto px-4 h-10 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <span className="text-slate-400 font-medium">Hotline 24/7</span>
-          <span className="font-bold text-slate-800 hover:text-emerald-600 cursor-pointer transition-colors">
+    <div className="border-b border-slate-100 text-xs text-slate-500 py-1.5 px-4 lg:px-8 bg-white">
+      <div className="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+        <div className="flex items-center space-x-2">
+          <span className="font-medium text-slate-400">Hotline 24/7</span>
+          <a
+            href="tel:02538862516"
+            className="font-bold text-slate-800 hover:text-emerald-600 transition"
+          >
             {hotline}
-          </span>
+          </a>
         </div>
-        <div className="flex items-center gap-6">
-          <a href="#sell" className="hover:text-emerald-600 transition-colors">
+        <div className="flex items-center space-x-4 sm:space-x-6 text-[11px] sm:text-xs">
+          <a className="hover:text-emerald-600 transition" href="#sell">
             Sell on Swoo
           </a>
-          <span className="text-slate-300">|</span>
-          <a href="#track" className="hover:text-emerald-600 transition-colors">
-            Order Tracking
+          <a className="hover:text-emerald-600 transition" href="#track">
+            Order Tracki
           </a>
-          <span className="text-slate-300">|</span>
-          <SelectorPill
-            label="USD"
-            className="border-0 px-0 py-0 hover:border-0"
-          />
-          <SelectorPill
-            label="Eng"
-            className="border-0 px-0 py-0 hover:border-0"
-          />
+          <div className="flex items-center space-x-1 cursor-pointer hover:text-slate-800">
+            <span>USD</span>
+            <i className="fa-solid fa-chevron-down text-[10px]" />
+          </div>
+          <div className="flex items-center space-x-1 cursor-pointer hover:text-slate-800">
+            <img
+              alt="US Flag"
+              className="w-3.5 h-2.5 rounded-xs inline-block"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNQO_6CHPZObfWOGjmy17iyG-bzsKSHC4s9XIhLx4A0aqPriDT3GR6jrbGUtpoYN_Lioxtv-pom-ys2-Ra9_ErLvp4beiEgDHdZQGBLT3302Y5HiOt6GRanSx-p_zWYSOvZFCg024tcyxnD22uU-hBE93ibf7Ikygluq6Yv4qebHhnAwSegsxDQIUwZN7c28_p3MQ1oJDGsIjEOkVFLufceQ6I5IhvDGu17qutqq8U3uZ2mb2PFgNA"
+            />
+            <span>Eng</span>
+            <i className="fa-solid fa-chevron-down text-[10px]" />
+          </div>
         </div>
       </div>
     </div>
