@@ -102,27 +102,30 @@ export default function Header({ onSearch }) {
             className="flex items-center space-x-1 cursor-pointer hover:text-emerald-600 transition shrink-0"
           >
             <span>HOMES</span>
-            <i className="fa-solid fa-chevron-down text-[9px]" />
           </Link>
           <Link
             to="/cart"
             className="flex items-center space-x-1 cursor-pointer hover:text-emerald-600 transition shrink-0"
           >
             <span>PAGES</span>
-            <i className="fa-solid fa-chevron-down text-[9px]" />
           </Link>
           <Link
             to="/products"
             className="flex items-center space-x-1 cursor-pointer hover:text-emerald-600 transition shrink-0"
           >
             <span>PRODUCTS</span>
-            <i className="fa-solid fa-chevron-down text-[9px]" />
           </Link>
           <Link
             to="/contact"
             className="hover:text-emerald-600 transition shrink-0"
           >
             CONTACT
+          </Link>
+          <Link
+            to="/about"
+            className="flex items-center space-x-1 cursor-pointer hover:text-emerald-600 transition shrink-0"
+          >
+            <span>About us</span>
           </Link>
         </nav>
 

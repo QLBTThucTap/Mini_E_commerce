@@ -10,6 +10,7 @@ import CartPage from "../Pages/cart/CartPage";
 import CheckoutPage from "../Pages/checkout/CheckoutPage";
 import WishlistPage from "../Pages/wishlist/WishlistPage";
 import ContactPage from "../Pages/contact/ContactPage";
+import AboutPage from "../Pages/about/AboutPage";
 
 import AdminRoute from "./AdminRoute";
 import AuthRoute from "./AuthRoute";
@@ -43,6 +44,7 @@ function AppRouter() {
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/wishlist" element={<WishlistPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/about" element={<AboutPage />} />
 
         {/* Trang tài khoản cá nhân — yêu cầu đăng nhập */}
         <Route element={<AuthRoute />}>
