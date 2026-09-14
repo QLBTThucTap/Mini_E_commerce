@@ -1,6 +1,6 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import useAuthStore from "../Stores/authStore";
-
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 function AdminLayout() {
   const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
@@ -113,6 +113,8 @@ function AdminLayout() {
       <section className="min-w-0 flex-1">
         <Outlet />
       </section>
+
+      <ReactQueryDevtools initialIsOpen={false} />
     </div>
   );
 }

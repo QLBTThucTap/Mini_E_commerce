@@ -1,4 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import { Suspense, lazy } from "react";
 
 import HomePage from "../Pages/home/HomePage";
 import ProductListPage from "../Pages/products/ProductListPage";
@@ -13,42 +14,55 @@ import AdminRoute from "./AdminRoute";
 import AuthRoute from "./AuthRoute";
 import AdminLayout from "../Layouts/AdminLayout";
 import ProductManagementPage from "../Pages/admin/products/ProductManagementPage";
-import DashboardPage from "../Pages/admin/dashboard/DashboardPage";
+
 import OrderManagementPage from "../Pages/admin/orders/OrderManagementPage";
 import UserManagementPage from "../Pages/admin/users/UserManagementPage";
 import AccountPage from "../Pages/account/AccountPage";
 
+const DashboardPage = lazy(
+  () => import("../Pages/admin/dashboard/DashboardPage"),
+);
+function PageFallback() {
+  return (
+    <div className="flex items-center justify-center py-20">
+      <span className="text-gray-500">Đang tải...</span>
+    </div>
+  );
+}
 function AppRouter() {
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/products" element={<ProductListPage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
-      <Route path="/product/:productId" element={<ProductDetailPage />} />
-      <Route path="/cart" element={<CartPage />} />
-      <Route path="/checkout" element={<CheckoutPage />} />
-      <Route path="/wishlist" element={<WishlistPage />} />
+    <Suspense fallback={<PageFallback />}>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/products" element={<ProductListPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/product/:productId" element={<ProductDetailPage />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/wishlist" element={<WishlistPage />} />
 
-      {/* Trang tài khoản cá nhân — yêu cầu đăng nhập */}
-      <Route element={<AuthRoute />}>
-        <Route path="/account" element={<AccountPage />} />
-      </Route>
-
-      {/* Trang admin — yêu cầu role admin */}
-      <Route element={<AdminRoute />}>
-        <Route element={<AdminLayout />}>
-          <Route
-            path="/admin"
-            element={<Navigate to="/admin/dashboard" replace />}
-          />
-          <Route path="/admin/dashboard" element={<DashboardPage />} />
-          <Route path="/admin/orders" element={<OrderManagementPage />} />
-          <Route path="/admin/products" element={<ProductManagementPage />} />
-          <Route path="/admin/users" element={<UserManagementPage />} />
+        {/* Trang tài khoản cá nhân — yêu cầu đăng nhập */}
+        <Route element={<AuthRoute />}>
+          <Route path="/account" element={<AccountPage />} />
         </Route>
-      </Route>
-    </Routes>
+
+        {/* Trang admin — yêu cầu role admin */}
+        <Route element={<AdminRoute />}>
+          <Route element={<AdminLayout />}>
+            <Route
+              path="/admin"
+              element={<Navigate to="/admin/dashboard" replace />}
+            />
+
+            <Route path="/admin/dashboard" element={<DashboardPage />} />
+            <Route path="/admin/orders" element={<OrderManagementPage />} />
+            <Route path="/admin/products" element={<ProductManagementPage />} />
+            <Route path="/admin/users" element={<UserManagementPage />} />
+          </Route>
+        </Route>
+      </Routes>
+    </Suspense>
   );
 }
 

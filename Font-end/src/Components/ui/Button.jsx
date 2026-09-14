@@ -8,10 +8,10 @@ import { forwardRef } from "react";
 
 const VARIANT_CLASSES = {
   primary:
-    "bg-emerald-600 text-white shadow-lg shadow-emerald-600/20 hover:bg-emerald-700",
+    "bg-emerald-600 text-white shadow-md hover:bg-emerald-700 active:bg-emerald-800",
   dark: "bg-slate-900 text-white hover:bg-slate-800",
   outline:
-    "bg-white text-slate-800 border border-slate-200 hover: border-emerald-500 hover: text-emerald-600 ",
+    "bg-white text-slate-800 border border-slate-200 hover:border-emerald-500 hover:text-emerald-600 ",
   ghost: "bg-transparent text-slate-700 hover:bg-slate-100",
   danger: "bg-red-600 text-white hover:bg-red-700",
 };
@@ -42,8 +42,8 @@ const Button = forwardRef(function Button(
       disabled={disabled || isLoading}
       className={[
         "inline-flex items-center justify-center gap-2 rounded-xl font-bold",
-        "transition-all disabled: opacity-50 disabled:cursor-not-allowed",
-        "focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-50000/40",
+        "transition-all disabled:opacity-50 disabled:cursor-not-allowed",
+        "focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/40",
         VARIANT_CLASSES[variant],
         SIZE_CLASSES[size],
         className,

@@ -47,9 +47,10 @@ export default function Header({ onSearch }) {
         <div className="flex items-center justify-between gap-8">
           <div className="flex items-center gap-8">
             <Link to="/" className="flex items-center gap-2.5 group">
-              <div className="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white font-extrabold text-xl shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform">
+              {/* <div className="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white font-extrabold text-xl shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform">
                 LH
-              </div>
+              </div> */}
+              <img src="./public/brand.ico" className="w-20 h-20"></img>
               <div>
                 <div className="text-2xl font-extrabold tracking-tight text-slate-900 leading-none">
                   Lã Ngọc Huyền
@@ -85,19 +86,19 @@ export default function Header({ onSearch }) {
             </nav>
           </div>
 
-          <div className="flex-1 max-w-2xl">
+          <div className="flex-1 max-w-4xl">
             <form
               onSubmit={handleSubmitSearch}
               className="flex items-center rounded-xl border-2 border-emerald-600/90 bg-white overflow-hidden focus-within:ring-2 focus-within:ring-emerald-500/30 transition-all"
             >
-              <div className="relative flex items-center border-r border-slate-200 px-3.5 py-2.5 bg-slate-50/50">
+              <div className="relative flex items-center border-r border-slate-200 px-3.5 py-2.5 bg-slate-50/50 shrink-0">
                 <select
                   value={categoryInput}
                   onChange={(e) => setCategoryInput(e.target.value)}
                   className="appearance-none bg-transparent pr-7 pl-1 text-xs font-semibold text-slate-700 focus:outline-none cursor-pointer border-0"
                 >
                   <option value="all">All Categories</option>
-                  <option value="laptop">Laptops</option>
+                  <option value="laptop">Laptop</option>
                   <option value="phone">Smartphones</option>
                   <option value="headphone">Audio & Visual</option>
                   <option value="keyboard">Gaming Gear</option>
@@ -109,11 +110,11 @@ export default function Header({ onSearch }) {
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 placeholder="Search products, brands, model numbers..."
-                className="w-full border-0 px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:ring-0 focus:outline-none"
+                className="flex-1 min-w-0 border-0 px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:ring-0 focus:outline-none"
               />
               <button
                 type="submit"
-                className="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 transition-colors cursor-pointer"
+                className="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 transition-colors cursor-pointer shrink-0"
               >
                 <i className="fa-solid fa-magnifying-glass text-sm" />
               </button>
@@ -124,7 +125,7 @@ export default function Header({ onSearch }) {
             <Link
               to="/wishlist"
               className="relative p-2 text-slate-700 hover:text-emerald-600 transition-colors rounded-full hover:bg-slate-100 cursor-pointer group"
-              title="Danh sách yêu thích"
+              title="WishList"
             >
               <i
                 className={`text-xl transition-transform group-hover:scale-110 ${
@@ -159,7 +160,7 @@ export default function Header({ onSearch }) {
                           ? user.name
                           : typeof user.name === "object"
                             ? `${user.name?.firstname || ""} ${user.name?.lastname || ""}`.trim()
-                            : user.username || "Tài khoản")}
+                            : user.username || "Account")}
                     </div>
                   </div>
                 </Link>
@@ -169,7 +170,7 @@ export default function Header({ onSearch }) {
                   onClick={handleLogout}
                   className="hidden lg:block text-xs font-bold text-slate-500 hover:text-emerald-600 transition-colors"
                 >
-                  ĐĂNG XUẤT
+                  Logout
                 </button>
               </>
             ) : (
