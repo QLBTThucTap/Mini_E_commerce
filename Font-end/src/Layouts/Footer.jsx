@@ -1,5 +1,6 @@
 import SelectorPill from "../Components/common/SelectorPill";
 import NewsletterForm from "../Components/common/NewsletterForm";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import IconButton from "../Components/ui/IconButton";
 const SOCIALS = [
@@ -121,6 +122,7 @@ export default function Footer({ columns, brand }) {
           </a>
         </div>
       </div>
+      <ReactQueryDevtools initialIsOpen={false} />
     </footer>
   );
 }

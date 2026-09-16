@@ -51,7 +51,7 @@ export const useLoginForm = () => {
         localStorage.setItem("access_token", result.accessToken);
       }
 
-      navigate(result.user?.role === "admin" ? "/admin/products" : "/");
+      navigate(result.user?.role === "admin" ? "/admin/dashboard" : "/");
     } catch (error) {
       const message =
         error.response?.data?.message ||

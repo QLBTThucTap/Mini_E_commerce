@@ -90,7 +90,7 @@ export function useCheckout() {
     const success = await copyTextToClipboard(text);
     if (success) {
       setCopiedField(fieldName);
-      setTimeout(() => setCopiedField(""), 2000);
+      setTimeout(() => setCopiedField(""), 10000);
     }
   }, []);
 
