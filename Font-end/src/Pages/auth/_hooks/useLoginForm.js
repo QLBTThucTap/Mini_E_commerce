@@ -47,9 +47,9 @@ export const useLoginForm = () => {
         refreshToken: result.refreshToken,
       });
 
-      if (result.accessToken) {
-        localStorage.setItem("access_token", result.accessToken);
-      }
+      // if (result.accessToken) {
+      //   localStorage.setItem("access_token", result.accessToken);
+      // }
 
       navigate(result.user?.role === "admin" ? "/admin/dashboard" : "/");
     } catch (error) {

@@ -958,53 +958,5 @@
       "rate": 4.7,
       "count": 180
     }
-  },
-  {
-    "id": 81,
-    "title": "Laptop Demo",
-    "price": 999,
-    "description": "Mô tả sản phẩm",
-    "category": "laptop",
-    "image": "https://cdn.tgdd.vn/Products/Images/44/363537/macbook-neo-13-inch-a18-pro-8gb-256gb-xanh-duong-600x600.jpg",
-    "rating": {
-      "rate": 0,
-      "count": 0
-    }
-  },
-  {
-    "id": 82,
-    "title": "Laptop Demo",
-    "price": 999,
-    "description": "Mô tả sản phẩm",
-    "category": "laptop",
-    "image": "https://cdn.tgdd.vn/Products/Images/44/363537/macbook-neo-13-inch-a18-pro-8gb-256gb-xanh-duong-600x600.jpg",
-    "rating": {
-      "rate": 0,
-      "count": 0
-    }
-  },
-  {
-    "id": 83,
-    "title": "Laptop Demo",
-    "price": 999,
-    "description": "Mô tả sản phẩm",
-    "category": "laptop",
-    "image": "https://cdn.tgdd.vn/Products/Images/44/363537/macbook-neo-13-inch-a18-pro-8gb-256gb-xanh-duong-600x600.jpg",
-    "rating": {
-      "rate": 0,
-      "count": 0
-    }
-  },
-  {
-    "id": 84,
-    "title": "Laptop Demo",
-    "price": 999,
-    "description": "Mô tả sản phẩm",
-    "category": "laptop",
-    "image": "https://cdn.tgdd.vn/Products/Images/44/363537/macbook-neo-13-inch-a18-pro-8gb-256gb-xanh-duong-600x600.jpg",
-    "rating": {
-      "rate": 0,
-      "count": 0
-    }
   }
 ]

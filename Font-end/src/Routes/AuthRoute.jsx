@@ -9,15 +9,14 @@ import useAuthStore from "../Stores/authStore";
 function AuthRoute() {
   const location = useLocation();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const isInitializing = useAuthStore((state) => state.isInitializing);
+
+  if (isInitializing) {
+    return <div className="p-8 text-center text-slate-500">Đang tải...</div>;
+  }
 
   if (!isAuthenticated) {
-    return (
-      <Navigate
-        to="/login"
-        state={{ from: location.pathname }}
-        replace
-      />
-    );
+    return <Navigate to="/login" state={{ from: location.pathname }} replace />;
   }
 
   return <Outlet />;

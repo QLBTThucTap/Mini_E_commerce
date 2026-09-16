@@ -20,6 +20,7 @@ import ProductManagementPage from "../Pages/admin/products/ProductManagementPage
 import OrderManagementPage from "../Pages/admin/orders/OrderManagementPage";
 import UserManagementPage from "../Pages/admin/users/UserManagementPage";
 import AccountPage from "../Pages/account/AccountPage";
+import GuestRoute from "./GuestRoute";
 
 const DashboardPage = lazy(
   () => import("../Pages/admin/dashboard/DashboardPage"),
@@ -37,18 +38,23 @@ function AppRouter() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/products" element={<ProductListPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
+
+        {/* Trang login/register — chỉ dành cho người CHƯA đăng nhập */}
+        <Route element={<GuestRoute />}>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+        </Route>
+
         <Route path="/product/:productId" element={<ProductDetailPage />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/checkout" element={<CheckoutPage />} />
-        <Route path="/wishlist" element={<WishlistPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/about" element={<AboutPage />} />
 
         {/* Trang tài khoản cá nhân — yêu cầu đăng nhập */}
         <Route element={<AuthRoute />}>
           <Route path="/account" element={<AccountPage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/wishlist" element={<WishlistPage />} />
         </Route>
 
         {/* Trang admin — yêu cầu role admin */}
