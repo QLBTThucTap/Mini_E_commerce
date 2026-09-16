@@ -4,6 +4,7 @@ import useCartStore from "../Stores/cartStore";
 import useWishlistStore from "../Stores/wishlistStore";
 import TopBar from "./TopBar";
 import { Link, useNavigate } from "react-router-dom";
+import brandLogo from "../assets/brand.ico";
 
 export default function Header({ onSearch }) {
   const navigate = useNavigate();
@@ -50,7 +51,7 @@ export default function Header({ onSearch }) {
         <div className="flex items-center justify-between w-full md:w-auto">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 group">
-            <img src="./src/assets/brand.ico" className="w-20 h-20"></img>
+            <img src={brandLogo} className="w-20 h-20"></img>
             <div>
               <div className="text-2xl font-extrabold tracking-tight text-slate-900 leading-none">
                 Lã Ngọc Huyền
