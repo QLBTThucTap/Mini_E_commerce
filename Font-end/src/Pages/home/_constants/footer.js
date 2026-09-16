@@ -9,12 +9,10 @@ export const FOOTER_COLUMNS = [
   {
     title: "TOP CATEGORIES",
     links: [
-      { label: "Laptops", href: "/products?category=laptop" },
-      { label: "PC & Computers", href: "/products?category=pc" },
-      { label: "Cell Phones", href: "/products?category=phone" },
-      { label: "Tablets", href: "/products?category=tablet" },
-      { label: "Gaming & VR", href: "/products?category=gaming" },
-      { label: "Sounds", href: "/products?category=headphone" },
+      { label: "Laptop", href: "/products?category=laptop" },
+      { label: "Smartphones", href: "/products?category=phone" },
+      { label: "Audio & Visual", href: "/products?category=tablet" },
+      { label: "Gaming Gear", href: "/products?category=gaming" },
     ],
   },
   {

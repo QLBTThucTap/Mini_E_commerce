@@ -1,12 +1,14 @@
 import axios from "axios";
 import useAuthStore from "../Stores/authStore";
 
+// Chuẩn hóa baseURL: luôn đảm bảo có đúng 1 dấu "/" ở cuối
+const rawApiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/";
+const API_BASE_URL = rawApiUrl.endsWith("/") ? rawApiUrl : `${rawApiUrl}/`;
 export const Instance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: API_BASE_URL,
   timeout: 60000,
   headers: {
     "Content-Type": "application/json",
-    Authorization: "Bearer your_token_here",
   },
 });
 
@@ -71,10 +73,9 @@ Instance.interceptors.response.use(
 
       try {
         // Dùng axios "trần" (không qua Instance) để tránh việc chính call này bị interceptor xử lý lại
-        const { data } = await axios.post(
-          `${import.meta.env.VITE_API_URL}auth/refresh-token`,
-          { refreshToken },
-        );
+        const { data } = await axios.post(`${API_BASE_URL}auth/refresh-token`, {
+          refreshToken,
+        });
 
         const newAccessToken = data.newAccessToken;
         setAccessToken(newAccessToken);
