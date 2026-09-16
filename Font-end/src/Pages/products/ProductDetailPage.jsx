@@ -1,20 +1,26 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useCartStore from "../../Stores/cartStore";
 import useWishlistStore from "../../Stores/wishlistStore";
 import Header from "../../Layouts/Header";
+import Footer from "../../Layouts/Footer";
 import Button from "../../Components/ui/Button";
-import PriceTag from "../../Components/ui/PriceTag";
-import RatingStars from "../../Components/ui/RatingStars";
-import StockStatus from "../../Components/ui/StockStatus";
 
 import { getProductById } from "../../Services/productService";
-import Footer from "../../Layouts/Footer";
 import { FOOTER_BRAND, FOOTER_COLUMNS } from "../home/_constants/footer";
 
-function ProductDetailPage() {
+import ProductBreadcrumb from "./_detail_components/ProductBreadcrumb";
+import ProductGallery from "./_detail_components/ProductGallery";
+import ProductInfo from "./_detail_components/ProductInfo";
+import FrequentlyBoughtTogether from "./_detail_components/FrequentlyBoughtTogether";
+import ProductDetailTabs from "./_detail_components/ProductDetailTabs";
+import RelatedProducts from "./_detail_components/RelatedProducts";
+import RecentlyViewedProducts from "./_detail_components/RecentlyViewedProducts";
+
+export default function ProductDetailPage() {
   const { productId } = useParams();
   const navigate = useNavigate();
+
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -27,19 +33,12 @@ function ProductDetailPage() {
     product ? state.items.some((item) => item.id === product.id) : false,
   );
 
-  const handleToggleWishlist = () => {
-    if (!product) return;
-    const added = toggleWishlist(product);
-    setMessage(
-      added
-        ? "Đã thêm sản phẩm vào danh sách yêu thích!"
-        : "Đã gỡ sản phẩm khỏi danh sách yêu thích!",
-    );
-    setTimeout(() => {
-      setMessage("");
-    }, 2500);
-  };
+  // Cuộn mượt lên đầu trang khi đổi productId
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [productId]);
 
+  // Tải chi tiết sản phẩm từ API
   useEffect(() => {
     async function loadProduct() {
       try {
@@ -47,10 +46,10 @@ function ProductDetailPage() {
         setError("");
         const data = await getProductById(productId);
         setProduct(data);
-      } catch (error) {
+      } catch (err) {
         setError(
-          error.response?.data?.message ||
-            "Không thể hiển thị thông tin sản phẩm!",
+          err.response?.data?.message ||
+            "Không thể hiển thị thông tin sản phẩm lúc này!",
         );
       } finally {
         setLoading(false);
@@ -61,163 +60,116 @@ function ProductDetailPage() {
   }, [productId]);
 
   const decreaseQuantity = () => {
-    setQuantity((current) => Math.max(1, current - 1));
-
-    //Math.max(1, ...): đảm bảo giá trị không nhỏ hơn 1
+    setQuantity((curr) => Math.max(1, curr - 1));
   };
 
   const increaseQuantity = () => {
-    setQuantity((current) => current + 1);
+    setQuantity((curr) => curr + 1);
   };
 
   const handleAddToCart = () => {
+    if (!product) return;
     addItem(product, quantity);
+    setMessage(`Đã thêm ${quantity} sản phẩm vào giỏ hàng thành công!`);
     setTimeout(() => {
       setMessage("");
-    }, 1000);
-    setMessage(`Đã thêm ${quantity} sản phẩm vào giỏ hàng`);
+    }, 2500);
   };
+
+  const handleToggleWishlist = () => {
+    if (!product) return;
+    const added = toggleWishlist(product);
+    setMessage(
+      added
+        ? "Đã thêm sản phẩm vào danh sách yêu thích!"
+        : "Đã xóa sản phẩm khỏi danh sách yêu thích!",
+    );
+    setTimeout(() => {
+      setMessage("");
+    }, 2500);
+  };
+
   return (
-    <div className="min-h-screen bg-slate-50">
-      <Header
-        cartCount={0}
-        cartTotal={0}
-        user={null}
-        onSearch={(event) => event.preventDefault()}
-      />
-      <main className="max-w-[1360px] mx-auto px-4 py-10">
-        <Link
-          to="/"
-          className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-emerald-600"
-        >
-          <i className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-emerald-600" />
-          Quay lại trang chủ
-        </Link>
+    <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
+      {/* 1. HEADER */}
+      <Header />
 
-        {loading && (
-          <p className="py-16 text-center text-slate-500">
-            Đang tải sản phẩm...
+      {/* Loading state */}
+      {loading && (
+        <main className="flex-1 max-w-[1360px] mx-auto px-4 py-24 text-center">
+          <i className="fa-solid fa-spinner fa-spin text-3xl text-emerald-600 mb-3 block" />
+          <p className="text-sm font-semibold text-slate-500">
+            Đang tải thông tin sản phẩm...
           </p>
-        )}
+        </main>
+      )}
 
-        {error && (
-          <div className="py-16 text-center">
-            <p className="text-red-600">{error}</p>
-            <Button className="mt-4" onClick={() => navigate("/")}>
-              Về trang chủ
+      {/* Error state */}
+      {error && !loading && (
+        <main className="flex-1 max-w-[1360px] mx-auto px-4 py-24 text-center">
+          <div className="bg-white p-8 rounded-2xl border border-red-200 max-w-md mx-auto shadow-xs">
+            <i className="fa-solid fa-circle-exclamation text-4xl text-red-500 mb-3 block" />
+            <h3 className="text-base font-bold text-slate-900 mb-1">
+              Không tìm thấy sản phẩm
+            </h3>
+            <p className="text-xs text-red-600 mb-4">{error}</p>
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => navigate("/products")}
+            >
+              Quay lại danh sách sản phẩm
             </Button>
           </div>
-        )}
+        </main>
+      )}
 
-        {!loading && !error && product && (
-          <section className="grid grid-cols-1 lg:grid-cols-2 gap-10 mt-8">
-            <div className="rounded-2xl bg-white border border-slate-200 p-6">
-              <img
-                src={product.image}
-                alt={product.title}
-                className="w-full h-[420px] object-contain rounded-xl"
-              />
-            </div>
+      {/* Content khi đã có dữ liệu sản phẩm */}
+      {!loading && !error && product && (
+        <>
+          {/* 2. BREADCRUMB */}
+          <ProductBreadcrumb product={product} />
 
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 lg:p-8">
-              <p className="text-sm font-bold uppercase text-emerald-600">
-                {product.category}
-              </p>
+          <main className="max-w-[1360px] mx-auto px-4 flex-1 w-full pb-12">
+            {/* 3. KHU VỰC THÔNG TIN CHÍNH (Ảnh trái + Thông tin phải) */}
+            <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
+              {/* Bên trái: Gallery ảnh */}
+              <div className="lg:col-span-5">
+                <ProductGallery product={product} />
+              </div>
 
-              <h1 className="mt-3 text-2xl lg:text-3xl font-extrabold text-slate-900">
-                {product.title}
-              </h1>
-
-              <div className="mt-4">
-                <RatingStars
-                  value={Math.round(product.rating?.rate ?? 0)}
-                  count={product.rating?.count ?? 0}
-                  size="md"
+              {/* Bên phải: Thông tin sản phẩm, options, giá & nút mua */}
+              <div className="lg:col-span-7">
+                <ProductInfo
+                  product={product}
+                  quantity={quantity}
+                  onDecreaseQuantity={decreaseQuantity}
+                  onIncreaseQuantity={increaseQuantity}
+                  onAddToCart={handleAddToCart}
+                  onToggleWishlist={handleToggleWishlist}
+                  isWishlisted={isWishlisted}
+                  message={message}
                 />
               </div>
+            </section>
 
-              <div className="mt-6">
-                <PriceTag price={product.price} size="lg" tone="sale" />
-              </div>
+            {/* 4. FREQUENTLY BOUGHT TOGETHER */}
+            <FrequentlyBoughtTogether product={product} />
 
-              <div className="mt-5">
-                <StockStatus status="in_stock" />
-              </div>
+            {/* 5. THÔNG TIN CHI TIẾT SẢN PHẨM (Tabs Description / Specs / Reviews / Shipping) */}
+            <ProductDetailTabs product={product} />
 
-              <p className="mt-6 text-sm leading-7 text-slate-600">
-                {product.description}
-              </p>
+            {/* 6. RELATED PRODUCTS (Sản phẩm liên quan) */}
+            <RelatedProducts currentProduct={product} />
 
-              <div className="mt-8 flex items-center gap-4">
-                <span className="text-sm font-bold text-slate-700">
-                  Số lượng
-                </span>
+            {/* 7. RECENTLY VIEWED (Sản phẩm vừa xem) */}
+            <RecentlyViewedProducts currentProduct={product} />
+          </main>
+        </>
+      )}
 
-                <div className="flex items-center border border-slate-200 rounded-xl">
-                  <button
-                    type="button"
-                    onClick={decreaseQuantity}
-                    className="w-10 h-10 text-slate-600 hover:text-emerald-600"
-                  >
-                    −
-                  </button>
-
-                  <span className="w-10 text-center font-bold">{quantity}</span>
-
-                  <button
-                    type="button"
-                    onClick={increaseQuantity}
-                    className="w-10 h-10 text-slate-600 hover:text-emerald-600"
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3 mt-8">
-                <Button
-                  className="flex-1 cursor-pointer"
-                  icon="fa-solid fa-cart-shopping"
-                  onClick={handleAddToCart}
-                >
-                  Thêm vào giỏ hàng
-                </Button>
-
-                <button
-                  type="button"
-                  onClick={handleToggleWishlist}
-                  className={`px-4 py-3 rounded-xl border transition-all cursor-pointer flex items-center justify-center ${
-                    isWishlisted
-                      ? "bg-rose-50 border-rose-200 text-rose-600 shadow-sm"
-                      : "bg-white border-slate-200 text-slate-500 hover:text-rose-500 hover:border-rose-200 hover:bg-rose-50/50"
-                  }`}
-                  title={
-                    isWishlisted
-                      ? "Gỡ khỏi danh sách yêu thích"
-                      : "Thêm vào danh sách yêu thích"
-                  }
-                >
-                  <i
-                    className={`text-lg ${
-                      isWishlisted ? "fa-solid fa-heart" : "fa-regular fa-heart"
-                    }`}
-                  />
-                </button>
-              </div>
-
-              {message && (
-                <p className="mt-4 text-center text-sm font-semibold text-emerald-600">
-                  {message}
-                </p>
-              )}
-            </div>
-          </section>
-        )}
-      </main>
-
+      {/* 8. FOOTER */}
       <Footer brand={FOOTER_BRAND} columns={FOOTER_COLUMNS} />
     </div>
   );
 }
-
-export default ProductDetailPage;

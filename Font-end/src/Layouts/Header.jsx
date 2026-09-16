@@ -41,195 +41,205 @@ export default function Header({ onSearch }) {
   };
 
   return (
-    <header className="w-full bg-white shadow-sm border-b border-slate-200 sticky top-0 z-40">
-      {/* Top Micro Bar */}
-      <TopBar />
+    <>
+      <header className="w-full bg-white shadow-xs border-b border-slate-100 relative z-30">
+        {/* Top Micro Bar */}
+        <TopBar />
 
-      {/* Main Navigation Bar */}
-      <div className="max-w-7xl mx-auto px-4 lg:px-8 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
-        {/* Top row on mobile: Logo + Actions */}
-        <div className="flex items-center justify-between w-full md:w-auto">
-          {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 group">
-            <img src={brandLogo} className="w-20 h-20"></img>
-            <div>
-              <div className="text-2xl font-extrabold tracking-tight text-slate-900 leading-none">
-                Lã Ngọc Huyền
-              </div>
-              <span className="text-[10px] tracking-widest font-semibold text-slate-500 uppercase">
-                TECH MART
-              </span>
-            </div>
-          </Link>
-
-          {/* Quick Cart on Mobile */}
-          <div className="flex items-center space-x-3 md:hidden">
-            <Link
-              to="/wishlist"
-              className="relative w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition"
-            >
-              <i
-                className={`text-sm ${
-                  wishlistCount > 0
-                    ? "fa-solid fa-heart text-rose-500"
-                    : "fa-regular fa-heart"
-                }`}
-              />
-              {wishlistCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
-                  {wishlistCount}
+        {/* Main Navigation Bar */}
+        <div className="max-w-7xl mx-auto px-4 lg:px-8 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
+          {/* Top row on mobile: Logo + Actions */}
+          <div className="flex items-center justify-between w-full md:w-auto">
+            {/* Logo */}
+            <Link to="/" className="flex items-center space-x-2 group">
+              <img src={brandLogo} className="w-20 h-20"></img>
+              <div>
+                <div className="text-2xl font-extrabold tracking-tight text-slate-900 leading-none">
+                  Lã Ngọc Huyền
+                </div>
+                <span className="text-[10px] tracking-widest font-semibold text-slate-500 uppercase">
+                  TECH MART
                 </span>
-              )}
+              </div>
             </Link>
 
+            {/* Quick Cart on Mobile */}
+            <div className="flex items-center space-x-3 md:hidden">
+              <Link
+                to="/wishlist"
+                className="relative w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition"
+              >
+                <i
+                  className={`text-sm ${
+                    wishlistCount > 0
+                      ? "fa-solid fa-heart text-rose-500"
+                      : "fa-regular fa-heart"
+                  }`}
+                />
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+                    {wishlistCount}
+                  </span>
+                )}
+              </Link>
+
+              <Link
+                to="/cart"
+                className="relative w-9 h-9 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow"
+              >
+                <i className="fa-solid fa-bag-shopping text-sm" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-slate-900 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+                    {cartCount}
+                  </span>
+                )}
+              </Link>
+            </div>
+          </div>
+
+          {/* Navigation Links */}
+          <nav className="flex items-center space-x-6 sm:space-x-7 text-xs font-bold tracking-wide uppercase text-slate-800 overflow-x-auto max-w-full py-1">
+            <Link
+              to="/"
+              className="flex items-center space-x-1 cursor-pointer hover:text-emerald-600 transition shrink-0"
+            >
+              <span>HOMES</span>
+            </Link>
             <Link
               to="/cart"
-              className="relative w-9 h-9 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow"
+              className="flex items-center space-x-1 cursor-pointer hover:text-emerald-600 transition shrink-0"
             >
-              <i className="fa-solid fa-bag-shopping text-sm" />
-              {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-slate-900 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
-                  {cartCount}
-                </span>
-              )}
+              <span>PAGES</span>
             </Link>
-          </div>
-        </div>
-
-        {/* Navigation Links */}
-        <nav className="flex items-center space-x-6 sm:space-x-7 text-xs font-bold tracking-wide uppercase text-slate-800 overflow-x-auto max-w-full py-1">
-          <Link
-            to="/"
-            className="flex items-center space-x-1 cursor-pointer hover:text-emerald-600 transition shrink-0"
-          >
-            <span>HOMES</span>
-          </Link>
-          <Link
-            to="/cart"
-            className="flex items-center space-x-1 cursor-pointer hover:text-emerald-600 transition shrink-0"
-          >
-            <span>PAGES</span>
-          </Link>
-          <Link
-            to="/products"
-            className="flex items-center space-x-1 cursor-pointer hover:text-emerald-600 transition shrink-0"
-          >
-            <span>PRODUCTS</span>
-          </Link>
-          <Link
-            to="/contact"
-            className="hover:text-emerald-600 transition shrink-0"
-          >
-            CONTACT
-          </Link>
-          <Link
-            to="/about"
-            className="flex items-center space-x-1 cursor-pointer hover:text-emerald-600 transition shrink-0"
-          >
-            <span>About us</span>
-          </Link>
-        </nav>
-
-        {/* User Actions & Cart (Desktop & Tablet) */}
-        <div className="hidden md:flex items-center space-x-5">
-          {/* Quick Actions */}
-          <div className="flex items-center space-x-3 text-slate-600">
-            <button
-              type="button"
-              className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition cursor-pointer"
-              title="Notifications"
-            >
-              <i className="fa-regular fa-bell text-sm" />
-            </button>
             <Link
-              to="/wishlist"
-              className="relative w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition text-slate-600 cursor-pointer"
-              title="Wishlist"
+              to="/products"
+              className="flex items-center space-x-1 cursor-pointer hover:text-emerald-600 transition shrink-0"
             >
-              <i
-                className={`text-sm ${
-                  wishlistCount > 0
-                    ? "fa-solid fa-heart text-rose-500"
-                    : "fa-regular fa-heart"
-                }`}
-              />
-              {wishlistCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
-                  {wishlistCount}
-                </span>
-              )}
+              <span>PRODUCTS</span>
             </Link>
-          </div>
+            <Link
+              to="/contact"
+              className="hover:text-emerald-600 transition shrink-0"
+            >
+              CONTACT
+            </Link>
+            <Link
+              to="/about"
+              className="flex items-center space-x-1 cursor-pointer hover:text-emerald-600 transition shrink-0"
+            >
+              <span>About us</span>
+            </Link>
+          </nav>
 
-          {/* Account Greeting */}
-          {user ? (
-            <div className="text-left leading-tight flex items-center gap-2">
-              <Link
-                to={user.role === "admin" ? "/admin/dashboard" : "/account"}
-                className="cursor-pointer group"
-              >
-                <div className="text-[10px] uppercase font-semibold text-slate-400">
-                  WELCOME BACK
-                </div>
-                <div className="text-xs font-bold text-slate-900 group-hover:text-emerald-600 transition">
-                  {user.fullName ||
-                    (typeof user.name === "string"
-                      ? user.name
-                      : typeof user.name === "object"
-                        ? `${user.name?.firstname || ""} ${user.name?.lastname || ""}`.trim()
-                        : user.username || "Account")}
-                </div>
-              </Link>
+          {/* User Actions & Cart (Desktop & Tablet) */}
+          <div className="hidden md:flex items-center space-x-5">
+            {/* Quick Actions */}
+            <div className="flex items-center space-x-3 text-slate-600">
               <button
                 type="button"
-                onClick={handleLogout}
-                className="text-xs font-bold text-slate-500 hover:text-emerald-600 transition cursor-pointer ml-1"
-                title="Logout"
+                className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition cursor-pointer"
+                title="Notifications"
               >
-                <i className="fa-solid fa-arrow-right-from-bracket text-xs" />
+                <i className="fa-regular fa-bell text-sm" />
               </button>
-            </div>
-          ) : (
-            <div className="text-left leading-tight">
-              <div className="text-[10px] uppercase font-semibold text-slate-400">
-                WELCOME
-              </div>
               <Link
-                to="/login"
-                className="text-xs font-bold text-slate-900 cursor-pointer hover:text-emerald-600 transition"
+                to="/wishlist"
+                className="relative w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition text-slate-600 cursor-pointer"
+                title="Wishlist"
               >
-                LOG IN / REGISTER
+                <i
+                  className={`text-sm ${
+                    wishlistCount > 0
+                      ? "fa-solid fa-heart text-rose-500"
+                      : "fa-regular fa-heart"
+                  }`}
+                />
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+                    {wishlistCount}
+                  </span>
+                )}
               </Link>
             </div>
-          )}
 
-          {/* Cart Box */}
-          <Link
-            to="/cart"
-            className="flex items-center space-x-2.5 pl-3 border-l border-slate-200 cursor-pointer group"
-          >
-            <div className="relative w-9 h-9 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow group-hover:bg-emerald-700 transition">
-              <i className="fa-solid fa-bag-shopping text-sm" />
-              {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-slate-900 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
-                  {cartCount}
+            {/* Account Greeting */}
+            {user ? (
+              <div className="text-left leading-tight flex items-center gap-2">
+                <Link
+                  to={user.role === "admin" ? "/admin/dashboard" : "/account"}
+                  className="cursor-pointer group"
+                >
+                  <div className="text-[10px] uppercase font-semibold text-slate-400">
+                    WELCOME BACK
+                  </div>
+                  <div className="text-xs font-bold text-slate-900 group-hover:text-emerald-600 transition">
+                    {user.fullName ||
+                      (typeof user.name === "string"
+                        ? user.name
+                        : typeof user.name === "object"
+                          ? `${user.name?.firstname || ""} ${user.name?.lastname || ""}`.trim()
+                          : user.username || "Account")}
+                  </div>
+                </Link>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="text-xs font-bold text-slate-500 hover:text-emerald-600 transition cursor-pointer ml-1"
+                  title="Logout"
+                >
+                  <i className="fa-solid fa-arrow-right-from-bracket text-xs" />
+                </button>
+              </div>
+            ) : (
+              <div className="text-left leading-tight">
+                <div className="text-[10px] uppercase font-semibold text-slate-400">
+                  WELCOME
+                </div>
+                <Link
+                  to="/login"
+                  className="text-xs font-bold text-slate-900 cursor-pointer hover:text-emerald-600 transition"
+                >
+                  LOG IN
+                </Link>
+
+                <label> / </label>
+                <Link
+                  to="/register"
+                  className="text-xs font-bold text-slate-900 cursor-pointer hover:text-emerald-600 transition"
+                >
+                  REGISTER
+                </Link>
+              </div>
+            )}
+
+            {/* Cart Box */}
+            <Link
+              to="/cart"
+              className="flex items-center space-x-2.5 pl-3 border-l border-slate-200 cursor-pointer group"
+            >
+              <div className="relative w-9 h-9 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow group-hover:bg-emerald-700 transition">
+                <i className="fa-solid fa-bag-shopping text-sm" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-slate-900 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+                    {cartCount}
+                  </span>
+                )}
+              </div>
+              <div className="leading-tight">
+                <span className="block text-[10px] font-semibold text-slate-400 uppercase">
+                  CART
                 </span>
-              )}
-            </div>
-            <div className="leading-tight">
-              <span className="block text-[10px] font-semibold text-slate-400 uppercase">
-                CART
-              </span>
-              <span className="font-extrabold text-sm text-slate-900 group-hover:text-emerald-600 transition">
-                ${cartTotal.toFixed(2)}
-              </span>
-            </div>
-          </Link>
+                <span className="font-extrabold text-sm text-slate-900 group-hover:text-emerald-600 transition">
+                  ${cartTotal.toFixed(2)}
+                </span>
+              </div>
+            </Link>
+          </div>
         </div>
-      </div>
+      </header>
 
-      {/* Green Sub-Bar with Search and Guarantees */}
-      <div className="bg-emerald-600 text-white">
+      {/* Green Sub-Bar with Search and Guarantees — Sticky at top on scroll */}
+      <div className="bg-emerald-600 text-white sticky top-0 z-40 shadow-md">
         <div className="max-w-7xl mx-auto px-4 lg:px-8 py-2.5 flex flex-col md:flex-row items-center justify-between gap-4">
           {/* Category & Search Box */}
           <form
@@ -284,6 +294,6 @@ export default function Header({ onSearch }) {
           </div>
         </div>
       </div>
-    </header>
+    </>
   );
 }

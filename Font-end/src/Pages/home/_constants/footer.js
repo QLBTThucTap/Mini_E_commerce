@@ -11,8 +11,8 @@ export const FOOTER_COLUMNS = [
     links: [
       { label: "Laptop", href: "/products?category=laptop" },
       { label: "Smartphones", href: "/products?category=phone" },
-      { label: "Audio & Visual", href: "/products?category=tablet" },
-      { label: "Gaming Gear", href: "/products?category=gaming" },
+      { label: "Audio & Visual", href: "/products?category=headphone" },
+      { label: "Gaming Gear", href: "/products?category=keyboard" },
     ],
   },
   {

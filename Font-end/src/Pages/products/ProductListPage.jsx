@@ -287,7 +287,7 @@ export default function ProductListPage() {
         {/* Bố cục 2 cột: Sidebar bên trái & Product Listing bên phải */}
         <div className="flex flex-col lg:flex-row items-start gap-6">
           {/* CỘT TRÁI: Filter Sidebar Desktop */}
-          <aside className="w-full lg:w-72 shrink-0 hidden lg:block sticky top-24">
+          <aside className="w-full lg:w-72 shrink-0 hidden lg:block sticky top-[60px] self-start max-h-[calc(100vh-75px)] overflow-y-auto pr-1">
             <ProductFilterSidebar
               key={`desktop-${currentMinPrice}-${currentMaxPrice}-${currentCategory}`}
               categories={categories}
