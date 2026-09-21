@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 import useAuthStore from "../../../Stores/authStore";
 import { updateUser } from "../../../Services/userService";
 
@@ -19,12 +20,11 @@ export function useAccountAddress() {
         ? `${user.name?.firstname || ""} ${user.name?.lastname || ""}`.trim()
         : user?.username || "Người dùng");
 
-  // Fallback lấy danh sách địa chỉ từ user trong data/users.js
+  // Fallback lấy danh sách địa chỉ từ user
   const addresses = useMemo(() => {
     if (Array.isArray(user?.addresses) && user.addresses.length > 0) {
       return user.addresses;
     }
-    // Nếu trong data chỉ có object address đơn lẻ (address: { city, district, street... })
     if (user?.address && typeof user.address === "object") {
       return [
         {
@@ -32,7 +32,10 @@ export function useAccountAddress() {
           name: displayName,
           phone: user?.phoneNumber || user?.phone || "",
           street: user.address?.street || "Địa chỉ hiện tại",
-          city: `${user.address?.district || ""}, ${user.address?.city || ""}`.replace(/^,\s*/, ""),
+          city: `${user.address?.district || ""}, ${user.address?.city || ""}`.replace(
+            /^,\s*/,
+            "",
+          ),
           country: "Việt Nam",
           type: "Home",
           isDefault: true,
@@ -42,12 +45,11 @@ export function useAccountAddress() {
     return [];
   }, [user, displayName]);
 
-  // Mutation cập nhật danh sách địa chỉ vào Server / data mock
+  // Mutation cập nhật danh sách địa chỉ vào Server / Auth Store
   const updateAddressMutation = useMutation({
     mutationFn: (newAddresses) =>
       updateUser(user.id, {
         addresses: newAddresses,
-        // Cập nhật luôn thông tin address mặc định ở root user để đồng bộ
         address: {
           city: newAddresses.find((a) => a.isDefault)?.city || "",
           district: "",
@@ -62,11 +64,23 @@ export function useAccountAddress() {
       });
       queryClient.invalidateQueries({ queryKey: ["account-profile"] });
     },
+    onError: (error) => {
+      toast.error(
+        error.response?.data?.message ||
+          "Cập nhật địa chỉ thất bại, vui lòng thử lại!",
+      );
+    },
   });
 
   // Xử lý các thao tác CRUD
-  const saveAddresses = (newAddresses) => {
-    updateAddressMutation.mutate(newAddresses);
+  const saveAddresses = (newAddresses, successMessage) => {
+    updateAddressMutation.mutate(newAddresses, {
+      onSuccess: () => {
+        if (successMessage) {
+          toast.success(successMessage);
+        }
+      },
+    });
   };
 
   const setDefaultAddress = (id) => {
@@ -74,39 +88,42 @@ export function useAccountAddress() {
       ...item,
       isDefault: item.id === id,
     }));
-    saveAddresses(updated);
+    saveAddresses(updated, "Đã thiết lập địa chỉ mặc định thành công!");
   };
 
   const deleteAddress = (id) => {
     if (window.confirm("Bạn có chắc chắn muốn xóa địa chỉ này?")) {
       const updated = addresses.filter((item) => item.id !== id);
-      // Nếu xóa địa chỉ mặc định, tự động gán địa chỉ đầu tiên làm mặc định
       if (updated.length > 0 && !updated.some((a) => a.isDefault)) {
         updated[0].isDefault = true;
       }
-      saveAddresses(updated);
+      saveAddresses(updated, "Đã xóa địa chỉ thành công!");
     }
   };
 
   const addOrUpdateAddress = (formData, editingId) => {
-    // Sửa lỗi: dùng toán tử ba ngôi (ternary) trực tiếp cho hằng số const updated
     const nextAddresses = editingId
       ? addresses.map((item) =>
-          item.id === editingId ? { ...formData, id: item.id } : item
+          item.id === editingId ? { ...formData, id: item.id } : item,
         )
       : formData.isDefault || addresses.length === 0
-      ? addresses.map((a) => ({ ...a, isDefault: false })).concat({
-          ...formData,
-          id: Date.now(),
-        })
-      : [...addresses, { ...formData, id: Date.now() }];
+        ? addresses
+            .map((a) => ({ ...a, isDefault: false }))
+            .concat({
+              ...formData,
+              id: Date.now(),
+            })
+        : [...addresses, { ...formData, id: Date.now() }];
 
-    // Đảm bảo luôn có 1 địa chỉ làm mặc định nếu danh sách không trống
     if (nextAddresses.length > 0 && !nextAddresses.some((a) => a.isDefault)) {
       nextAddresses[0].isDefault = true;
     }
 
-    saveAddresses(nextAddresses);
+    const message = editingId
+      ? "Đã cập nhật địa chỉ thành công!"
+      : "Đã thêm địa chỉ mới thành công!";
+
+    saveAddresses(nextAddresses, message);
   };
 
   return {

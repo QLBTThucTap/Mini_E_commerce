@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import useAuthStore from "../../../Stores/authStore";
 import Instance from "../../../Services/http";
@@ -47,16 +48,20 @@ export const useLoginForm = () => {
         refreshToken: result.refreshToken,
       });
 
-      // if (result.accessToken) {
-      //   localStorage.setItem("access_token", result.accessToken);
-      // }
+      const displayName =
+        result.user?.fullName ||
+        (typeof result.user?.name === "string" ? result.user.name : "") ||
+        result.user?.username ||
+        "bạn";
 
+      toast.success(`Đăng nhập thành công! Xin chào, ${displayName} 👋`);
       navigate(result.user?.role === "admin" ? "/admin/dashboard" : "/");
     } catch (error) {
       const message =
         error.response?.data?.message ||
         "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin tài khoản.";
       setServerError(message);
+      toast.error(message);
     }
   };
 

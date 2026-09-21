@@ -19,7 +19,7 @@ import ProductToolbar from "./_components/ProductToolbar";
 import ActiveFilterChips from "./_components/ActiveFilterChips";
 import BestSellerSection from "./_components/BestSellerSection";
 import MobileFilterDrawer from "./_components/MobileFilterDrawer";
-
+import { toast } from "react-toastify";
 import { FOOTER_BRAND, FOOTER_COLUMNS } from "../home/_constants/footer";
 
 const PAGE_SIZE = 8;
@@ -47,7 +47,6 @@ export default function ProductListPage() {
   // UI States
   const [viewMode, setViewMode] = useState("grid"); // "grid" | "list"
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
-  const [addprId, setAddprId] = useState(null);
 
   // Global Stores
   const wishlistItems = useWishlistStore((state) => state.items);
@@ -120,15 +119,22 @@ export default function ProductListPage() {
       1,
     );
 
-    setAddprId(itemData.id);
-    setTimeout(() => {
-      setAddprId((curr) => (curr === itemData.id ? null : curr));
-    }, 2500);
+    toast.success(`Đã thêm "${itemData.title || itemData.name}" vào giỏ hàng!`);
   };
 
   // Toggle wishlist handler
   const handleToggleWishlist = (product) => {
-    toggleWishlist(product.original || product);
+    const itemData = product.original || product;
+    const added = toggleWishlist(itemData);
+    if (added) {
+      toast.success(
+        `Đã thêm "${itemData.title || itemData.name}" vào danh sách yêu thích!`,
+      );
+    } else {
+      toast.info(
+        `Đã xóa "${itemData.title || itemData.name}" khỏi danh sách yêu thích.`,
+      );
+    }
   };
 
   // Chuẩn hóa danh sách sản phẩm theo prop của ProductCard
@@ -403,12 +409,6 @@ export default function ProductListPage() {
                           onAddToCart={handleAddToCart}
                           onClick={() => navigate(`/product/${prod.id}`)}
                         />
-
-                        {addprId === prod.id && (
-                          <p className="text-center text-[11px] font-bold text-emerald-700 bg-emerald-50 py-1.5 px-2 rounded-lg border border-emerald-200 animate-in fade-in duration-200">
-                            ✓ Đã thêm vào giỏ hàng thành công!
-                          </p>
-                        )}
                       </div>
                     ))}
                   </div>
@@ -496,11 +496,6 @@ export default function ProductListPage() {
                               Thêm giỏ
                             </Button>
                           </div>
-                          {addprId === prod.id && (
-                            <p className="text-right text-[11px] font-bold text-emerald-700 bg-emerald-50 py-1 px-2 rounded border border-emerald-200 animate-in fade-in">
-                              ✓ Đã thêm!
-                            </p>
-                          )}
                         </div>
                       </Card>
                     ))}

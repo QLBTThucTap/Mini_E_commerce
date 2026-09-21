@@ -12,6 +12,7 @@ import HeroShowcase from "./_components/HeroShowcase";
 import DealsOfDaySection from "./_components/DealsOfDaySection";
 
 import ProductCard from "../../Components/product/ProductCard";
+import { toast } from "react-toastify";
 import SectionHeader from "../../Components/common/SectionHeader";
 
 import { HERO_SLIDES } from "./_constants/hero";
@@ -22,7 +23,6 @@ export default function HomePage() {
   const navigate = useNavigate();
   const addItem = useCartStore((s) => s.addItem);
 
-  const [toastMessage, setToastMessage] = useState(null);
   const wishlistItems = useWishlistStore((s) => s.items);
   const toggleWishlist = useWishlistStore((s) => s.toggleItem);
   const [timeLeft, setTimeLeft] = useState({
@@ -98,30 +98,22 @@ export default function HomePage() {
       },
       1,
     );
-    setToastMessage(`Đã thêm "${item.title || item.name}" vào giỏ hàng`);
-    setTimeout(() => setToastMessage(null), 3000);
+    toast.success(`Đã thêm "${item.title || item.name}" vào giỏ hàng!`);
   };
 
   const handleToggleWishlist = (product) => {
     const item = product.original || product;
     const added = toggleWishlist(item);
-    setToastMessage(
-      added
-        ? `Đã thêm "${item.title || item.name}" vào danh sách yêu thích`
-        : `Đã xóa "${item.title || item.name}" khỏi danh sách yêu thích`,
-    );
-    setTimeout(() => setToastMessage(null), 3000);
+    if (added) {
+      toast.success(`Đã thêm "${item.title || item.name}" vào danh sách yêu thích!`);
+    } else {
+      toast.info(`Đã xóa "${item.title || item.name}" khỏi danh sách yêu thích.`);
+    }
   };
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
       <Header />
-
-      {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-[#0b1c30] text-white px-5 py-3 rounded-2xl shadow-xl text-xs animate-in fade-in">
-          ✓ {toastMessage}
-        </div>
-      )}
 
       <main className="max-w-[1360px] mx-auto px-4 py-6 space-y-12 flex-1 w-full">
         <HeroShowcase categoryLinks={CATEGORY_LINKS} heroSlides={HERO_SLIDES} />

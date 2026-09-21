@@ -8,6 +8,8 @@ import {
   updateOrder,
 } from "../../../../Services/orderService";
 import { getProducts } from "../../../../Services/productService";
+import { toast } from "react-toastify";
+import useAdminNotificationStore from "../../../../Stores/adminNotificationStore";
 
 import { orderSchema } from "../_schema/orderSchema";
 
@@ -92,17 +94,25 @@ function OrderFormModal({ order, onClose, onSaved }) {
 
       if (order) {
         await updateOrder(order.id, data);
+        toast.success(`Cập nhật đơn hàng #${order.id} thành công!`);
       } else {
-        await createOrderByAdmin(data);
+        const created = await createOrderByAdmin(data);
+        toast.success("Tạo đơn hàng mới thành công!");
+        useAdminNotificationStore.getState().addNotification({
+          type: "order",
+          title: "Đơn hàng mới tạo bởi Admin",
+          message: `Đơn hàng #${created?.id || ""} cho khách hàng "${data.shippingInfo?.fullName || ""}" đã được tạo.`,
+        });
       }
 
       await onSaved();
       onClose();
     } catch (error) {
-      setServerError(
+      const message =
         error.response?.data?.message ||
-          "Không thể lưu đơn hàng. Vui lòng thử lại.",
-      );
+        "Không thể lưu đơn hàng. Vui lòng thử lại.";
+      setServerError(message);
+      toast.error(message);
     }
   };
 

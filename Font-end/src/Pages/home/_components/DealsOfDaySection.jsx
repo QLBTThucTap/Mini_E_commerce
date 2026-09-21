@@ -25,11 +25,13 @@ export default function DealsOfDaySection({ product, timeLeft, onAddToCart }) {
           <span className="absolute top-3 left-3 z-10">
             <Badge tone="discount">SALE</Badge>
           </span>
-          <img
-            src={product.image}
-            alt={product.title}
-            className="max-h-60 object-contain hover:scale-105 transition-transform"
-          />
+          <Link to={`/product/${product.id}`}>
+            <img
+              src={product.image}
+              alt={product.title}
+              className="max-h-60 object-contain hover:scale-105 transition-transform"
+            />
+          </Link>
         </div>
 
         <div className="col-span-12 md:col-span-7 space-y-4">

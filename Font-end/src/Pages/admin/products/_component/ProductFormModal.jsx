@@ -7,6 +7,8 @@ import {
   updateProduct,
   getCategories,
 } from "../../../../Services/productService";
+import { toast } from "react-toastify";
+import useAdminNotificationStore from "../../../../Stores/adminNotificationStore";
 
 import { productSchema } from "../_schema/productSchema";
 
@@ -58,17 +60,27 @@ function ProductFormModal({ product, onClose, onSaved }) {
 
       if (product) {
         await updateProduct(product.id, data);
+        toast.success(`Cập nhật sản phẩm "${data.title}" thành công!`);
       } else {
         await createProduct(data);
+        toast.success(`Thêm sản phẩm "${data.title}" thành công!`);
+
+        // Gửi thông báo đến chuông Admin
+        useAdminNotificationStore.getState().addNotification({
+          type: "product",
+          title: "Sản phẩm mới",
+          message: `Đã thêm sản phẩm "${data.title}" (${data.category}) với giá $${Number(data.price).toFixed(2)}.`,
+        });
       }
 
       await onSaved();
       onClose();
     } catch (error) {
-      setServerError(
+      const message =
         error.response?.data?.message ||
-          "Không thể lưu sản phẩm. Vui lòng thử lại.",
-      );
+        "Không thể lưu sản phẩm. Vui lòng thử lại.";
+      setServerError(message);
+      toast.error(message);
     }
   };
 

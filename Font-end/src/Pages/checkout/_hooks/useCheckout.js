@@ -1,8 +1,11 @@
 import { useState, useMemo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 import useCartStore from "../../../Stores/cartStore";
 import useAuthStore from "../../../Stores/authStore";
+import useNotificationStore from "../../../Stores/notificationStore";
+import useAdminNotificationStore from "../../../Stores/adminNotificationStore";
 import { createOrder } from "../../../Services/orderService";
 import { checkoutFormSchema } from "../_schema/checkoutSchema";
 import {
@@ -21,6 +24,9 @@ export function useCheckout() {
   const cleanCart = useCartStore((state) => state.cleanCart);
   const user = useAuthStore((state) => state.user);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const addNotification = useNotificationStore(
+    (state) => state.addNotification,
+  );
 
   // Parse Initial Name
   const rawFullName =
@@ -94,12 +100,19 @@ export function useCheckout() {
     }
   }, []);
 
-  // Toast Helper
-  const showToast = useCallback((title, desc) => {
+  // Toast Helper – vừa set state (cho CheckoutToast inline), vừa fire react-toastify
+  const showToast = useCallback((title, desc, type = "info") => {
     setToastMessage({ title, desc });
     setTimeout(() => {
       setToastMessage(null);
     }, 4000);
+
+    // Cũng fire react-toastify để nhất quán toàn app
+    const message = desc ? `${title}: ${desc}` : title;
+    if (type === "success") toast.success(message);
+    else if (type === "error") toast.error(message);
+    else if (type === "warn") toast.warn(message);
+    else toast.info(message);
   }, []);
 
   // Handle Input Changes
@@ -237,12 +250,29 @@ export function useCheckout() {
         cleanCart();
         queryClient.invalidateQueries({ queryKey: ["user-orders"] });
 
+        // Thêm vào notification bell của user
+        const orderId = successInfo.orderId;
+        addNotification({
+          type: "order",
+          title: "Đặt hàng thành công! 🎉",
+          message: `Đơn hàng #${orderId} của bạn đã được ghi nhận. Tổng tiền: $${pricing.grandTotal.toFixed(2)}`,
+        });
+
+        // Thêm thông báo đến chuông của Admin
+        const customerName = fullName || "Khách vãng lai";
+        useAdminNotificationStore.getState().addNotification({
+          type: "order",
+          title: "Đơn hàng mới",
+          message: `Khách hàng ${customerName} vừa đặt đơn #${orderId} ($${pricing.grandTotal.toFixed(2)})`,
+        });
+
         if (paymentMethod === "bank") {
           setShowQrModal(true);
         } else {
           showToast(
             "Đặt hàng thành công!",
             "Đơn hàng của bạn đã được ghi nhận vào hệ thống.",
+            "success",
           );
         }
       } catch (err) {
@@ -251,6 +281,7 @@ export function useCheckout() {
           "Đặt hàng thất bại",
           err.response?.data?.message ||
             "Đã có lỗi xảy ra khi tạo đơn hàng. Vui lòng thử lại.",
+          "error",
         );
       } finally {
         setIsSubmitting(false);
@@ -267,6 +298,7 @@ export function useCheckout() {
       cleanCart,
       queryClient,
       showToast,
+      addNotification,
     ],
   );
 
@@ -276,7 +308,13 @@ export function useCheckout() {
     showToast(
       "Xác nhận đã thanh toán!",
       "Đang chuyển đến trang lịch sử đơn hàng của bạn...",
+      "success",
     );
+    addNotification({
+      type: "payment",
+      title: "Xác nhận thanh toán 💳",
+      message: "Bạn đã xác nhận thanh toán thành công. Cảm ơn bạn đã mua hàng!",
+    });
 
     setTimeout(() => {
       if (isAuthenticated) {
@@ -284,8 +322,8 @@ export function useCheckout() {
       } else {
         navigate("/login", { state: { from: "/account?tab=orders" } });
       }
-    }, 600);
-  }, [isAuthenticated, navigate, showToast]);
+    }, 60000);
+  }, [isAuthenticated, navigate, showToast, addNotification]);
 
   const qrCodeUrl = useMemo(() => {
     return generateQrCodeUrl(

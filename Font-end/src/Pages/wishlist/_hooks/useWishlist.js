@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback } from "react";
+import { toast } from "react-toastify";
 import useWishlistStore from "../../../Stores/wishlistStore";
 import useCartStore from "../../../Stores/cartStore";
 import {
@@ -16,17 +17,9 @@ export function useWishlist() {
 
   const addItemToCart = useCartStore((state) => state.addItem);
 
-  const [toastMessage, setToastMessage] = useState(null);
   const [addedItemIds, setAddedItemIds] = useState(new Set());
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("default");
-
-  const showToast = useCallback((message) => {
-    setToastMessage(message);
-    setTimeout(() => {
-      setToastMessage(null);
-    }, 3000);
-  }, []);
 
   // Thêm 1 sản phẩm vào giỏ hàng
   const handleAddToCart = useCallback(
@@ -50,9 +43,9 @@ export function useWishlist() {
         });
       }, 2000);
 
-      showToast(`Đã thêm "${item.title || item.name}" vào giỏ hàng!`);
+      toast.success(`Đã thêm "${item.title || item.name}" vào giỏ hàng!`);
     },
-    [addItemToCart, showToast],
+    [addItemToCart],
   );
 
   // Thêm tất cả sản phẩm vào giỏ hàng
@@ -71,23 +64,25 @@ export function useWishlist() {
       );
     });
 
-    showToast(`Đã thêm tất cả ${items.length} sản phẩm vào giỏ hàng!`);
-  }, [items, addItemToCart, showToast]);
+    toast.success(`Đã thêm tất cả ${items.length} sản phẩm vào giỏ hàng!`);
+  }, [items, addItemToCart]);
 
   // Xóa 1 sản phẩm khỏi danh sách yêu thích
   const handleRemoveItem = useCallback(
     (item) => {
       removeItem(item.id);
-      showToast(`Đã gỡ "${item.title || item.name}" khỏi danh sách yêu thích`);
+      toast.error(
+        `Đã gỡ "${item.title || item.name}" khỏi danh sách yêu thích`,
+      );
     },
-    [removeItem, showToast],
+    [removeItem],
   );
 
   // Xóa tất cả sản phẩm trong wishlist
   const handleClearAll = useCallback(() => {
     clearWishlist();
-    showToast("Đã làm trống danh sách yêu thích");
-  }, [clearWishlist, showToast]);
+    toast.error("Đã làm trống danh sách yêu thích");
+  }, [clearWishlist]);
 
   // Thống kê tóm tắt
   const summary = useMemo(() => calculateWishlistSummary(items), [items]);
@@ -103,13 +98,11 @@ export function useWishlist() {
     displayedItems,
     summary,
     isEmpty: items.length === 0,
-    toastMessage,
     addedItemIds,
     searchTerm,
     setSearchTerm,
     sortBy,
     setSortBy,
-    showToast,
     handleAddToCart,
     handleAddAllToCart,
     handleRemoveItem,

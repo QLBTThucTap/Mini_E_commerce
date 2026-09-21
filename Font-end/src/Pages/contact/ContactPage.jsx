@@ -1,44 +1,21 @@
-import { useState } from "react";
 import Header from "../../Layouts/Header";
 import Footer from "../../Layouts/Footer";
 import Card from "../../Components/ui/Card";
 import { FOOTER_BRAND, FOOTER_COLUMNS } from "../home/_constants/footer";
-
+import { toast } from "react-toastify";
 import ContactBreadcrumb from "./_components/ContactBreadcrumb";
 import ContactForm from "./_components/ContactForm";
 import ContactInfoCard from "./_components/ContactInfoCard";
 import ContactMapSection from "./_components/ContactMapSection";
 
 export default function ContactPage() {
-  const [toastMessage, setToastMessage] = useState(null);
-
   const handleFormSuccess = (msg) => {
-    setToastMessage(msg);
-    setTimeout(() => {
-      setToastMessage(null);
-    }, 4500);
+    toast.success(msg || "Gửi lời nhắn thành công");
   };
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
       <Header />
-
-      {/* Toast Notification */}
-      {toastMessage && (
-        <div className="fixed bottom-6 right-4 left-4 sm:left-auto sm:right-6 sm:max-w-md z-50 bg-[#0b1c30] text-white px-5 py-3.5 rounded-2xl shadow-xl text-xs flex items-start gap-3 border border-slate-700 animate-in fade-in duration-300">
-          <span className="w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
-            ✓
-          </span>
-          <div className="flex-1 leading-relaxed">{toastMessage}</div>
-          <button
-            type="button"
-            onClick={() => setToastMessage(null)}
-            className="text-slate-400 hover:text-white text-sm"
-          >
-            ✕
-          </button>
-        </div>
-      )}
 
       {/* Breadcrumb Navigation */}
       <ContactBreadcrumb />
@@ -57,7 +34,9 @@ export default function ContactPage() {
               READY TO WORK WITH US
             </h1>
             <p className="text-xs sm:text-sm text-slate-500 mt-2 max-w-2xl leading-relaxed">
-              Bạn có câu hỏi về sản phẩm, chính sách bảo hành hay cần tư vấn giải pháp công nghệ? Hãy để lại tin nhắn hoặc ghé thăm hệ thống showroom của chúng tôi.
+              Bạn có câu hỏi về sản phẩm, chính sách bảo hành hay cần tư vấn
+              giải pháp công nghệ? Hãy để lại tin nhắn hoặc ghé thăm hệ thống
+              showroom của chúng tôi.
             </p>
 
             {/* Quick Assurance Badges - Optimized for mobile & tablet */}
@@ -67,8 +46,12 @@ export default function ContactPage() {
                   <i className="fa-solid fa-headset text-xs" />
                 </div>
                 <div className="min-w-0">
-                  <div className="font-bold text-slate-900 text-[11px] sm:text-xs truncate">Hỗ trợ 24/7</div>
-                  <div className="text-[10px] text-slate-400 truncate">Tư vấn tức thì</div>
+                  <div className="font-bold text-slate-900 text-[11px] sm:text-xs truncate">
+                    Hỗ trợ 24/7
+                  </div>
+                  <div className="text-[10px] text-slate-400 truncate">
+                    Tư vấn tức thì
+                  </div>
                 </div>
               </div>
 
@@ -77,8 +60,12 @@ export default function ContactPage() {
                   <i className="fa-solid fa-shield-check text-xs" />
                 </div>
                 <div className="min-w-0">
-                  <div className="font-bold text-slate-900 text-[11px] sm:text-xs truncate">Chính Hãng 100%</div>
-                  <div className="text-[10px] text-slate-400 truncate">Bảo hành 12-36T</div>
+                  <div className="font-bold text-slate-900 text-[11px] sm:text-xs truncate">
+                    Chính Hãng 100%
+                  </div>
+                  <div className="text-[10px] text-slate-400 truncate">
+                    Bảo hành 12-36T
+                  </div>
                 </div>
               </div>
 
@@ -87,8 +74,12 @@ export default function ContactPage() {
                   <i className="fa-solid fa-bolt text-xs" />
                 </div>
                 <div className="min-w-0">
-                  <div className="font-bold text-slate-900 text-[11px] sm:text-xs truncate">Phản Hồi Nhanh</div>
-                  <div className="text-[10px] text-slate-400 truncate">Trong 2-4 giờ</div>
+                  <div className="font-bold text-slate-900 text-[11px] sm:text-xs truncate">
+                    Phản Hồi Nhanh
+                  </div>
+                  <div className="text-[10px] text-slate-400 truncate">
+                    Trong 2-4 giờ
+                  </div>
                 </div>
               </div>
 
@@ -97,8 +88,12 @@ export default function ContactPage() {
                   <i className="fa-solid fa-truck-fast text-xs" />
                 </div>
                 <div className="min-w-0">
-                  <div className="font-bold text-slate-900 text-[11px] sm:text-xs truncate">Giao Toàn Quốc</div>
-                  <div className="text-[10px] text-slate-400 truncate">Miễn phí từ $199</div>
+                  <div className="font-bold text-slate-900 text-[11px] sm:text-xs truncate">
+                    Giao Toàn Quốc
+                  </div>
+                  <div className="text-[10px] text-slate-400 truncate">
+                    Miễn phí từ $199
+                  </div>
                 </div>
               </div>
             </div>
@@ -113,7 +108,8 @@ export default function ContactPage() {
                   Gửi lời nhắn cho chúng tôi
                 </h2>
                 <p className="text-xs text-slate-500">
-                  Vui lòng điền các thông tin bên dưới, nhân viên hỗ trợ sẽ liên hệ với bạn trong thời gian sớm nhất.
+                  Vui lòng điền các thông tin bên dưới, nhân viên hỗ trợ sẽ liên
+                  hệ với bạn trong thời gian sớm nhất.
                 </p>
               </div>
 

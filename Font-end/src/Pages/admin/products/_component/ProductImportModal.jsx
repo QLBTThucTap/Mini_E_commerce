@@ -1,5 +1,7 @@
 import { useState } from "react";
 import * as XLSX from "xlsx";
+import { toast } from "react-toastify";
+import useAdminNotificationStore from "../../../../Stores/adminNotificationStore";
 
 import { createProduct } from "../../../../Services/productService";
 import { productSchema } from "../_schema/productSchema";
@@ -81,13 +83,21 @@ function ProductImportModal({ onClose, onImported }) {
         await createProduct(row.data);
       }
 
+      toast.success(`Import thành công ${validRows.length} sản phẩm!`);
+      useAdminNotificationStore.getState().addNotification({
+        type: "product",
+        title: "Import sản phẩm",
+        message: `Đã import thành công ${validRows.length} sản phẩm từ file Excel.`,
+      });
+
       await onImported();
       onClose();
     } catch (error) {
-      setFileError(
+      const message =
         error.response?.data?.message ||
-          "Import bị dừng. Một số sản phẩm có thể đã được thêm.",
-      );
+        "Import bị dừng. Một số sản phẩm có thể đã được thêm.";
+      setFileError(message);
+      toast.error(message);
     } finally {
       setIsImporting(false);
     }

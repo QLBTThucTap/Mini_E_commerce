@@ -1,18 +1,60 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import useAuthStore from "../Stores/authStore";
 import useCartStore from "../Stores/cartStore";
 import useWishlistStore from "../Stores/wishlistStore";
 import TopBar from "./TopBar";
 import { Link, useNavigate } from "react-router-dom";
 import brandLogo from "../assets/brand.ico";
+import UserNotificationBell from "../Components/ui/UserNotificationBell";
 
 export default function Header({ onSearch }) {
   const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const logout = useAuthStore((state) => state.logout);
+
+  // --- STATE VÀ XỬ LÝ ẨN/HIỆN HEADER KHI CUỘN ---
+  const [isVisible, setIsVisible] = useState(true);
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // 1. Luôn hiện nếu đang ở gần đỉnh trang (khoảng cách < 50px)
+      if (currentScrollY < 50) {
+        setIsVisible(true);
+        lastScrollY = currentScrollY;
+      }
+
+      // 2. Cuộn lên -> Hiển thị Header
+      if (currentScrollY < lastScrollY) {
+        setIsVisible(true);
+      }
+      // 3. Cuộn xuống -> Ẩn Header
+      else if (currentScrollY > lastScrollY) {
+        setIsVisible(false);
+      }
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const handleLogout = () => {
     logout();
+    toast.info("Bạn đã đăng xuất thành công.");
     navigate("/");
+  };
+
+  // Guard: yêu cầu đăng nhập để vào Cart/Wishlist
+  const handleProtectedLink = (e) => {
+    if (!isAuthenticated) {
+      e.preventDefault();
+      toast.warn("Yêu cầu đăng nhập để truy cập vào");
+    }
   };
 
   const [searchInput, setSearchInput] = useState("");
@@ -41,8 +83,12 @@ export default function Header({ onSearch }) {
   };
 
   return (
-    <>
-      <header className="w-full bg-white shadow-xs border-b border-slate-100 relative z-30">
+    <div
+      className={`sticky top-0 z-50 w-full transition-transform duration-300 ease-in-out ${
+        isVisible ? "translate-y-0" : "-translate-y-full"
+      }`}
+    >
+      <header className="w-full bg-white shadow-xs border-b border-slate-100 relative">
         {/* Top Micro Bar */}
         <TopBar />
 
@@ -52,7 +98,7 @@ export default function Header({ onSearch }) {
           <div className="flex items-center justify-between w-full md:w-auto">
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2 group">
-              <img src={brandLogo} className="w-20 h-20"></img>
+              <img src={brandLogo} className="w-20 h-20" alt="Brand Logo" />
               <div>
                 <div className="text-2xl font-extrabold tracking-tight text-slate-900 leading-none">
                   Lã Ngọc Huyền
@@ -65,8 +111,11 @@ export default function Header({ onSearch }) {
 
             {/* Quick Cart on Mobile */}
             <div className="flex items-center space-x-3 md:hidden">
+              {user && <UserNotificationBell />}
+
               <Link
                 to="/wishlist"
+                onClick={handleProtectedLink}
                 className="relative w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition"
               >
                 <i
@@ -85,6 +134,7 @@ export default function Header({ onSearch }) {
 
               <Link
                 to="/cart"
+                onClick={handleProtectedLink}
                 className="relative w-9 h-9 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow"
               >
                 <i className="fa-solid fa-bag-shopping text-sm" />
@@ -107,6 +157,7 @@ export default function Header({ onSearch }) {
             </Link>
             <Link
               to="/cart"
+              onClick={handleProtectedLink}
               className="flex items-center space-x-1 cursor-pointer hover:text-emerald-600 transition shrink-0"
             >
               <span>PAGES</span>
@@ -135,15 +186,11 @@ export default function Header({ onSearch }) {
           <div className="hidden md:flex items-center space-x-5">
             {/* Quick Actions */}
             <div className="flex items-center space-x-3 text-slate-600">
-              <button
-                type="button"
-                className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition cursor-pointer"
-                title="Notifications"
-              >
-                <i className="fa-regular fa-bell text-sm" />
-              </button>
+              {user && <UserNotificationBell />}
+
               <Link
                 to="/wishlist"
+                onClick={handleProtectedLink}
                 className="relative w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition text-slate-600 cursor-pointer"
                 title="Wishlist"
               >
@@ -215,6 +262,7 @@ export default function Header({ onSearch }) {
             {/* Cart Box */}
             <Link
               to="/cart"
+              onClick={handleProtectedLink}
               className="flex items-center space-x-2.5 pl-3 border-l border-slate-200 cursor-pointer group"
             >
               <div className="relative w-9 h-9 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow group-hover:bg-emerald-700 transition">
@@ -238,8 +286,8 @@ export default function Header({ onSearch }) {
         </div>
       </header>
 
-      {/* Green Sub-Bar with Search and Guarantees — Sticky at top on scroll */}
-      <div className="bg-emerald-600 text-white sticky top-0 z-40 shadow-md">
+      {/* Green Sub-Bar with Search and Guarantees */}
+      <div className="bg-emerald-600 text-white shadow-md">
         <div className="max-w-7xl mx-auto px-4 lg:px-8 py-2.5 flex flex-col md:flex-row items-center justify-between gap-4">
           {/* Category & Search Box */}
           <form
@@ -294,6 +342,6 @@ export default function Header({ onSearch }) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

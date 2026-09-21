@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getAllOrders } from "../../../Services/orderService";
 import { getProducts } from "../../../Services/productService";
 import { deleteOrder } from "../../../Services/orderService";
+import { toast } from "react-toastify";
 import OrderFormModal from "./_component/OrderFormModal";
 
 const PAGE_SIZE = 10;
@@ -46,9 +47,10 @@ function OrderManagementPage() {
     mutationFn: (orderId) => deleteOrder(orderId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-orders"] });
+      toast.success("Xóa đơn hàng thành công!");
     },
     onError: (error) => {
-      window.alert(error.response?.data?.message || "Không thể xóa đơn hàng.");
+      toast.error(error.response?.data?.message || "Không thể xóa đơn hàng.");
     },
   });
 

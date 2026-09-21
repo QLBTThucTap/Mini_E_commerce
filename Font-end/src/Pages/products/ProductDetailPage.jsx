@@ -16,6 +16,7 @@ import FrequentlyBoughtTogether from "./_detail_components/FrequentlyBoughtToget
 import ProductDetailTabs from "./_detail_components/ProductDetailTabs";
 import RelatedProducts from "./_detail_components/RelatedProducts";
 import RecentlyViewedProducts from "./_detail_components/RecentlyViewedProducts";
+import { toast } from "react-toastify";
 
 export default function ProductDetailPage() {
   const { productId } = useParams();
@@ -25,7 +26,6 @@ export default function ProductDetailPage() {
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [message, setMessage] = useState("");
 
   const addItem = useCartStore((state) => state.addItem);
   const toggleWishlist = useWishlistStore((state) => state.toggleItem);
@@ -70,23 +70,23 @@ export default function ProductDetailPage() {
   const handleAddToCart = () => {
     if (!product) return;
     addItem(product, quantity);
-    setMessage(`Đã thêm ${quantity} sản phẩm vào giỏ hàng thành công!`);
-    setTimeout(() => {
-      setMessage("");
-    }, 2500);
+    toast.success(
+      `Đã thêm ${quantity} sản phẩm "${product.title || product.name}" vào giỏ hàng!`,
+    );
   };
 
   const handleToggleWishlist = () => {
     if (!product) return;
     const added = toggleWishlist(product);
-    setMessage(
-      added
-        ? "Đã thêm sản phẩm vào danh sách yêu thích!"
-        : "Đã xóa sản phẩm khỏi danh sách yêu thích!",
-    );
-    setTimeout(() => {
-      setMessage("");
-    }, 2500);
+    if (added) {
+      toast.success(
+        `Đã thêm "${product.title || product.name}" vào danh sách yêu thích`,
+      );
+    } else {
+      toast.error(
+        `Đã xóa "${product.title || product.name}" khỏi danh sách yêu thích`,
+      );
+    }
   };
 
   return (
@@ -148,7 +148,6 @@ export default function ProductDetailPage() {
                   onAddToCart={handleAddToCart}
                   onToggleWishlist={handleToggleWishlist}
                   isWishlisted={isWishlisted}
-                  message={message}
                 />
               </div>
             </section>

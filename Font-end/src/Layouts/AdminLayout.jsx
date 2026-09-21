@@ -1,6 +1,7 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import useAuthStore from "../Stores/authStore";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import AdminNotificationBell from "../Components/ui/AdminNotificationBell";
 function AdminLayout() {
   const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
@@ -110,8 +111,31 @@ function AdminLayout() {
         </div>
       </aside>
 
-      <section className="min-w-0 flex-1">
-        <Outlet />
+      <section className="min-w-0 flex-1 flex flex-col">
+        {/* Admin Top Header */}
+        <header className="sticky top-0 z-30 bg-white border-b border-slate-200 shadow-sm">
+          <div className="px-6 py-3 flex items-center justify-between">
+            <div className="text-sm font-semibold text-slate-600">
+              <i className="fa-solid fa-shield-check text-emerald-600 mr-2" />
+              Trang quản trị
+            </div>
+            <div className="flex items-center gap-4">
+              {/* Admin Notification Bell */}
+              <AdminNotificationBell />
+              {/* Admin name */}
+              <div className="hidden sm:flex items-center gap-2 text-sm text-slate-600">
+                <div className="w-7 h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs font-bold">
+                  {displayName?.charAt(0)?.toUpperCase() || "A"}
+                </div>
+                <span className="font-semibold">{displayName}</span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <div className="flex-1">
+          <Outlet />
+        </div>
       </section>
 
       <ReactQueryDevtools initialIsOpen={false} />

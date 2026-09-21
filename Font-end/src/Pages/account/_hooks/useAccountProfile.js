@@ -1,10 +1,10 @@
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useAuthStore from "../../../Stores/authStore";
 import { updateUser } from "../../../Services/userService";
 import { profileSchema } from "../_schema/accountSchema";
+import { toast } from "react-toastify";
 
 export function useAccountProfile() {
   const queryClient = useQueryClient();
@@ -12,7 +12,6 @@ export function useAccountProfile() {
   const loginAction = useAuthStore((state) => state.login);
   const accessToken = useAuthStore((state) => state.accessToken);
   const refreshToken = useAuthStore((state) => state.refreshToken);
-  const [saveSuccess, setSaveSuccess] = useState("");
 
   const displayName =
     user?.fullName ||
@@ -42,9 +41,15 @@ export function useAccountProfile() {
     mutationFn: (data) => updateUser(user.id, data),
     onSuccess: (updated) => {
       loginAction({ user: { ...user, ...updated }, accessToken, refreshToken });
-      setSaveSuccess("Cập nhật thông tin thành công!");
       queryClient.invalidateQueries({ queryKey: ["account-profile"] });
-      setTimeout(() => setSaveSuccess(""), 3000);
+      toast.success("Cập nhật thông tin thành công!");
+    },
+
+    onError: (error) => {
+      toast.error(
+        error.response?.data?.message ||
+          "Cập nhật thông tin thất bại, vui lòng thử lại sau!",
+      );
     },
   });
 
@@ -65,7 +70,6 @@ export function useAccountProfile() {
   return {
     user,
     displayName,
-    saveSuccess,
     formMethods,
     updateMutation,
     onProfileSubmit,

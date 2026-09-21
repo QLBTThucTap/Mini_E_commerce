@@ -6,6 +6,7 @@ import {
   deleteUser,
   toggleLockUser,
 } from "../../../Services/userService";
+import { toast } from "react-toastify";
 import UserFormModal from "./_component/UserFormModal";
 
 const PAGE_SIZE = 10;
@@ -44,19 +45,25 @@ function UserManagementPage() {
     mutationFn: (userId) => deleteUser(userId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-users"] });
+      toast.success("Xóa người dùng thành công!");
     },
     onError: (err) => {
-      window.alert(err.response?.data?.message || "Không thể xóa người dùng.");
+      toast.error(err.response?.data?.message || "Không thể xóa người dùng.");
     },
   });
 
   const lockMutation = useMutation({
     mutationFn: ({ userId, isLocked }) => toggleLockUser(userId, isLocked),
-    onSuccess: () => {
+    onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["admin-users"] });
+      toast.success(
+        variables.isLocked
+          ? "Đã khóa tài khoản thành công!"
+          : "Đã mở khóa tài khoản thành công!",
+      );
     },
     onError: (err) => {
-      window.alert(
+      toast.error(
         err.response?.data?.message ||
           "Không thể đổi trạng thái khóa của tài khoản.",
       );

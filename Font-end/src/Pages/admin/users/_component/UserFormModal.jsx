@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createUser, updateUser } from "../../../../Services/userService";
+import { toast } from "react-toastify";
+import useAdminNotificationStore from "../../../../Stores/adminNotificationStore";
 import { createUserSchema, updateUserSchema } from "../_schema/userSchema";
 
 const defaultValues = {
@@ -90,8 +92,15 @@ function UserFormModal({ user, currentUserId, onClose, onSaved }) {
 
       if (isEditing) {
         await updateUser(user.id, payload);
+        toast.success(`Cập nhật tài khoản "${payload.fullName}" thành công!`);
       } else {
         await createUser(payload);
+        toast.success(`Tạo tài khoản "${payload.fullName}" thành công!`);
+        useAdminNotificationStore.getState().addNotification({
+          type: "user",
+          title: "Thêm tài khoản mới",
+          message: `Admin đã tạo tài khoản "${payload.fullName}" (${payload.email}) với vai trò ${payload.role}.`,
+        });
       }
 
       await onSaved();
@@ -103,6 +112,7 @@ function UserFormModal({ user, currentUserId, onClose, onSaved }) {
           ? "Không thể cập nhật tài khoản. Vui lòng thử lại."
           : "Không thể tạo tài khoản. Vui lòng thử lại.");
       setServerError(message);
+      toast.error(message);
     }
   };
 

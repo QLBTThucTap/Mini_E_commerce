@@ -7,6 +7,7 @@ import {
 } from "@tanstack/react-query";
 
 import { deleteProduct, getProducts } from "../../../Services/productService";
+import { toast } from "react-toastify";
 import ProductImportModal from "./_component/ProductImportModal";
 import ProductFormModal from "./_component/ProductFormModal";
 
@@ -49,9 +50,10 @@ function ProductManagementPage() {
     mutationFn: (productId) => deleteProduct(productId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
+      toast.success("Xóa sản phẩm thành công!");
     },
     onError: (error) => {
-      window.alert(error.response?.data?.message || "Không thể xóa sản phẩm.");
+      toast.error(error.response?.data?.message || "Không thể xóa sản phẩm.");
     },
   });
 
