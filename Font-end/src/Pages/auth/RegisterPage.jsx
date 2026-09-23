@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import Header from "../../Layouts/Header";
 import Footer from "../../Layouts/Footer";
@@ -221,7 +222,7 @@ export default function RegisterPage() {
                         href="#terms"
                         onClick={(e) => {
                           e.preventDefault();
-                          alert(
+                          toast.info(
                             "Điều khoản dịch vụ bảo mật thông tin chuẩn quốc tế của SWOO Tech Mart.",
                           );
                         }}
@@ -234,7 +235,7 @@ export default function RegisterPage() {
                         href="#privacy"
                         onClick={(e) => {
                           e.preventDefault();
-                          alert(
+                          toast.info(
                             "Chính sách quyền riêng tư bảo đảm không chia sẻ dữ liệu người dùng.",
                           );
                         }}

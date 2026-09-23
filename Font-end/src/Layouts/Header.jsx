@@ -7,6 +7,7 @@ import TopBar from "./TopBar";
 import { Link, useNavigate } from "react-router-dom";
 import brandLogo from "../assets/brand.ico";
 import UserNotificationBell from "../Components/ui/UserNotificationBell";
+import AdminNotificationBell from "../Components/ui/AdminNotificationBell";
 
 export default function Header({ onSearch }) {
   const navigate = useNavigate();
@@ -111,7 +112,12 @@ export default function Header({ onSearch }) {
 
             {/* Quick Cart on Mobile */}
             <div className="flex items-center space-x-3 md:hidden">
-              {user && <UserNotificationBell />}
+              {user &&
+                (user.role === "admin" ? (
+                  <AdminNotificationBell />
+                ) : (
+                  <UserNotificationBell />
+                ))}
 
               <Link
                 to="/wishlist"
@@ -186,7 +192,12 @@ export default function Header({ onSearch }) {
           <div className="hidden md:flex items-center space-x-5">
             {/* Quick Actions */}
             <div className="flex items-center space-x-3 text-slate-600">
-              {user && <UserNotificationBell />}
+              {user &&
+                (user.role === "admin" ? (
+                  <AdminNotificationBell />
+                ) : (
+                  <UserNotificationBell />
+                ))}
 
               <Link
                 to="/wishlist"

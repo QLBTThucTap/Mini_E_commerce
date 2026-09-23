@@ -1,10 +1,12 @@
+import { toast } from "react-toastify";
+
 export default function SocialAuthButtons() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
       <button
         type="button"
         className="flex items-center justify-center gap-2.5 px-4 py-2.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold transition-all shadow-2xs hover:border-slate-300 cursor-pointer"
-        onClick={() => alert("Tính năng đăng nhập với Google đang được nâng cấp!")}
+        onClick={() => toast.info("Tính năng đăng nhập với Google đang được nâng cấp!")}
       >
         <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
           <path
@@ -30,7 +32,7 @@ export default function SocialAuthButtons() {
       <button
         type="button"
         className="flex items-center justify-center gap-2.5 px-4 py-2.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-800 text-xs font-bold transition-all shadow-2xs hover:border-slate-300 cursor-pointer"
-        onClick={() => alert("Tính năng đăng nhập với Apple đang được nâng cấp!")}
+        onClick={() => toast.info("Tính năng đăng nhập với Apple đang được nâng cấp!")}
       >
         <i className="fa-brands fa-apple text-base shrink-0" />
         <span>Apple</span>

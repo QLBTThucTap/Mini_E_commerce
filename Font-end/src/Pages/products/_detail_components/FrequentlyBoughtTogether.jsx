@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { toast } from "react-toastify";
 import PriceTag from "../../../Components/ui/PriceTag";
 import Button from "../../../Components/ui/Button";
 import useCartStore from "../../../Stores/cartStore";
@@ -71,6 +72,9 @@ export default function FrequentlyBoughtTogether({ product }) {
       );
     });
 
+    toast.success(
+      `Đã thêm ${selectedItems.length} sản phẩm combo vào giỏ hàng!`,
+    );
     setAddedMessage(
       `✓ Đã thêm ${selectedItems.length} sản phẩm combo vào giỏ!`,
     );

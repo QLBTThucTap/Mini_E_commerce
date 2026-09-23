@@ -4,6 +4,7 @@ import PriceTag from "../ui/PriceTag";
 import StockStatus from "../ui/StockStatus";
 import Button from "../ui/Button";
 import useWishlistStore from "../../Stores/wishlistStore";
+import { toast } from "react-toastify";
 
 /**
  * product: {
@@ -93,7 +94,15 @@ export default function ProductCard({
               if (onAddToWishlist) {
                 onAddToWishlist(product);
               } else {
-                toggleWishlist(product.original || product);
+                const target = product.original || product;
+                const added = toggleWishlist(target);
+                if (added) {
+                  toast.success(
+                    `Đã thêm "${name}" vào danh sách yêu thích!`,
+                  );
+                } else {
+                  toast.info(`Đã xóa "${name}" khỏi danh sách yêu thích.`);
+                }
               }
             }}
             className={[

@@ -1,6 +1,9 @@
 // Font-end/src/Components/ui/UserNotificationBell.jsx
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
 import useNotificationStore from "../../Stores/notificationStore";
+import useAuthStore from "../../Stores/authStore";
+import { getOrdersByUser } from "../../Services/orderService";
 
 // Icon map theo loại notification
 const TYPE_ICON = {
@@ -10,6 +13,7 @@ const TYPE_ICON = {
 };
 
 function timeAgo(isoString) {
+  if (!isoString) return "Vừa xong";
   const diff = Date.now() - new Date(isoString).getTime();
   const minutes = Math.floor(diff / 60000);
   if (minutes < 1) return "Vừa xong";
@@ -25,13 +29,54 @@ export default function UserNotificationBell() {
   const panelRef = useRef(null);
   const buttonRef = useRef(null);
 
-  const notifications = useNotificationStore((s) => s.notifications);
-  const unreadCount = useNotificationStore(
-    (s) => s.notifications.filter((n) => !n.read).length,
-  );
+  const user = useAuthStore((s) => s.user);
+  const allNotifications = useNotificationStore((s) => s.notifications);
+  const addNotification = useNotificationStore((s) => s.addNotification);
   const markAllRead = useNotificationStore((s) => s.markAllRead);
   const markRead = useNotificationStore((s) => s.markRead);
   const clearAll = useNotificationStore((s) => s.clearAll);
+
+  // Tự động đồng bộ các đơn hàng của user từ server nếu chưa có trong chuông
+  const { data: userOrders } = useQuery({
+    queryKey: ["user-orders-bell", user?.id],
+    queryFn: () => getOrdersByUser(user.id),
+    enabled: Boolean(user?.id),
+    staleTime: 60 * 1000,
+  });
+
+  useEffect(() => {
+    if (!Array.isArray(userOrders) || userOrders.length === 0) return;
+
+    userOrders.forEach((order) => {
+      const exists = allNotifications.some(
+        (n) => n.orderId === order.id || n.message?.includes(`#${order.id}`),
+      );
+      if (!exists) {
+        addNotification({
+          userId: user?.id,
+          orderId: order.id,
+          type: "order",
+          title: "Đơn hàng của bạn",
+          message: `Đơn hàng #${order.id} trị giá $${Number(order.total || 0).toFixed(2)} (${order.status || "pending"})`,
+          createdAt: order.createdAt || new Date().toISOString(),
+          read: true, // đơn cũ đồng bộ về mặc định coi như đã biết
+        });
+      }
+    });
+  }, [userOrders, allNotifications, addNotification, user?.id]);
+
+  // Lọc thông báo theo user hiện tại
+  const notifications = useMemo(() => {
+    if (!user) return [];
+    return allNotifications.filter(
+      (n) => !n.userId || Number(n.userId) === Number(user.id),
+    );
+  }, [allNotifications, user]);
+
+  const unreadCount = useMemo(
+    () => notifications.filter((n) => !n.read).length,
+    [notifications],
+  );
 
   // Đóng dropdown khi click bên ngoài
   useEffect(() => {
@@ -114,7 +159,7 @@ export default function UserNotificationBell() {
           </div>
 
           {/* Notification List */}
-          <div className="max-h-80 overflow-y-auto divide-y divide-slate-50 absolute z-10">
+          <div className="max-h-80 overflow-y-auto divide-y divide-slate-100">
             {notifications.length === 0 ? (
               <div className="py-10 text-center text-sm text-slate-400">
                 <i className="fa-regular fa-bell-slash text-2xl mb-2 block" />
@@ -128,13 +173,13 @@ export default function UserNotificationBell() {
                     key={n.id}
                     type="button"
                     onClick={() => handleMarkRead(n.id)}
-                    className={`w-full text-left flex items-start gap-3 px-4 py-3 hover:bg-slate-50 transition ${
+                    className={`w-full text-left flex items-start gap-3 px-4 py-3 hover:bg-slate-50 transition cursor-pointer ${
                       !n.read ? "bg-emerald-50/40" : ""
                     }`}
                   >
                     {/* Icon */}
                     <div
-                      className={`mt-0.5 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center shrink-0`}
+                      className="mt-0.5 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center shrink-0"
                     >
                       <i
                         className={`${typeInfo.icon} ${typeInfo.color} text-xs`}
@@ -146,7 +191,7 @@ export default function UserNotificationBell() {
                       <p className="text-xs font-bold text-slate-800 leading-tight">
                         {n.title}
                       </p>
-                      <p className="text-xs text-slate-500 mt-0.5 leading-snug line-clamp-2">
+                      <p className="text-xs text-slate-600 mt-1 leading-relaxed break-words">
                         {n.message}
                       </p>
                       <p className="text-[10px] text-slate-400 mt-1">
@@ -156,7 +201,7 @@ export default function UserNotificationBell() {
 
                     {/* Unread dot */}
                     {!n.read && (
-                      <div className="w-2 h-2 rounded-full bg-emerald-500 shrink-0 mt-1" />
+                      <div className="w-2 h-2 rounded-full bg-emerald-500 shrink-0 mt-1.5" />
                     )}
                   </button>
                 );

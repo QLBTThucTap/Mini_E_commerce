@@ -1,6 +1,9 @@
 // Font-end/src/Components/ui/AdminNotificationBell.jsx
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
 import useAdminNotificationStore from "../../Stores/adminNotificationStore";
+import useAuthStore from "../../Stores/authStore";
+import { getAllOrders } from "../../Services/orderService";
 
 // Icon map theo loại notification admin
 const TYPE_ICON = {
@@ -27,6 +30,7 @@ const TYPE_ICON = {
 };
 
 function timeAgo(isoString) {
+  if (!isoString) return "Vừa xong";
   const diff = Date.now() - new Date(isoString).getTime();
   const minutes = Math.floor(diff / 60000);
   if (minutes < 1) return "Vừa xong";
@@ -42,13 +46,51 @@ export default function AdminNotificationBell() {
   const panelRef = useRef(null);
   const buttonRef = useRef(null);
 
+  const user = useAuthStore((s) => s.user);
   const notifications = useAdminNotificationStore((s) => s.notifications);
-  const unreadCount = useAdminNotificationStore(
-    (s) => s.notifications.filter((n) => !n.read).length,
-  );
+  const addNotification = useAdminNotificationStore((s) => s.addNotification);
   const markAllRead = useAdminNotificationStore((s) => s.markAllRead);
   const markRead = useAdminNotificationStore((s) => s.markRead);
   const clearAll = useAdminNotificationStore((s) => s.clearAll);
+
+  // Tự động kiểm tra đơn hàng mới từ database backend mỗi 10 giây khi là admin
+  const { data: serverOrders } = useQuery({
+    queryKey: ["admin-orders-bell"],
+    queryFn: getAllOrders,
+    enabled: user?.role === "admin",
+    refetchInterval: 10000,
+    staleTime: 5000,
+  });
+
+  useEffect(() => {
+    if (!Array.isArray(serverOrders) || serverOrders.length === 0) return;
+
+    // Lọc và duyệt các đơn hàng gần đây (đặc biệt là đơn pending hoặc mới)
+    serverOrders.forEach((order) => {
+      const exists = notifications.some(
+        (n) => n.orderId === order.id || n.message?.includes(`#${order.id}`),
+      );
+      if (!exists) {
+        const customerName =
+          order.shippingInfo?.fullName ||
+          order.shippingInfo?.firstName ||
+          (order.userId ? `User #${order.userId}` : "Khách hàng");
+        addNotification({
+          type: "order",
+          orderId: order.id,
+          title: "Đơn hàng mới",
+          message: `Khách hàng ${customerName} vừa đặt đơn #${order.id} ($${Number(order.total || 0).toFixed(2)})`,
+          createdAt: order.createdAt || new Date().toISOString(),
+          read: false,
+        });
+      }
+    });
+  }, [serverOrders, notifications, addNotification]);
+
+  const unreadCount = useMemo(
+    () => notifications.filter((n) => !n.read).length,
+    [notifications],
+  );
 
   // Đóng dropdown khi click bên ngoài
   useEffect(() => {
@@ -73,15 +115,12 @@ export default function AdminNotificationBell() {
         ref={buttonRef}
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
-        className="relative flex items-center gap-2 px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition cursor-pointer"
+        className="relative w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition cursor-pointer text-slate-700"
         title="Thông báo quản trị"
       >
-        <i className="fa-regular fa-bell text-base" />
-        <span className="text-sm font-semibold hidden sm:inline">
-          Thông báo
-        </span>
+        <i className="fa-regular fa-bell text-sm" />
         {unreadCount > 0 && (
-          <span className="absolute top-1 left-5 bg-rose-500 text-white text-[10px] min-w-[16px] h-4 px-0.5 rounded-full flex items-center justify-center font-bold leading-none">
+          <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] min-w-[16px] h-4 px-1 rounded-full flex items-center justify-center font-bold leading-none shadow-sm">
             {unreadCount > 99 ? "99+" : unreadCount}
           </span>
         )}
@@ -140,8 +179,8 @@ export default function AdminNotificationBell() {
                     key={n.id}
                     type="button"
                     onClick={() => markRead(n.id)}
-                    className={`w-full text-left flex items-start gap-3 px-4 py-3 hover:bg-slate-50 transition ${
-                      !n.read ? "bg-blue-50/30" : ""
+                    className={`w-full text-left flex items-start gap-3 px-4 py-3 hover:bg-slate-50 transition cursor-pointer ${
+                      !n.read ? "bg-blue-50/40" : ""
                     }`}
                   >
                     {/* Icon */}
@@ -158,7 +197,7 @@ export default function AdminNotificationBell() {
                       <p className="text-xs font-bold text-slate-800 leading-tight">
                         {n.title}
                       </p>
-                      <p className="text-xs text-slate-500 mt-0.5 leading-snug line-clamp-2">
+                      <p className="text-xs text-slate-600 mt-1 leading-relaxed break-words">
                         {n.message}
                       </p>
                       <p className="text-[10px] text-slate-400 mt-1">

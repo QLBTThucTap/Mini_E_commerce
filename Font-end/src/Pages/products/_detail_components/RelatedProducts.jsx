@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import ProductCard from "../../../Components/product/ProductCard";
 import { getProducts } from "../../../Services/productService";
 import useCartStore from "../../../Stores/cartStore";
@@ -13,6 +14,24 @@ export default function RelatedProducts({ currentProduct }) {
   const addItem = useCartStore((state) => state.addItem);
   const toggleWishlist = useWishlistStore((state) => state.toggleItem);
   const wishlistItems = useWishlistStore((state) => state.items);
+
+  const handleAddToCart = (product) => {
+    addItem(product, 1);
+    toast.success(`Đã thêm "${product.title || product.name}" vào giỏ hàng!`);
+  };
+
+  const handleToggleWishlist = (product) => {
+    const added = toggleWishlist(product);
+    if (added) {
+      toast.success(
+        `Đã thêm "${product.title || product.name}" vào danh sách yêu thích!`,
+      );
+    } else {
+      toast.info(
+        `Đã xóa "${product.title || product.name}" khỏi danh sách yêu thích.`,
+      );
+    }
+  };
 
   useEffect(() => {
     if (!currentProduct?.category) return;
@@ -85,8 +104,8 @@ export default function RelatedProducts({ currentProduct }) {
                 isWishlisted: wishlistItems.some((it) => it.id === p.id),
                 original: p,
               }}
-              onAddToCart={() => addItem(p, 1)}
-              onAddToWishlist={() => toggleWishlist(p)}
+              onAddToCart={() => handleAddToCart(p)}
+              onAddToWishlist={() => handleToggleWishlist(p)}
               onClick={() => {
                 navigate(`/product/${p.id}`);
                 window.scrollTo({ top: 0, behavior: "smooth" });

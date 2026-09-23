@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import ProductCard from "../../../Components/product/ProductCard";
 import useCartStore from "../../../Stores/cartStore";
 import useWishlistStore from "../../../Stores/wishlistStore";
@@ -23,6 +24,24 @@ export default function RecentlyViewedProducts({ currentProduct }) {
   const addItem = useCartStore((state) => state.addItem);
   const toggleWishlist = useWishlistStore((state) => state.toggleItem);
   const wishlistItems = useWishlistStore((state) => state.items);
+
+  const handleAddToCart = (product) => {
+    addItem(product, 1);
+    toast.success(`Đã thêm "${product.title || product.name}" vào giỏ hàng!`);
+  };
+
+  const handleToggleWishlist = (product) => {
+    const added = toggleWishlist(product);
+    if (added) {
+      toast.success(
+        `Đã thêm "${product.title || product.name}" vào danh sách yêu thích!`,
+      );
+    } else {
+      toast.info(
+        `Đã xóa "${product.title || product.name}" khỏi danh sách yêu thích.`,
+      );
+    }
+  };
 
   // 1. Chỉ dùng effect để ĐỒNG BỘ với localStorage (hệ thống ngoài) — không setState ở đây
   useEffect(() => {
@@ -69,6 +88,7 @@ export default function RecentlyViewedProducts({ currentProduct }) {
     try {
       localStorage.removeItem(STORAGE_KEY);
       setClearedAt(Date.now()); // set trong event handler, không phải trong effect → không bị lint cảnh báo
+      toast.info("Đã xóa lịch sử sản phẩm vừa xem.");
     } catch (e) {
       console.error(e);
     }
@@ -119,8 +139,8 @@ export default function RecentlyViewedProducts({ currentProduct }) {
               isWishlisted: wishlistItems.some((it) => it.id === p.id),
               original: p,
             }}
-            onAddToCart={() => addItem(p, 1)}
-            onAddToWishlist={() => toggleWishlist(p)}
+            onAddToCart={() => handleAddToCart(p)}
+            onAddToWishlist={() => handleToggleWishlist(p)}
             onClick={() => {
               navigate(`/product/${p.id}`);
               window.scrollTo({ top: 0, behavior: "smooth" });

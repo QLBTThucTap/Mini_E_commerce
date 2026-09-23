@@ -79,7 +79,6 @@ export function useCheckout() {
 
   // Submission & modal states
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [toastMessage, setToastMessage] = useState(null);
   const [orderSuccessData, setOrderSuccessData] = useState(null);
   const [showQrModal, setShowQrModal] = useState(false);
   const [copiedField, setCopiedField] = useState("");
@@ -100,14 +99,8 @@ export function useCheckout() {
     }
   }, []);
 
-  // Toast Helper – vừa set state (cho CheckoutToast inline), vừa fire react-toastify
+  // Toast Helper – sử dụng react-toastify nhất quán toàn ứng dụng
   const showToast = useCallback((title, desc, type = "info") => {
-    setToastMessage({ title, desc });
-    setTimeout(() => {
-      setToastMessage(null);
-    }, 4000);
-
-    // Cũng fire react-toastify để nhất quán toàn app
     const message = desc ? `${title}: ${desc}` : title;
     if (type === "success") toast.success(message);
     else if (type === "error") toast.error(message);
@@ -249,21 +242,30 @@ export function useCheckout() {
         setOrderSuccessData(successInfo);
         cleanCart();
         queryClient.invalidateQueries({ queryKey: ["user-orders"] });
+        queryClient.invalidateQueries({ queryKey: ["user-orders-bell"] });
+        queryClient.invalidateQueries({ queryKey: ["admin-orders"] });
+        queryClient.invalidateQueries({ queryKey: ["admin-orders-bell"] });
 
         // Thêm vào notification bell của user
         const orderId = successInfo.orderId;
         addNotification({
+          userId: user?.id,
+          orderId: orderId,
           type: "order",
           title: "Đặt hàng thành công! 🎉",
           message: `Đơn hàng #${orderId} của bạn đã được ghi nhận. Tổng tiền: $${pricing.grandTotal.toFixed(2)}`,
+          createdAt: createdOrder?.createdAt || new Date().toISOString(),
         });
 
         // Thêm thông báo đến chuông của Admin
         const customerName = fullName || "Khách vãng lai";
         useAdminNotificationStore.getState().addNotification({
           type: "order",
+          orderId: orderId,
           title: "Đơn hàng mới",
           message: `Khách hàng ${customerName} vừa đặt đơn #${orderId} ($${pricing.grandTotal.toFixed(2)})`,
+          createdAt: createdOrder?.createdAt || new Date().toISOString(),
+          read: false,
         });
 
         if (paymentMethod === "bank") {
@@ -349,7 +351,6 @@ export function useCheckout() {
     paymentMethod,
     setPaymentMethod,
     isSubmitting,
-    toastMessage,
     orderSuccessData,
     showQrModal,
     setShowQrModal,

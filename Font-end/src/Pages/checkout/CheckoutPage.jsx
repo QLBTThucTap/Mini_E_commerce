@@ -10,7 +10,6 @@ import {
   OrderSummary,
   CheckoutQrModal,
   CheckoutSuccessModal,
-  CheckoutToast,
 } from "./_components";
 
 export default function CheckoutPage() {
@@ -30,7 +29,6 @@ export default function CheckoutPage() {
     paymentMethod,
     setPaymentMethod,
     isSubmitting,
-    toastMessage,
     orderSuccessData,
     showQrModal,
     setShowQrModal,
@@ -93,8 +91,6 @@ export default function CheckoutPage() {
           </div>
         </div>
       </main>
-
-      <CheckoutToast toastMessage={toastMessage} />
 
       <CheckoutQrModal
         show={showQrModal}

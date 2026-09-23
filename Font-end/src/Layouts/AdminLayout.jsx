@@ -1,4 +1,5 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import useAuthStore from "../Stores/authStore";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import AdminNotificationBell from "../Components/ui/AdminNotificationBell";
@@ -9,6 +10,7 @@ function AdminLayout() {
 
   const handleLogout = () => {
     logout();
+    toast.info("Bạn đã đăng xuất thành công.");
     navigate("/");
   };
 

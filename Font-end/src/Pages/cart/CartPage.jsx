@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import Header from "../../Layouts/Header";
 import Button from "../../Components/ui/Button";
@@ -20,6 +21,16 @@ function CartPage() {
   const updateQuantity = useCartStore((state) => state.updateQuantity);
   const removeItem = useCartStore((state) => state.removeItem);
   const cleanCart = useCartStore((state) => state.cleanCart);
+
+  const handleCleanCart = () => {
+    cleanCart();
+    toast.info("Đã làm trống giỏ hàng.");
+  };
+
+  const handleRemoveItem = (item) => {
+    removeItem(item.id);
+    toast.info(`Đã xóa "${item.title}" khỏi giỏ hàng.`);
+  };
 
   const cartCount = items.reduce((total, item) => total + item.quantity, 0);
 
@@ -46,7 +57,7 @@ function CartPage() {
         {items.length > 0 && (
           <button
             type="button"
-            onClick={cleanCart}
+            onClick={handleCleanCart}
             className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-500 hover:border-red-300 hover:text-red-500 transition-colors"
           >
             <i className="fa-solid fa-trash-can" />
@@ -86,7 +97,7 @@ function CartPage() {
 
                       <button
                         type="button"
-                        onClick={() => removeItem(item.id)}
+                        onClick={() => handleRemoveItem(item)}
                         className="text-slate-400 hover:text-red-500"
                         aria-label="Xóa sản phẩm"
                       >

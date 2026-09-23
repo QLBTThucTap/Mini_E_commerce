@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 import { getProducts } from "../../../Services/productService";
 import { getAllOrders } from "../../../Services/orderService";
@@ -127,7 +128,7 @@ function DashboardPage() {
     const year = Number(yearInput);
     const quarter = Number(quarterInput);
     if (!year || year < 2000) {
-      window.alert("Vui lòng nhập năm hợp lệ");
+      toast.warn("Vui lòng nhập năm hợp lệ!");
       return;
     }
     setAppliedFilter({ year, quarter });

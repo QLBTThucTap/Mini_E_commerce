@@ -143,7 +143,7 @@ function UserManagementPage() {
 
   const handleDelete = (targetUser) => {
     if (Number(targetUser.id) === Number(currentUser?.id)) {
-      window.alert("Bạn không thể tự xóa tài khoản của chính mình!");
+      toast.error("Bạn không thể tự xóa tài khoản của chính mình!");
       return;
     }
 
@@ -159,7 +159,7 @@ function UserManagementPage() {
 
   const handleToggleLock = (targetUser) => {
     if (Number(targetUser.id) === Number(currentUser?.id)) {
-      window.alert("Bạn không thể tự khóa tài khoản của chính mình!");
+      toast.error("Bạn không thể tự khóa tài khoản của chính mình!");
       return;
     }
 

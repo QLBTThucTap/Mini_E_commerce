@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import Header from "../../Layouts/Header";
 import Footer from "../../Layouts/Footer";
@@ -124,7 +125,7 @@ export default function LoginPage() {
                       href="#forgot-password"
                       onClick={(e) => {
                         e.preventDefault();
-                        alert(
+                        toast.info(
                           "Vui lòng liên hệ hotline (025) 3686 25 16 để đặt lại mật khẩu.",
                         );
                       }}

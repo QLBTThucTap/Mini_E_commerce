@@ -1,12 +1,31 @@
+import { toast } from "react-toastify";
+
 export default function NewsletterForm({
   placeholder = "Enter your email address",
   buttonLabel = "SUBSCRIBE",
   onSubmit,
   dark = false,
 }) {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (onSubmit) {
+      onSubmit(e);
+      return;
+    }
+    const form = e.currentTarget;
+    const emailInput = form.querySelector("input[type='email']");
+    const email = emailInput?.value?.trim();
+    if (!email) {
+      toast.warn("Vui lòng nhập địa chỉ email của bạn!");
+      return;
+    }
+    toast.success("Cảm ơn bạn đã đăng ký nhận bản tin khuyến mãi!");
+    if (emailInput) emailInput.value = "";
+  };
+
   return (
     <form
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
       className={[
         "flex items-center border-b-2 pb-1 transition-colors",
         dark

@@ -6,7 +6,6 @@ import WishlistBreadcrumb from "./_components/WishlistBreadcrumb";
 import WishlistHeader from "./_components/WishlistHeader";
 import WishlistGrid from "./_components/WishlistGrid";
 import WishlistEmptyState from "./_components/WishlistEmptyState";
-import WishlistToast from "./_components/WishlistToast";
 
 export default function WishlistPage() {
   const {
@@ -14,7 +13,6 @@ export default function WishlistPage() {
     displayedItems,
     summary,
     isEmpty,
-    toastMessage,
     addedItemIds,
     searchTerm,
     setSearchTerm,
@@ -29,8 +27,6 @@ export default function WishlistPage() {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
       <Header />
-
-      <WishlistToast message={toastMessage} />
 
       <WishlistBreadcrumb count={items.length} />
 
