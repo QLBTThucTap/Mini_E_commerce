@@ -55,6 +55,7 @@ export default function Header({ onSearch }) {
     if (!isAuthenticated) {
       e.preventDefault();
       toast.warn("Yêu cầu đăng nhập để truy cập vào");
+      navigate("/login");
     }
   };
 
