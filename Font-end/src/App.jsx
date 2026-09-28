@@ -1,9 +1,7 @@
-// import HomePage from "./Pages/home/HomePage";
-// import LoginPage from "./Pages/auth/LoginPage";
-// import RegisterPage from "./Pages/auth/RegisterPage";
 import { useEffect } from "react";
 import AppRouter from "./Routes/AppRouter";
 import useAuthStore from "./Stores/authStore";
+import ScrollToTop from "./Components/common/ScrollToTop";
 
 function App() {
   const initializeAuth = useAuthStore((state) => state.initializeAuth);
@@ -14,8 +12,10 @@ function App() {
 
   return (
     <div>
-      <AppRouter></AppRouter>
+      <ScrollToTop />
+      <AppRouter />
     </div>
   );
 }
+
 export default App;
