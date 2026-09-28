@@ -50,12 +50,12 @@ export default function Header({ onSearch }) {
     navigate("/");
   };
 
-  // Guard: yêu cầu đăng nhập để vào Cart/Wishlist
-  const handleProtectedLink = (e) => {
+  // Guard: yêu cầu đăng nhập khi vào Wishlist
+  const handleProtectedWishlist = (e) => {
     if (!isAuthenticated) {
       e.preventDefault();
-      toast.warn("Yêu cầu đăng nhập để truy cập vào");
-      navigate("/login");
+      toast.warn("Yêu cầu đăng nhập để xem danh sách yêu thích");
+      navigate("/login", { state: { from: "/wishlist" } });
     }
   };
 
@@ -122,7 +122,7 @@ export default function Header({ onSearch }) {
 
               <Link
                 to="/wishlist"
-                onClick={handleProtectedLink}
+                onClick={handleProtectedWishlist}
                 className="relative w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition"
               >
                 <i
@@ -141,7 +141,6 @@ export default function Header({ onSearch }) {
 
               <Link
                 to="/cart"
-                onClick={handleProtectedLink}
                 className="relative w-9 h-9 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow"
               >
                 <i className="fa-solid fa-bag-shopping text-sm" />
@@ -202,7 +201,7 @@ export default function Header({ onSearch }) {
 
               <Link
                 to="/wishlist"
-                onClick={handleProtectedLink}
+                onClick={handleProtectedWishlist}
                 className="relative w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition text-slate-600 cursor-pointer"
                 title="Wishlist"
               >
@@ -274,7 +273,6 @@ export default function Header({ onSearch }) {
             {/* Cart Box */}
             <Link
               to="/cart"
-              onClick={handleProtectedLink}
               className="flex items-center space-x-2.5 pl-3 border-l border-slate-200 cursor-pointer group"
             >
               <div className="relative w-9 h-9 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow group-hover:bg-emerald-700 transition">

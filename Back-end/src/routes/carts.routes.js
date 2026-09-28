@@ -27,7 +27,9 @@ async function findOrCreateActiveCart(userId) {
   const targetUserId = Number(userId);
 
   let active = all.find(
-    (c) => Number(c.userId) === targetUserId && c.status === "active",
+    (c) =>
+      Number(c.userId) === targetUserId &&
+      (c.status === "active" || c.status === undefined),
   );
 
   if (!active) {
@@ -37,9 +39,66 @@ async function findOrCreateActiveCart(userId) {
       products: [],
       date: new Date().toISOString(),
     });
+  } else if (active.status !== "active") {
+    active = await carts.updateById(
+      active.id,
+      { status: "active" },
+      { replace: false },
+    );
   }
   return active;
 }
+
+// ===== POST /carts/merge: Hợp nhất giỏ hàng tạm (guest cart) với giỏ hàng của user =====
+router.post("/merge", authenticateToken, async (req, res) => {
+  try {
+    const { items = [] } = req.body;
+    const active = await findOrCreateActiveCart(req.user.id);
+
+    let currentProducts = Array.isArray(active.products)
+      ? [...active.products]
+      : [];
+
+    if (Array.isArray(items) && items.length > 0) {
+      for (const guestItem of items) {
+        const productId = Number(guestItem.productId || guestItem.id);
+        const quantity = Number(guestItem.quantity) || 1;
+
+        if (!productId || isNaN(productId) || quantity <= 0) continue;
+
+        const existingIndex = currentProducts.findIndex(
+          (p) => Number(p.productId) === productId,
+        );
+
+        if (existingIndex > -1) {
+          currentProducts[existingIndex] = {
+            ...currentProducts[existingIndex],
+            quantity:
+              Number(currentProducts[existingIndex].quantity) + quantity,
+          };
+        } else {
+          currentProducts.push({
+            productId,
+            quantity,
+          });
+        }
+      }
+
+      await carts.updateById(
+        active.id,
+        { products: currentProducts },
+        { replace: false },
+      );
+    }
+
+    const updated = await carts.findById(active.id);
+    const enriched = await enrichCart(updated || active);
+    res.json(enriched);
+  } catch (error) {
+    console.error("Error merging cart:", error);
+    res.status(500).json({ message: "Lỗi hệ thống khi hợp nhất giỏ hàng" });
+  }
+});
 
 // ===== GET giỏ hàng đang dùng của user hiện tại =====
 router.get("/active", authenticateToken, async (req, res) => {

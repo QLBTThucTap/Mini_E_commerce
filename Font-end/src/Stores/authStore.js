@@ -2,6 +2,7 @@
 import { persist } from "zustand/middleware";
 import { create } from "zustand";
 import Instance from "../Services/http";
+import useCartStore from "./cartStore";
 
 const useAuthStore = create(
   persist(
@@ -21,14 +22,18 @@ const useAuthStore = create(
           isInitializing: false,
         }),
 
-      logout: () =>
+      logout: () => {
+        // Clear sạch giỏ hàng trong Store và localStorage khi đăng xuất
+        useCartStore.getState().resetCart();
+
         set({
           user: null,
           accessToken: null,
           refreshToken: null,
           isAuthenticated: false,
           isInitializing: false,
-        }),
+        });
+      },
 
       setAccessToken: (accessToken) => set({ accessToken }),
 
@@ -48,9 +53,12 @@ const useAuthStore = create(
             isAuthenticated: true,
             isInitializing: false,
           });
+
+          // Khôi phục giỏ hàng từ server cho user đã đăng nhập
+          await useCartStore.getState().fetchServerCart();
         } catch (error) {
           // Refresh token hết hạn hoặc không hợp lệ -> đăng xuất sạch
-          get(error).logout();
+          get().logout();
         }
       },
     }),

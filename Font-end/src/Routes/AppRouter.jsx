@@ -46,13 +46,13 @@ function AppRouter() {
         </Route>
 
         <Route path="/product/:productId" element={<ProductDetailPage />} />
+        <Route path="/cart" element={<CartPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/about" element={<AboutPage />} />
 
         {/* Trang tài khoản cá nhân — yêu cầu đăng nhập */}
         <Route element={<AuthRoute />}>
           <Route path="/account" element={<AccountPage />} />
-          <Route path="/cart" element={<CartPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/wishlist" element={<WishlistPage />} />
         </Route>
