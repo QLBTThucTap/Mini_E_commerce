@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { Link, useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
 
 import Header from "../../Layouts/Header";

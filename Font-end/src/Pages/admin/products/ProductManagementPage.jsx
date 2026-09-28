@@ -5,6 +5,7 @@ import {
   useQueryClient,
   keepPreviousData,
 } from "@tanstack/react-query";
+import * as XLSX from "xlsx";
 
 import { deleteProduct, getProducts } from "../../../Services/productService";
 import { toast } from "react-toastify";
@@ -93,6 +94,31 @@ function ProductManagementPage() {
     deleteMutation.mutate(product.id);
   };
 
+  const handleExportExcel = () => {
+    if (filteredProducts.length === 0) {
+      toast.warn("Không có sản phẩm nào để xuất!");
+      return;
+    }
+
+    const exportData = filteredProducts.map((product) => ({
+      "Mã SP": product.id,
+      "Tên sản phẩm": product.title,
+      "Danh mục": product.category,
+      "Giá ($)": product.price,
+      "Mô tả": product.description || "",
+      "Hình ảnh": product.image || "",
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(exportData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Danh sách sản phẩm");
+
+    const dateStr = new Date().toISOString().slice(0, 10);
+    XLSX.writeFile(workbook, `Danh_sach_san_pham_${dateStr}.xlsx`);
+
+    toast.success(`Đã xuất ${filteredProducts.length} sản phẩm ra file Excel!`);
+  };
+
   const updateFilter = (field, value) => {
     setFilters((current) => ({ ...current, [field]: value }));
     setPage(1);
@@ -122,8 +148,18 @@ function ProductManagementPage() {
         <div className="flex flex-wrap gap-3">
           <button
             type="button"
+            onClick={handleExportExcel}
+            disabled={filteredProducts.length === 0}
+            className="rounded-lg bg-[#FACC15] px-4 py-2.5 text-sm font-bold text-slate-900 hover:bg-[#EAB308] disabled:opacity-50 disabled:cursor-not-allowed transition-colors inline-flex items-center gap-2 cursor-pointer shadow-xs"
+          >
+            <i className="fa-solid fa-file-excel text-slate-900 text-sm" />
+            <span>Xuất Excel</span>
+          </button>
+
+          <button
+            type="button"
             onClick={() => setIsImportOpen(true)}
-            className="rounded-lg border border-emerald-600 px-4 py-2.5 text-sm font-bold text-emerald-600 hover:bg-emerald-50"
+            className="rounded-lg border border-emerald-600 px-4 py-2.5 text-sm font-bold text-emerald-600 hover:bg-emerald-50 cursor-pointer"
           >
             <i className="fa-solid fa-file-excel mr-2" />
             Import Excel
@@ -137,7 +173,7 @@ function ProductManagementPage() {
                 product: null,
               })
             }
-            className="rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-bold text-white hover:bg-emerald-700"
+            className="rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-bold text-white hover:bg-emerald-700 cursor-pointer"
           >
             <i className="fa-solid fa-plus mr-2" />
             Thêm sản phẩm

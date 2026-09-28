@@ -25,10 +25,15 @@ app.use(express.json());
 
 // Khai báo các cổng định tuyến API
 app.use("/auth", authRoutes);
+app.use("/api/auth", authRoutes);
 app.use("/products", productsRoutes);
+app.use("/api/products", productsRoutes);
 app.use("/orders", ordersRoutes);
+app.use("/api/orders", ordersRoutes);
 app.use("/users", usersRoutes);
+app.use("/api/users", usersRoutes);
 app.use("/favorites", favoritesRoutes);
+app.use("/api/favorites", favoritesRoutes);
 
 app.get("/", (req, res) => {
   res.json({

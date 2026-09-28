@@ -6,6 +6,8 @@ import { useQuery } from "@tanstack/react-query";
 import {
   createOrderByAdmin,
   updateOrder,
+  exportOrderInvoices,
+  downloadPdfBlob,
 } from "../../../../Services/orderService";
 import { getProducts } from "../../../../Services/productService";
 import { toast } from "react-toastify";
@@ -13,6 +15,7 @@ import useAdminNotificationStore from "../../../../Stores/adminNotificationStore
 
 import { orderSchema } from "../_schema/orderSchema";
 import Modal from "../../../../Hooks/formatters";
+import ExportInvoiceButton from "../../../../Components/ui/ExportInvoiceButton";
 
 const emptyOrder = {
   shippingInfo: { fullName: "", phone: "", address: "" },
@@ -27,6 +30,7 @@ function formatCurrency(value) {
 
 function OrderFormModal({ order, onClose, onSaved }) {
   const [serverError, setServerError] = useState("");
+  const [isExporting, setIsExporting] = useState(false);
 
   // Lấy toàn bộ sản phẩm để làm dropdown chọn + tính giá xem trước
   const { data: productData, isLoading: loadingProducts } = useQuery({
@@ -45,7 +49,7 @@ function OrderFormModal({ order, onClose, onSaved }) {
     control,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isDirty },
   } = useForm({
     resolver: zodResolver(orderSchema),
     defaultValues: emptyOrder,
@@ -88,6 +92,38 @@ function OrderFormModal({ order, onClose, onSaved }) {
       return sum + (product?.price || 0) * quantity;
     }, 0);
   }, [watchedProducts, productMap]);
+
+  const handleExportSingleInvoice = async () => {
+    if (!order) return;
+
+    if (isDirty) {
+      const proceed = window.confirm(
+        "Bạn chưa lưu thay đổi, hóa đơn sẽ theo dữ liệu đã lưu",
+      );
+      if (!proceed) return;
+    }
+
+    try {
+      setIsExporting(true);
+      const response = await exportOrderInvoices([order.id]);
+      downloadPdfBlob(response);
+      toast.success(`Xuất hóa đơn #${order.id} thành công!`);
+    } catch (error) {
+      let message = "Không thể xuất hóa đơn PDF.";
+      if (error.response?.data instanceof Blob) {
+        try {
+          const text = await error.response.data.text();
+          const json = JSON.parse(text);
+          if (json.message) message = json.message;
+        } catch {}
+      } else if (error.response?.data?.message) {
+        message = error.response.data.message;
+      }
+      toast.error(message);
+    } finally {
+      setIsExporting(false);
+    }
+  };
 
   const onSubmit = async (data) => {
     try {
@@ -293,11 +329,11 @@ function OrderFormModal({ order, onClose, onSaved }) {
             Tổng tiền chính thức sẽ được máy chủ tính lại khi lưu.
           </p>
 
-          <div className="mt-4 flex justify-end gap-3">
+          <div className="mt-4 flex justify-end gap-3 items-center">
             <button
               type="button"
               onClick={onClose}
-              className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-bold text-slate-600"
+              className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-bold text-slate-600 hover:bg-slate-50 cursor-pointer"
             >
               Hủy
             </button>
@@ -305,10 +341,17 @@ function OrderFormModal({ order, onClose, onSaved }) {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-bold text-white hover:bg-emerald-700 disabled:bg-slate-300"
+              className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-bold text-white hover:bg-emerald-700 disabled:bg-slate-300 cursor-pointer"
             >
               {isSubmitting ? "Đang lưu..." : "Lưu đơn hàng"}
             </button>
+
+            {order && (
+              <ExportInvoiceButton
+                onClick={handleExportSingleInvoice}
+                isLoading={isExporting}
+              />
+            )}
           </div>
         </form>
     </Modal>

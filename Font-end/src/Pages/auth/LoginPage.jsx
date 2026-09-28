@@ -90,18 +90,18 @@ export default function LoginPage() {
               )}
 
               <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-                {/* Name */}
+                {/* Name / Email / Phone */}
                 <div>
                   <label
                     htmlFor="name"
                     className="block text-xs font-bold text-slate-700 mb-1.5"
                   >
-                    Họ và tên
+                    Email / Số điện thoại / Họ tên
                   </label>
                   <input
                     id="name"
                     type="text"
-                    placeholder="Alex"
+                    placeholder="VD: nguyenvana@gmail.com hoặc Nguyen Van An"
                     className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all shadow-2xs"
                     {...register("name")}
                   />

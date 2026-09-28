@@ -32,22 +32,29 @@ router.post("/login", async (req, res) => {
     const identifier = (username || name || email || "").trim().toLowerCase();
 
     if (!identifier || !password) {
-      return res.status(400).json({ message: "Vui lòng nhập tài khoản và mật khẩu" });
+      return res
+        .status(400)
+        .json({ message: "Vui lòng nhập tài khoản và mật khẩu" });
     }
 
     // Chờ đọc dữ liệu từ file users.json
     const users = await usersCollection.findAll();
     const user = users.find((u) => {
-      const uUsername = (u.username || "").toLowerCase();
-      const uEmail = (u.email || "").toLowerCase();
-      const uFullName = (u.fullName || "").toLowerCase();
-      const uNameStr = typeof u.name === "string" ? u.name.toLowerCase() : "";
+      //const uUsername = (u.username || "").trim().toLowerCase();
+      const uEmail = (u.email || "").trim().toLowerCase();
+      const uFullName = (u.fullName || "").trim().toLowerCase();
+      //const uNameStr = typeof u.name === "string" ? u.name.trim().toLowerCase() : "";
+      const uPhone = String(u.phoneNumber || u.phone || "")
+        .trim()
+        .toLowerCase();
+      const uId = String(u.id || "").trim();
 
       const matchIdentifier =
-        uUsername === identifier ||
-        uEmail === identifier ||
-        uFullName === identifier ||
-        uNameStr === identifier;
+        (uEmail && uEmail === identifier) ||
+        //(uUsername && uUsername === identifier) ||
+        (uFullName && uFullName === identifier) ||
+        //(uNameStr && uNameStr === identifier) ||
+        (uPhone && uPhone === identifier);
 
       return matchIdentifier && String(u.password) === String(password);
     });

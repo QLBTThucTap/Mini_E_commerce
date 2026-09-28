@@ -344,4 +344,86 @@ router.delete(
     }
   },
 );
+
+// Admin xuất hóa đơn PDF cho 1 hoặc nhiều đơn hàng
+router.post(
+  "/invoices",
+  authenticateToken,
+  authorizeRoles("admin"),
+  async (req, res) => {
+    try {
+      const { orderIds } = req.body;
+
+      if (
+        !orderIds ||
+        !Array.isArray(orderIds) ||
+        orderIds.length === 0 ||
+        orderIds.length > 200
+      ) {
+        return res.status(400).json({
+          message:
+            "Danh sách orderIds không hợp lệ hoặc vượt quá giới hạn 200 đơn.",
+        });
+      }
+
+      const numericIds = orderIds
+        .map((id) => Number(id))
+        .filter((id) => !isNaN(id));
+
+      if (numericIds.length === 0) {
+        return res
+          .status(400)
+          .json({ message: "Không có mã đơn hàng hợp lệ nào được cung cấp." });
+      }
+
+      const allOrders = await orders.findAll();
+      const idSet = new Set(numericIds);
+
+      // Preserve requested order sequence as much as possible
+      const matchedOrders = allOrders.filter((o) => idSet.has(Number(o.id)));
+
+      if (matchedOrders.length === 0) {
+        return res
+          .status(404)
+          .json({ message: "Không tìm thấy đơn hàng nào tương ứng." });
+      }
+
+      const allProducts = await productsCollection.findAll();
+      const productMap = new Map(allProducts.map((p) => [p.id, p]));
+
+      // Read company config
+      const companyConfig = require("../companyConfig.json");
+
+      // Generate filename: hoa-don_<mã đơn>.pdf (1 đơn) hoặc hoa-don_nhieu-don_YYYYMMDD.pdf
+      let filename = "";
+      if (matchedOrders.length === 1) {
+        filename = `hoa-don_${matchedOrders[0].id}.pdf`;
+      } else {
+        const d = new Date();
+        const yyyy = d.getFullYear();
+        const mm = String(d.getMonth() + 1).padStart(2, "0");
+        const dd = String(d.getDate()).padStart(2, "0");
+        filename = `hoa-don_nhieu-don_${yyyy}${mm}${dd}.pdf`;
+      }
+
+      res.setHeader("Content-Type", "application/pdf");
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename="${filename}"`,
+      );
+      res.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
+
+      const { generateInvoicePdf } = require("../utils/pdfGenerator");
+      generateInvoicePdf(matchedOrders, companyConfig, productMap, res);
+    } catch (error) {
+      console.error("Error exporting invoice PDF:", error);
+      if (!res.headersSent) {
+        res
+          .status(500)
+          .json({ message: "Lỗi hệ thống khi tạo file PDF hóa đơn." });
+      }
+    }
+  },
+);
+
 module.exports = router;

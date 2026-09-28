@@ -1,11 +1,16 @@
 import { useMemo, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { getAllOrders } from "../../../Services/orderService";
+import {
+  getAllOrders,
+  deleteOrder,
+  exportOrderInvoices,
+  downloadPdfBlob,
+} from "../../../Services/orderService";
 import { getProducts } from "../../../Services/productService";
-import { deleteOrder } from "../../../Services/orderService";
 import { toast } from "react-toastify";
 import OrderFormModal from "./_component/OrderFormModal";
+import ExportInvoiceButton from "../../../Components/ui/ExportInvoiceButton";
 
 const PAGE_SIZE = 10;
 
@@ -42,6 +47,9 @@ function OrderManagementPage() {
   const [page, setPage] = useState(1);
   const queryClient = useQueryClient();
   const [formState, setFormState] = useState({ open: false, order: null });
+  const [selectedIds, setSelectedIds] = useState(new Set());
+  const [isSelectionMode, setIsSelectionMode] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
 
   const deleteMutation = useMutation({
     mutationFn: (orderId) => deleteOrder(orderId),
@@ -75,7 +83,7 @@ function OrderManagementPage() {
     queryFn: getAllOrders,
   });
 
-  // Lấy toàn bộ sản phẩm 1 lần để tra cứu tên theo productId (tránh gọi API lặp lại cho từng đơn)
+  // Lấy toàn bộ sản phẩm 1 lần để tra cứu tên theo productId
   const {
     data: productData,
     isLoading: loadingProducts,
@@ -119,10 +127,70 @@ function OrderManagementPage() {
     setPage(nextPage);
   };
 
+  // Selection handlers
+  const isAllPaginatedSelected = useMemo(() => {
+    if (!paginatedOrders || paginatedOrders.length === 0) return false;
+    return paginatedOrders.every((o) => selectedIds.has(o.id));
+  }, [paginatedOrders, selectedIds]);
+
+  const handleToggleSelectAll = () => {
+    const next = new Set(selectedIds);
+    if (isAllPaginatedSelected) {
+      paginatedOrders.forEach((o) => next.delete(o.id));
+    } else {
+      paginatedOrders.forEach((o) => next.add(o.id));
+    }
+    setSelectedIds(next);
+  };
+
+  const handleToggleSelect = (id) => {
+    const next = new Set(selectedIds);
+    if (next.has(id)) {
+      next.delete(id);
+    } else {
+      next.add(id);
+    }
+    setSelectedIds(next);
+  };
+
+  // Export Invoices
+  const handleBatchExportInvoice = async () => {
+    if (selectedIds.size === 0) {
+      toast.warn("Vui lòng tích chọn ít nhất 1 đơn hàng.");
+      return;
+    }
+    const orderIds = Array.from(selectedIds);
+
+    try {
+      setIsExporting(true);
+      const response = await exportOrderInvoices(orderIds);
+      downloadPdfBlob(response);
+      toast.success(`Xuất hóa đơn cho ${orderIds.length} đơn hàng thành công!`);
+      setSelectedIds(new Set());
+      setIsSelectionMode(false);
+    } catch (error) {
+      let message = "Không thể xuất hóa đơn PDF.";
+      if (error.response?.data instanceof Blob) {
+        try {
+          const text = await error.response.data.text();
+          const json = JSON.parse(text);
+          if (json.message) message = json.message;
+        } catch (parseError) {
+          console.warn("Không thể parse nội dung lỗi từ Blob:", parseError);
+        }
+      } else if (error.response?.data?.message) {
+        message = error.response.data.message;
+      }
+      toast.error(message);
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
   return (
     <main className="p-4 sm:p-6 lg:p-8">
       <div>
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl font-extrabold text-slate-900">
               Quản lý đơn hàng
@@ -132,14 +200,47 @@ function OrderManagementPage() {
             </p>
           </div>
 
-          <button
-            type="button"
-            onClick={() => setFormState({ open: true, order: null })}
-            className="rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-bold text-white hover:bg-emerald-700"
-          >
-            <i className="fa-solid fa-plus mr-2" />
-            Thêm đơn hàng
-          </button>
+          <div className="flex items-center gap-3">
+            {isSelectionMode ? (
+              <>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsSelectionMode(false);
+                    setSelectedIds(new Set());
+                  }}
+                  className="rounded-lg bg-slate-200 px-3.5 py-2.5 text-sm font-bold text-slate-700 hover:bg-slate-300 flex items-center gap-1.5 cursor-pointer transition-colors"
+                >
+                  <i className="fa-solid fa-xmark" />
+                  Hủy chọn
+                </button>
+
+                <ExportInvoiceButton
+                  onClick={handleBatchExportInvoice}
+                  disabled={selectedIds.size === 0}
+                  count={selectedIds.size}
+                  tooltip="Tích chọn ít nhất 1 đơn hàng để xuất"
+                  isLoading={isExporting}
+                />
+              </>
+            ) : (
+              <ExportInvoiceButton
+                onClick={() => setIsSelectionMode(true)}
+                isLoading={isExporting}
+              >
+                Xuất hóa đơn
+              </ExportInvoiceButton>
+            )}
+
+            <button
+              type="button"
+              onClick={() => setFormState({ open: true, order: null })}
+              className="rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-bold text-white hover:bg-emerald-700 flex items-center gap-2 cursor-pointer"
+            >
+              <i className="fa-solid fa-plus" />
+              Thêm đơn hàng
+            </button>
+          </div>
         </div>
       </div>
 
@@ -153,6 +254,16 @@ function OrderManagementPage() {
         <table className="w-full min-w-[1100px] text-left text-sm">
           <thead className="bg-slate-100 text-slate-600">
             <tr>
+              {isSelectionMode && (
+                <th className="px-4 py-3 w-10 text-center">
+                  <input
+                    type="checkbox"
+                    checked={isAllPaginatedSelected}
+                    onChange={handleToggleSelectAll}
+                    className="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer"
+                  />
+                </th>
+              )}
               <th className="px-4 py-3">Mã đơn</th>
               <th className="px-4 py-3">Khách hàng</th>
               <th className="px-4 py-3">Sản phẩm đã đặt</th>
@@ -168,7 +279,7 @@ function OrderManagementPage() {
             {loading && (
               <tr>
                 <td
-                  colSpan="8"
+                  colSpan={isSelectionMode ? 9 : 8}
                   className="px-4 py-12 text-center text-slate-500"
                 >
                   Đang tải đơn hàng...
@@ -179,7 +290,7 @@ function OrderManagementPage() {
             {!loading && paginatedOrders.length === 0 && (
               <tr>
                 <td
-                  colSpan="8"
+                  colSpan={isSelectionMode ? 9 : 8}
                   className="px-4 py-12 text-center text-slate-500"
                 >
                   Không có đơn hàng nào.
@@ -195,8 +306,6 @@ function OrderManagementPage() {
                   0,
                 );
 
-                // Đơn hàng cũ (seed thủ công) có thể thiếu field "total".
-                // Trường hợp đó, tự tính lại từ price trong productMap thay vì hiển thị $0.00.
                 const computedTotal = items.reduce((sum, item) => {
                   const product = productMap.get(item.productId);
                   return (
@@ -213,6 +322,17 @@ function OrderManagementPage() {
                     key={order.id}
                     className="border-t border-slate-100 align-top hover:bg-slate-50"
                   >
+                    {isSelectionMode && (
+                      <td className="px-4 py-3 text-center">
+                        <input
+                          type="checkbox"
+                          checked={selectedIds.has(order.id)}
+                          onChange={() => handleToggleSelect(order.id)}
+                          className="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer"
+                        />
+                      </td>
+                    )}
+
                     <td className="px-4 py-3 font-semibold">#{order.id}</td>
 
                     <td className="px-4 py-3">

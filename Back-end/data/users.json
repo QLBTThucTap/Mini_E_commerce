@@ -303,5 +303,21 @@
     },
     "password": "123456",
     "role": "user"
+  },
+  {
+    "id": 21,
+    "fullName": "Trinh",
+    "username": "trinh",
+    "email": "trinh@gmail.com",
+    "phoneNumber": "",
+    "gender": "Other",
+    "dateOfBirth": "",
+    "address": {
+      "city": "",
+      "district": ""
+    },
+    "password": "123456",
+    "role": "user",
+    "isLocked": false
   }
 ]
