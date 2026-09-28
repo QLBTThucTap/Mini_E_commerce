@@ -9,7 +9,7 @@ export default function AboutMission() {
       <div className="relative z-10 max-w-3xl space-y-3">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold uppercase tracking-wider">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-          Our Mission & Vision
+          Sứ Mệnh & Tầm Nhìn
         </div>
         <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white my-0">
           Sứ Mệnh Phổ Cập Công Nghệ Đỉnh Cao & Minh Bạch
@@ -70,7 +70,7 @@ export default function AboutMission() {
           <div className="flex items-center justify-between w-full">
             <div>
               <span className="text-[10px] text-emerald-400 uppercase font-extrabold tracking-widest block">
-                GLOBAL LOGISTICS & INNOVATION CENTER
+                TRUNG TÂM VẬN HÀNH & ĐỔI MỚI CÔNG NGHỆ
               </span>
               <span className="text-sm sm:text-base font-bold text-white">
                 Trụ sở nghiên cứu & trung tâm phân phối công nghệ cao

@@ -1,34 +1,34 @@
 export const ABOUT_METRICS = [
   {
     type: "slogan",
-    text: "OUR PURPOSE IS TO",
-    highlight: "ENRICH AND ENHANCE LIVES",
-    suffix: "THROUGH TECHNOLOGY",
+    text: "MỤC TIÊU CỦA CHÚNG TÔI LÀ",
+    highlight: "NÂNG TẦM CUỘC SỐNG",
+    suffix: "THÔNG QUA CÔNG NGHỆ",
   },
   {
     type: "stat",
     value: "$12.5M",
-    label: "TOTAL REVENUE FROM",
+    label: "TỔNG DOANH THU TỪ",
     sublabel: "2001 - 2024",
   },
   {
     type: "stat",
     value: "12K+",
-    label: "ORDERS DELIVERED",
-    sublabel: "SUCCESSFUL ON EVERYDAY",
+    label: "ĐƠN HÀNG GIAO MỖI NGÀY",
+    sublabel: "THÀNH CÔNG & AN TOÀN",
   },
   {
     type: "stat",
     value: "725+",
-    label: "STORE AND OFFICE IN U.S",
-    sublabel: "AND WORLDWIDE",
+    label: "CỬA HÀNG & VĂN PHÒNG",
+    sublabel: "TẠI MỸ VÀ TOÀN CẦU",
   },
 ];
 
 export const WHY_CHOOSE_US_ITEMS = [
   {
     id: "quality",
-    title: "100% AUTHENTIC PRODUCTS",
+    title: "SẢN PHẨM CHÍNH HÃNG 100%",
     titleVi: "Sản Phẩm Chính Hãng",
     icon: "fa-solid fa-shield-halved",
     description:
@@ -36,7 +36,7 @@ export const WHY_CHOOSE_US_ITEMS = [
   },
   {
     id: "fast-delivery",
-    title: "FAST & SECURE DELIVERY",
+    title: "GIAO HÀNG NHANH & AN TOÀN",
     titleVi: "Giao Hàng Thần Tốc",
     icon: "fa-solid fa-truck-fast",
     description:
@@ -44,7 +44,7 @@ export const WHY_CHOOSE_US_ITEMS = [
   },
   {
     id: "trusted-service",
-    title: "TRUSTED TECH SUPPORT",
+    title: "HỖ TRỢ KỸ THUẬT TIN CẬY",
     titleVi: "Dịch Vụ Đáng Tin Cậy",
     icon: "fa-solid fa-headset",
     description:
@@ -52,7 +52,7 @@ export const WHY_CHOOSE_US_ITEMS = [
   },
   {
     id: "customer-first",
-    title: "CUSTOMER FIRST POLICY",
+    title: "CHÍNH SÁCH VÌ KHÁCH HÀNG",
     titleVi: "Ưu Tiên Khách Hàng",
     icon: "fa-solid fa-arrows-rotate",
     description:
@@ -63,7 +63,7 @@ export const WHY_CHOOSE_US_ITEMS = [
 export const OUR_VALUES_ITEMS = [
   {
     id: "trust",
-    title: "Trust & Transparency",
+    title: "Minh Bạch & Đáng Tin Cậy",
     titleVi: "Minh Bạch & Đáng Tin Cậy",
     icon: "fa-solid fa-handshake-angle",
     description:
@@ -71,7 +71,7 @@ export const OUR_VALUES_ITEMS = [
   },
   {
     id: "quality",
-    title: "Uncompromised Quality",
+    title: "Chất Lượng Vượt Trội",
     titleVi: "Chất Lượng Đỉnh Cao",
     icon: "fa-solid fa-award",
     description:
@@ -79,7 +79,7 @@ export const OUR_VALUES_ITEMS = [
   },
   {
     id: "innovation",
-    title: "Continuous Innovation",
+    title: "Không Ngừng Đổi Mới",
     titleVi: "Không Ngừng Đổi Mới",
     icon: "fa-solid fa-microchip",
     description:
@@ -87,7 +87,7 @@ export const OUR_VALUES_ITEMS = [
   },
   {
     id: "customer-focus",
-    title: "Customer-Centric Care",
+    title: "Khách Hàng Là Trọng Tâm",
     titleVi: "Khách Hàng Là Trung Tâm",
     icon: "fa-solid fa-heart-pulse",
     description:
@@ -120,31 +120,31 @@ export const BRAND_TIMELINE = [
 export const LEADERSHIP_TEAM = [
   {
     name: "Henry Avery",
-    role: "CHAIRMAN & FOUNDER",
+    role: "CHỦ TỊCH & NHÀ SÁNG LẬP",
     image:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuB0TRHw4PN9WqfqiO5Kg7Y7o66vYC6JmW2mjXajd25Y_jVe_07EqXu6RJlAfW3-7WI8-YVcvx9L6GvwNpzPU8JfDA8X5kKEjXxrDke3YwdfZ7ljgSV9nF3nIjDzD1t_E67B-9koRlGZs1XDPS5N2m9Ge-e_j-bFkVYgour20Qxyo7L1_f7ptURfq4Gt9ssK5q3oBvlS2wXiGpjmMFb4CYkR00zrGlQZ7N4N62ytMwDlnADsWgxpgvrX",
   },
   {
     name: "Michael Edward",
-    role: "VICE PRESIDENT",
+    role: "PHÓ CHỦ TỊCH",
     image:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuAMQ3lJRyM4koNg-CD_LovcZOaMej6KX0rK8zgigIf04jHFMRiSwGlvEFVPbPeN6sajhyHi9gXn4K0zasPkSVT3dcT3rSRRLxaW-PmJsQ2FZQfjz6h1CE4ZQYA8xoInSL98h0y_l84bb-NGz5jsULzKCgIKq_U56zRTuynqCgIZBGiMKXeER42pH8RoLI_qQ6VDxWVAPlAOp4p5-HVLGRtEJlIrQZusrb21byztgnHOGzbYvqGT2n6x",
   },
   {
     name: "Eden Hazard",
-    role: "CHIEF EXECUTIVE OFFICER",
+    role: "TỔNG GIÁM ĐỐC ĐIỀU HÀNH (CEO)",
     image:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuAo5rsyO3JL0VfmJ-ZgSfhJJn5is0x67LiweDtA3wiVd9l1RdfSqEWZz9d_EKU99SPhxTr7CPH1wERtxlSTJroPYzhVQM1O6TnWF2Gum3t7VYXoA-9kIvNmPDMepVMsvA79Ec3dIRir0M1TJmGjgOJTWrLfLbZhqkT0-_Z_kpls4_p-TkK-R8Qaavs-Gkh6aQ2B_85DpRrIwPFlC2sUjNMsOUZ8I3C6GisUBw4TKsMalYnAeddYZD7J",
   },
   {
     name: "Robert Downey Jr",
-    role: "CHIEF OPERATING OFFICER",
+    role: "GIÁM ĐỐC VẬN HÀNH (COO)",
     image:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuAeMJmgZXl37x6lGCsjXFGEjPLwIz4Sed5v11EYUDaqdPtseIfxXW1U98WqjIf-mvOua891XTztAT0DmBNaNH6GcumxojWIeEz3UkYLSZVPLK2VFiSyKJCAxvsfnm9NE3AHJzLTPjpH0d2n0vtc58m6KNOKySuhCTVP4UQehK3cn9WcBNBf56O8mFt2edGqBEkqDF5R3GTtgJad3aqZhtpO5cdV2XFSnH6UQfWOSqb1JNUqa9G7Ntla",
   },
   {
     name: "Nathan Drake",
-    role: "STRATEGY & TECH DIRECTOR",
+    role: "GIÁM ĐỐC CHIẾN LƯỢC & CÔNG NGHỆ",
     image:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuCZK_bVQkFW7YRWukcLjb40ZK78VbJG7gae_i-1gYSj6kNCBeTCQbiRTt3xgb8jvAsUOdnqr_SEfnY5fHtMCiLad8SR6VRtqJZPCV0cPm62CijyAHvuFAZNs32-zMvQyhA74kIG28D9iu1y1ZfxX82-yjLz31Meq82ke6Hq7VVX7qnJrxUSgQkWNH7fxCpKy5jQJO-antZxa6DBxi8h6EHNjJs9ZUa4N_qEvS7Sx55_SQy04Ng2dDF7",
   },

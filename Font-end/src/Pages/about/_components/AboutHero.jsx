@@ -8,12 +8,12 @@ export default function AboutHero() {
         <div className="lg:col-span-6 z-10 space-y-4 sm:space-y-5">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold uppercase tracking-wider">
             <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
-            Modern Technical Commerce
+            Thương Mại Công Nghệ Hiện Đại
           </div>
 
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight my-0">
-            Best experience <br className="hidden sm:inline" />
-            <span className="text-emerald-600">always wins</span>
+            Trải nghiệm vượt trội <br className="hidden sm:inline" />
+            <span className="text-emerald-600">luôn luôn dẫn đầu</span>
           </h1>
 
           <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-xl">
@@ -70,7 +70,7 @@ export default function AboutHero() {
             <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-xl px-3.5 py-2 flex items-center gap-2.5 shadow-md border border-white">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
               <span className="text-xs font-extrabold text-slate-900 tracking-wide uppercase">
-                #1 Tech Platform
+                Nền Tảng Công Nghệ Số 1
               </span>
             </div>
           </div>

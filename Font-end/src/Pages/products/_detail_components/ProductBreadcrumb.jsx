@@ -24,7 +24,7 @@ export default function ProductBreadcrumb({ product }) {
             className="hover:text-emerald-600 transition-colors flex items-center gap-1 text-slate-600"
           >
             <i className="fa-solid fa-house text-[11px]" />
-            <span>Home</span>
+            <span>TRANG CHỦ</span>
           </Link>
 
           <i className="fa-solid fa-chevron-right text-[9px] text-slate-400" />

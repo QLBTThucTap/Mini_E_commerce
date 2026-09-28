@@ -46,7 +46,7 @@ export default function HeroShowcase({ categoryLinks, heroSlides }) {
                 iconPosition="right"
                 onClick={() => navigate(`/products?category=${slide.category}`)}
               >
-                BUY NOW
+                MUA NGAY
               </Button>
             </div>
           </div>
@@ -111,7 +111,7 @@ export default function HeroShowcase({ categoryLinks, heroSlides }) {
                 to="/products?category=laptop"
                 className="inline-block mt-1 text-xs font-extrabold text-slate-900 underline decoration-emerald-500 underline-offset-4 hover:text-emerald-600"
               >
-                BUY NOW
+                MUA NGAY
               </Link>
             </div>
             <div className="w-20 h-20 bg-slate-100 rounded-2xl flex items-center justify-center p-2 shadow-inner group-hover:scale-110 transition-transform">

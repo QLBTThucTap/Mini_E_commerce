@@ -3,10 +3,11 @@ export default function BillingForm({ formData, errors, onChange }) {
     <div className="lg:col-span-7 bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200/80 flex flex-col gap-6">
       <div>
         <h2 className="text-xl sm:text-2xl font-extrabold text-[#0b1c30] tracking-tight">
-          Billing & Shipping Details
+          Thông tin Thanh toán & Giao hàng
         </h2>
         <p className="text-xs sm:text-sm text-[#565e74] mt-1">
-          Vui lòng cung cấp chính xác địa chỉ và số điện thoại để đảm bảo giao hàng nhanh chóng.
+          Vui lòng cung cấp chính xác địa chỉ và số điện thoại để đảm bảo giao
+          hàng nhanh chóng.
         </p>
       </div>
 
@@ -15,7 +16,7 @@ export default function BillingForm({ formData, errors, onChange }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-bold text-[#0b1c30]">
-              First Name <span className="text-red-500">*</span>
+              Tên <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -34,7 +35,7 @@ export default function BillingForm({ formData, errors, onChange }) {
 
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-bold text-[#0b1c30]">
-              Last Name <span className="text-red-500">*</span>
+              Họ <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -55,7 +56,7 @@ export default function BillingForm({ formData, errors, onChange }) {
         {/* Company Name */}
         <div className="flex flex-col gap-1.5">
           <label className="text-xs font-bold text-[#0b1c30]">
-            Company Name (Optional)
+            Tên công ty (Tùy chọn)
           </label>
           <input
             type="text"
@@ -70,7 +71,7 @@ export default function BillingForm({ formData, errors, onChange }) {
         {/* Country / Region */}
         <div className="flex flex-col gap-1.5">
           <label className="text-xs font-bold text-[#0b1c30]">
-            Country / Region <span className="text-red-500">*</span>
+            Quốc gia / Vùng <span className="text-red-500">*</span>
           </label>
           <select
             name="country"
@@ -78,10 +79,10 @@ export default function BillingForm({ formData, errors, onChange }) {
             onChange={onChange}
             className="bg-[#eff4ff] px-3.5 py-2.5 rounded-xl text-sm text-[#0b1c30] border border-transparent focus:outline-none focus:bg-white focus:border-[#006948] transition-all cursor-pointer"
           >
-            <option value="VN">Vietnam (VN)</option>
-            <option value="US">United States (US)</option>
-            <option value="JP">Japan (JP)</option>
-            <option value="KR">South Korea (KR)</option>
+            <option value="VN">Việt Nam (VN)</option>
+            <option value="US">Hoa Kỳ (US)</option>
+            <option value="JP">Nhật Bản (JP)</option>
+            <option value="KR">Hàn Quốc (KR)</option>
             <option value="SG">Singapore (SG)</option>
           </select>
         </div>
@@ -89,7 +90,7 @@ export default function BillingForm({ formData, errors, onChange }) {
         {/* Street Address */}
         <div className="flex flex-col gap-2">
           <label className="text-xs font-bold text-[#0b1c30]">
-            Street Address <span className="text-red-500">*</span>
+            Địa chỉ <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
@@ -118,7 +119,7 @@ export default function BillingForm({ formData, errors, onChange }) {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-bold text-[#0b1c30]">
-              Town / City <span className="text-red-500">*</span>
+              Tỉnh / Thành phố <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -137,7 +138,7 @@ export default function BillingForm({ formData, errors, onChange }) {
 
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-bold text-[#0b1c30]">
-              State / County
+              Phường / Quận
             </label>
             <input
               type="text"
@@ -151,7 +152,7 @@ export default function BillingForm({ formData, errors, onChange }) {
 
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-bold text-[#0b1c30]">
-              Postcode / ZIP
+              Mã bưu điện / ZIP
             </label>
             <input
               type="text"
@@ -168,7 +169,7 @@ export default function BillingForm({ formData, errors, onChange }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-bold text-[#0b1c30]">
-              Phone Number <span className="text-red-500">*</span>
+              SDT <span className="text-red-500">*</span>
             </label>
             <input
               type="tel"
@@ -187,7 +188,7 @@ export default function BillingForm({ formData, errors, onChange }) {
 
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-bold text-[#0b1c30]">
-              Email Address <span className="text-red-500">*</span>
+              Email <span className="text-red-500">*</span>
             </label>
             <input
               type="email"
@@ -226,7 +227,7 @@ export default function BillingForm({ formData, errors, onChange }) {
         {/* Order Notes */}
         <div className="pt-2 flex flex-col gap-1.5">
           <label className="text-xs font-bold text-[#0b1c30]">
-            Order Notes & Delivery Instructions (Optional)
+            Ghi chú đơn hàng & Hướng dẫn giao hàng (Tùy chọn)
           </label>
           <textarea
             rows={3}

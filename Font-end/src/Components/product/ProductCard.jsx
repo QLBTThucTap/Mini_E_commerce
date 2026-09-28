@@ -97,9 +97,7 @@ export default function ProductCard({
                 const target = product.original || product;
                 const added = toggleWishlist(target);
                 if (added) {
-                  toast.success(
-                    `Đã thêm "${name}" vào danh sách yêu thích!`,
-                  );
+                  toast.success(`Đã thêm "${name}" vào danh sách yêu thích!`);
                 } else {
                   toast.info(`Đã xóa "${name}" khỏi danh sách yêu thích.`);
                 }
@@ -147,7 +145,7 @@ export default function ProductCard({
           onAddToCart?.(product);
         }}
       >
-        Add to Cart
+        Thêm vào giỏ
       </Button>
     </Card>
   );

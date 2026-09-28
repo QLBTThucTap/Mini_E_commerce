@@ -14,10 +14,10 @@ export default function DealsOfDaySection({ product, timeLeft, onAddToCart }) {
         <div className="flex items-center space-x-3">
           <i className="fa-solid fa-bolt text-yellow-300 text-lg" />
           <h3 className="font-extrabold text-sm sm:text-base tracking-wider uppercase">
-            Today's Discounted Products
+            Các sản phẩm giảm giá hôm nay
           </h3>
         </div>
-        <Badge tone="warning">Limited quantity</Badge>
+        <Badge tone="warning">Số lượng có hạn</Badge>
       </div>
 
       <div className="p-6 grid grid-cols-12 gap-8 items-center">
@@ -63,7 +63,7 @@ export default function DealsOfDaySection({ product, timeLeft, onAddToCart }) {
             icon="fa-solid fa-cart-shopping"
             onClick={() => onAddToCart(product)}
           >
-            Add to Cart
+            Thêm vào giỏ
           </Button>
         </div>
       </div>

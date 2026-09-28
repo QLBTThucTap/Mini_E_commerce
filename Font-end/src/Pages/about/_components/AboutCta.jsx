@@ -14,7 +14,7 @@ export default function AboutCta() {
         <div className="relative z-10 max-w-2xl space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
-            Ready To Upgrade Your Gear?
+            Sẵn Sàng Nâng Cấp Thiết Bị Của Bạn?
           </div>
 
           <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight my-0">
@@ -35,7 +35,7 @@ export default function AboutCta() {
               iconPosition="left"
               onClick={() => navigate("/products")}
             >
-              Shop Now / Khám Phá Ngay
+              Khám Phá Cửa Hàng Ngay
             </Button>
           </div>
         </div>

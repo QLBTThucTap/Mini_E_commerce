@@ -40,11 +40,11 @@ export default function RegisterPage() {
                 className="flex items-center gap-2 text-sm font-semibold text-slate-400 hover:text-slate-700 transition-colors pb-4 -mb-[18px]"
               >
                 <i className="fa-solid fa-arrow-right-to-bracket" />
-                <span>Login to Account</span>
+                <span>Đăng nhập vào tài khoản</span>
               </Link>
               <div className="flex items-center gap-2 text-sm font-extrabold text-slate-900 border-b-2 border-emerald-600 pb-4 -mb-[18px]">
                 <i className="fa-regular fa-user text-emerald-600" />
-                <span>Create Account</span>
+                <span>Tạo tài khoản</span>
               </div>
             </div>
 
@@ -65,10 +65,10 @@ export default function RegisterPage() {
             <div className="lg:col-span-6 max-w-md mx-auto w-full">
               <div className="mb-6">
                 <h1 className="text-3xl sm:text-4xl font-black text-emerald-600 tracking-tight my-0">
-                  Register
+                  ĐĂNG KÝ
                 </h1>
                 <div className="text-xs font-bold uppercase tracking-wider text-slate-400 mt-1">
-                  JOIN TO US
+                  TRUY CẬP VÀO CHÚNG TÔI
                 </div>
               </div>
 
@@ -86,7 +86,7 @@ export default function RegisterPage() {
                     htmlFor="name"
                     className="block text-xs font-bold text-slate-700 mb-1.5"
                   >
-                    Your name *
+                    Họ và tên *
                   </label>
                   <input
                     id="name"
@@ -108,7 +108,7 @@ export default function RegisterPage() {
                     htmlFor="email"
                     className="block text-xs font-bold text-slate-700 mb-1.5"
                   >
-                    Email Address *
+                    Email *
                   </label>
                   <input
                     id="email"
@@ -130,7 +130,7 @@ export default function RegisterPage() {
                     htmlFor="password"
                     className="block text-xs font-bold text-slate-700 mb-1.5"
                   >
-                    Password *
+                    Mật khẩu *
                   </label>
                   <div className="relative">
                     <input
@@ -169,7 +169,7 @@ export default function RegisterPage() {
                     htmlFor="confirm_password"
                     className="block text-xs font-bold text-slate-700 mb-1.5"
                   >
-                    Confirm Password *
+                    Xác nhận mật khẩu *
                   </label>
                   <div className="relative">
                     <input
@@ -217,7 +217,7 @@ export default function RegisterPage() {
                       htmlFor="agreeTerms"
                       className="text-xs text-slate-600 select-none cursor-pointer leading-normal"
                     >
-                      I agree to the{" "}
+                      Tôi đồng ý với{" "}
                       <a
                         href="#terms"
                         onClick={(e) => {
@@ -228,7 +228,7 @@ export default function RegisterPage() {
                         }}
                         className="font-semibold text-emerald-600 hover:underline"
                       >
-                        Terms of Service
+                        Điều khoản dịch vụ
                       </a>{" "}
                       &{" "}
                       <a
@@ -241,7 +241,7 @@ export default function RegisterPage() {
                         }}
                         className="font-semibold text-emerald-600 hover:underline"
                       >
-                        Privacy Policy
+                        Chính sách bảo mật
                       </a>
                     </label>
                   </div>
@@ -262,19 +262,19 @@ export default function RegisterPage() {
                     disabled={!isValid || isSubmitting}
                     className="w-full py-3 text-sm font-bold uppercase tracking-wider shadow-sm"
                   >
-                    REGISTER
+                    ĐĂNG KÝ
                   </Button>
                 </div>
               </form>
 
               {/* Already User Link */}
               <div className="text-center text-xs text-slate-500 mt-4">
-                <span>ALREADY USER ?</span>{" "}
+                <span>ĐÃ CÓ TÀI KHOẢN ?</span>{" "}
                 <Link
                   to="/login"
                   className="font-bold text-emerald-600 hover:text-emerald-700 uppercase tracking-wide hover:underline ml-1"
                 >
-                  LOGIN
+                  ĐĂNG NHẬP
                 </Link>
               </div>
 
@@ -284,7 +284,7 @@ export default function RegisterPage() {
                   <div className="w-full border-t border-slate-200" />
                 </div>
                 <div className="relative inline-block bg-white px-3 text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                  OR REGISTER WITH
+                  HOẶC ĐĂNG KÝ VỚI
                 </div>
               </div>
 

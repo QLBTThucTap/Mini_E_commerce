@@ -79,20 +79,21 @@ export default function Footer({ columns, brand }) {
         <div className="border-t border-b border-slate-100 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-4 flex items-center gap-3">
             <SelectorPill label="USD" />
-            <SelectorPill label="Eng" />
+            <SelectorPill label="VN" />
           </div>
           <div className="lg:col-span-8">
             <div className="text-sm font-extrabold text-slate-900 uppercase tracking-wide">
-              SUBSCRIBE &amp; GET <span className="text-red-500">10% OFF</span>{" "}
-              FOR YOUR FIRST ORDER
+              ĐĂNG KÝ &amp; NHẬN NGAY
+              <span className="text-red-500"> VOUCHER 10%</span> CHO ĐƠN HÀNG
+              ĐẦU TIÊN
             </div>
             <div className="mt-3">
               <NewsletterForm />
             </div>
             <div className="text-[11px] text-slate-400 mt-1.5">
-              By subscribing, you accept our{" "}
+              Bằng cách đăng ký, bạn chấp nhận{" "}
               <a href="#policy" className="underline hover:text-slate-600">
-                Policy
+                các điều khoản của chúng tôi.
               </a>
             </div>
           </div>

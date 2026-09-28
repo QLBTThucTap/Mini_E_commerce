@@ -7,7 +7,7 @@ export const FOOTER_BRAND = {
 
 export const FOOTER_COLUMNS = [
   {
-    title: "TOP CATEGORIES",
+    title: "DANH MỤC HÀNG ĐẦU",
     links: [
       { label: "Laptop", href: "/products?category=laptop" },
       { label: "Smartphones", href: "/products?category=phone" },
@@ -16,11 +16,20 @@ export const FOOTER_COLUMNS = [
     ],
   },
   {
-    title: "COMPANY",
+    title: "CÔNG TY",
     links: [
-      { label: "About Swoo", href: "/about" },
-      { label: "Contact", href: "/contact" },
-      { label: "Career", href: "#career" },
+      { label: "Về chúng tôi", href: "/about" },
+      { label: "Liên hệ", href: "/contact" },
+      { label: "Sự nghiệp", href: "#career" },
+    ],
+  },
+  {
+    title: "CHĂM SÓC KHÁCH HÀNG",
+    links: [
+      { label: "Tra cứu vận chuyển", href: "#" },
+      { label: "Chính sách đổi trả", href: "#" },
+      { label: "Vận chuyển hỏa tốc", href: "#" },
+      { label: "Hội viên", href: "#" },
     ],
   },
 ];

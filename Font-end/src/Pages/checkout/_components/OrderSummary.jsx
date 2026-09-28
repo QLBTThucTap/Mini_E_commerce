@@ -13,7 +13,7 @@ export default function OrderSummary({
     <div className="lg:col-span-5 bg-[#eff4ff] p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200/80 flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-extrabold text-[#0b1c30] tracking-tight">
-          Your Order Summary
+          Tóm tắt đơn hàng của bạn
         </h2>
         <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#006948] bg-emerald-100/80 px-2.5 py-0.5 rounded-full">
           <span className="material-symbols-outlined text-[14px]">lock</span>
@@ -24,8 +24,8 @@ export default function OrderSummary({
       {/* Line items review box */}
       <div className="space-y-3 bg-white p-4 sm:p-5 rounded-2xl shadow-xs border border-slate-200/60">
         <div className="flex items-center justify-between pb-3 border-b border-slate-100 text-[11px] font-bold text-[#565e74] uppercase tracking-wider">
-          <span>Item Description</span>
-          <span>Subtotal</span>
+          <span>Mô tả món hàng</span>
+          <span>Tạm tính</span>
         </div>
 
         {items.length === 0 ? (
@@ -78,7 +78,7 @@ export default function OrderSummary({
         {/* Calculations */}
         <div className="pt-4 border-t border-slate-100 space-y-2 text-xs text-[#3d4a42]">
           <div className="flex justify-between">
-            <span>Cart Subtotal</span>
+            <span>Tổng tiền trong giỏ hàng</span>
             <span className="font-semibold text-[#0b1c30]">
               {formatMoney(pricing.subTotal)}
             </span>
@@ -86,13 +86,13 @@ export default function OrderSummary({
 
           {appliedDiscount > 0 && (
             <div className="flex justify-between text-emerald-700 font-semibold">
-              <span>Voucher Discount (-{appliedDiscount * 100}%)</span>
+              <span>Mã giảm giá (-{appliedDiscount * 100}%)</span>
               <span>-{formatMoney(pricing.discountAmount)}</span>
             </div>
           )}
 
           <div className="flex justify-between">
-            <span>Worldwide Insured Shipping</span>
+            <span>Bảo hiểm khi giao hàng</span>
             <span className="font-semibold text-[#006948]">
               {pricing.isFreeShipping
                 ? "FREE (Đơn > $199)"
@@ -101,7 +101,7 @@ export default function OrderSummary({
           </div>
 
           <div className="flex justify-between text-slate-500">
-            <span>Regulatory Eco Tax</span>
+            <span>Thuế (VAT)</span>
             <span className="font-semibold text-[#0b1c30]">$0.00</span>
           </div>
         </div>
@@ -110,7 +110,7 @@ export default function OrderSummary({
         <div className="pt-4 border-t border-slate-200 flex items-baseline justify-between">
           <div>
             <span className="text-sm font-bold text-[#0b1c30] block">
-              Total Due
+              Tổng hóa đơn
             </span>
             <span className="text-[11px] text-[#565e74]">
               ≈ {formatVND(pricing.grandTotalVND)}
@@ -146,8 +146,10 @@ export default function OrderSummary({
             </>
           ) : (
             <>
-              <span className="material-symbols-outlined text-[20px]">lock</span>
-              <span>PLACE ORDER NOW</span>
+              <span className="material-symbols-outlined text-[20px]">
+                lock
+              </span>
+              <span>Đặt hàng ngay</span>
             </>
           )}
         </button>
@@ -156,9 +158,7 @@ export default function OrderSummary({
           <span className="material-symbols-outlined text-[15px] text-[#006948]">
             verified
           </span>
-          <span>
-            Protected by 256-Bit SSL End-to-End Encryption Guarantee
-          </span>
+          <span>Được bảo vệ bằng mã hóa từ đầu đến cuối SSL 256-bit</span>
         </div>
       </div>
     </div>

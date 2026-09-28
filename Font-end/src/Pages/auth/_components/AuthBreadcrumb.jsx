@@ -9,10 +9,10 @@ export default function AuthBreadcrumb({ currentLabel = "Authentication" }) {
           className="hover:text-emerald-600 transition-colors flex items-center gap-1.5"
         >
           <i className="fa-solid fa-house text-[11px]" />
-          <span>Home</span>
+          <span>Trang chủ</span>
         </Link>
         <span className="text-slate-300">/</span>
-        <span className="text-slate-400">pages</span>
+        <span className="text-slate-400">Trang</span>
         <span className="text-slate-300">/</span>
         <span className="text-slate-900 font-bold">{currentLabel}</span>
       </div>

@@ -28,10 +28,10 @@ export default function ContactPage() {
           <div className="mb-6 sm:mb-8 pb-5 border-b border-slate-100">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-[11px] font-bold uppercase tracking-wider mb-2.5">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
-              Customer Service & Technical Care
+              Chăm Sóc Khách Hàng & Hỗ Trợ Kỹ Thuật
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold uppercase tracking-tight text-slate-900 my-0">
-              READY TO WORK WITH US
+              SẴN SÀNG ĐỒNG HÀNH CÙNG BẠN
             </h1>
             <p className="text-xs sm:text-sm text-slate-500 mt-2 max-w-2xl leading-relaxed">
               Bạn có câu hỏi về sản phẩm, chính sách bảo hành hay cần tư vấn

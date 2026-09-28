@@ -5,10 +5,11 @@ export default function ContactMapSection() {
         <div>
           <h2 className="text-sm font-bold uppercase tracking-wider text-slate-900 flex items-center gap-2">
             <i className="fa-solid fa-map-location-dot text-emerald-600 text-base" />
-            <span>FIND US ON GOOGLE MAP</span>
+            <span>VỊ TRÍ TRÊN GOOGLE MAP</span>
           </h2>
           <p className="text-xs text-slate-500 mt-0.5">
-            Ghé thăm trung tâm trải nghiệm công nghệ và bảo hành chính hãng của chúng tôi
+            Ghé thăm trung tâm trải nghiệm công nghệ và bảo hành chính hãng của
+            chúng tôi
           </p>
         </div>
         <div className="flex items-center gap-2 text-xs font-semibold text-emerald-600">
@@ -37,7 +38,9 @@ export default function ContactMapSection() {
                 257 Thatcher Road St, Manhattan, NY 10092
               </p>
               <div className="flex items-center space-x-1.5 mt-1.5">
-                <span className="font-bold text-amber-500 text-[11px]">4.9</span>
+                <span className="font-bold text-amber-500 text-[11px]">
+                  4.9
+                </span>
                 <div className="flex text-amber-400 text-[10px]">
                   <i className="fa-solid fa-star" />
                   <i className="fa-solid fa-star" />

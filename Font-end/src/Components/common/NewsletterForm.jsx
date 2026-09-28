@@ -1,8 +1,8 @@
 import { toast } from "react-toastify";
 
 export default function NewsletterForm({
-  placeholder = "Enter your email address",
-  buttonLabel = "SUBSCRIBE",
+  placeholder = "Nhập địa chỉ email của bạn",
+  buttonLabel = "ĐĂNG KÝ",
   onSubmit,
   dark = false,
 }) {
@@ -38,7 +38,9 @@ export default function NewsletterForm({
         placeholder={placeholder}
         className={[
           "w-full border-0 bg-transparent px-0 py-2 text-xs focus:ring-0 focus:outline-none",
-          dark ? "text-white placeholder-slate-500" : "text-slate-800 placeholder-slate-400",
+          dark
+            ? "text-white placeholder-slate-500"
+            : "text-slate-800 placeholder-slate-400",
         ].join(" ")}
       />
       <button

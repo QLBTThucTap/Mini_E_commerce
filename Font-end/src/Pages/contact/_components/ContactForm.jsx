@@ -21,10 +21,10 @@ export default function ContactForm({ onSuccess }) {
   const validate = () => {
     const errs = {};
     if (!formData.firstName.trim()) {
-      errs.firstName = "Vui lòng nhập Tên (First Name)";
+      errs.firstName = "Vui lòng nhập tên của bạn";
     }
     if (!formData.lastName.trim()) {
-      errs.lastName = "Vui lòng nhập Họ (Last Name)";
+      errs.lastName = "Vui lòng nhập họ & tên đệm";
     }
     if (!formData.email.trim()) {
       errs.email = "Vui lòng nhập địa chỉ Email";
@@ -90,8 +90,8 @@ export default function ContactForm({ onSuccess }) {
           <Input
             id="firstName"
             name="firstName"
-            label="First Name *"
-            placeholder="John"
+            label="Tên *"
+            placeholder="Huyền"
             value={formData.firstName}
             onChange={handleChange}
             error={errors.firstName}
@@ -102,8 +102,8 @@ export default function ContactForm({ onSuccess }) {
           <Input
             id="lastName"
             name="lastName"
-            label="Last Name *"
-            placeholder="Doe"
+            label="Họ & Tên đệm *"
+            placeholder="Lã Ngọc"
             value={formData.lastName}
             onChange={handleChange}
             error={errors.lastName}
@@ -118,8 +118,8 @@ export default function ContactForm({ onSuccess }) {
           id="email"
           name="email"
           type="email"
-          label="Email Address *"
-          placeholder="your.email@example.com"
+          label="Địa chỉ Email *"
+          placeholder="email@example.com"
           icon="fa-solid fa-envelope"
           value={formData.email}
           onChange={handleChange}
@@ -134,7 +134,7 @@ export default function ContactForm({ onSuccess }) {
           id="phone"
           name="phone"
           type="tel"
-          label="Phone Number (Optional)"
+          label="Số điện thoại (Tùy chọn)"
           placeholder="+84 987 654 321"
           icon="fa-solid fa-phone"
           value={formData.phone}
@@ -151,7 +151,7 @@ export default function ContactForm({ onSuccess }) {
             htmlFor="country"
             className="block text-xs font-bold text-slate-700"
           >
-            Country / Region *
+            Quốc gia / Khu vực *
           </label>
           <div className="relative">
             <select
@@ -161,12 +161,12 @@ export default function ContactForm({ onSuccess }) {
               onChange={handleChange}
               className="w-full rounded-xl border border-slate-200 bg-white text-sm text-slate-800 px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 appearance-none pr-8 cursor-pointer"
             >
-              <option value="Vietnam">Vietnam (VN)</option>
-              <option value="United States">United States (US)</option>
-              <option value="United Kingdom">United Kingdom (UK)</option>
-              <option value="Japan">Japan (JP)</option>
+              <option value="Vietnam">Việt Nam (VN)</option>
+              <option value="United States">Hoa Kỳ (US)</option>
+              <option value="United Kingdom">Vương quốc Anh (UK)</option>
+              <option value="Japan">Nhật Bản (JP)</option>
               <option value="Singapore">Singapore (SG)</option>
-              <option value="Other">Other Country</option>
+              <option value="Other">Quốc gia khác</option>
             </select>
             <i className="fa-solid fa-chevron-down text-[10px] text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
           </div>
@@ -176,7 +176,7 @@ export default function ContactForm({ onSuccess }) {
           <Input
             id="subject"
             name="subject"
-            label="Subject (Optional)"
+            label="Chủ đề / Tiêu đề (Tùy chọn)"
             placeholder="Hỗ trợ kỹ thuật / Tư vấn đơn hàng"
             value={formData.subject}
             onChange={handleChange}
@@ -190,7 +190,7 @@ export default function ContactForm({ onSuccess }) {
           htmlFor="message"
           className="block text-xs font-bold text-slate-700"
         >
-          Message *
+          Nội dung tin nhắn *
         </label>
         <textarea
           id="message"
@@ -255,7 +255,7 @@ export default function ContactForm({ onSuccess }) {
           iconPosition="right"
           className="w-full sm:w-auto px-8 py-3 rounded-xl uppercase tracking-wider text-xs font-extrabold shadow-sm hover:shadow-md transition-all active:scale-[0.98]"
         >
-          SEND MESSAGE
+          GỬI TIN NHẮN
         </Button>
       </div>
     </form>

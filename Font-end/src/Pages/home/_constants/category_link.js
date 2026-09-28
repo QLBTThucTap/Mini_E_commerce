@@ -1,12 +1,12 @@
 export const CATEGORY_LINKS = [
   {
-    label: "SALE 40% OFF",
+    label: "GIẢM GIÁ ĐẾN 40%",
     icon: "fa-solid fa-fire",
     href: "/products?sort=price_asc",
     active: true,
   },
   {
-    label: "Laptops",
+    label: "Laptop",
     icon: "fa-solid fa-laptop",
     href: "/products?category=laptop",
   },
@@ -16,17 +16,17 @@ export const CATEGORY_LINKS = [
     href: "/products?category=phone",
   },
   {
-    label: "Headphone",
+    label: "Tai nghe",
     icon: "fa-solid fa-headphones",
     href: "/products?category=headphone",
   },
   {
-    label: "Keyboard",
+    label: "Bàn phím",
     icon: "fa-solid fa-keyboard",
     href: "/products?category=keyboard",
   },
   {
-    label: "Mouse & Accessories",
+    label: "Chuột & Phụ kiện",
     icon: "fa-solid fa-computer-mouse",
     href: "/products?category=mouse",
   },

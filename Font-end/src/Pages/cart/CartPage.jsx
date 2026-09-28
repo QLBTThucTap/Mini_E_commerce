@@ -51,9 +51,7 @@ function CartPage() {
       />
 
       <main className="max-w-[1360px] mx-auto px-4 py-10">
-        <h1 className="text-3xl font-extrabold text-slate-900">
-          Shopping Cart
-        </h1>
+        <h1 className="text-3xl font-extrabold text-slate-900">Giỏ hàng</h1>
         {items.length > 0 && (
           <button
             type="button"
@@ -147,24 +145,24 @@ function CartPage() {
 
             <aside className="h-fit rounded-2xl bg-white border border-slate-200 p-6">
               <h2 className="text-lg font-extrabold text-slate-900">
-                Order Summary
+                Tóm tắt đơn hàng
               </h2>
 
               <div className="mt-6 space-y-4 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-slate-500">Subtotal</span>
+                  <span className="text-slate-500">Tạm tính</span>
                   <strong>{formatMoney(subTotal)}</strong>
                 </div>
 
                 <div className="flex justify-between">
-                  <span className="text-slate-500">Shipping</span>
+                  <span className="text-slate-500">Phí ship</span>
                   <strong>
                     {shippingFee === 0 ? "FREE" : formatMoney(shippingFee)}
                   </strong>
                 </div>
 
                 <div className="border-t border-slate-200 pt-4 flex justify-between text-lg">
-                  <span className="font-bold">Total</span>
+                  <span className="font-bold">Tổng tiền</span>
                   <strong className="text-emerald-600">
                     {formatMoney(total)}
                   </strong>
@@ -175,7 +173,7 @@ function CartPage() {
                 className="w-full mt-6"
                 onClick={() => navigate("/checkout")}
               >
-                Proceed to Checkout
+                Tiến hành thanh toán
               </Button>
             </aside>
           </div>

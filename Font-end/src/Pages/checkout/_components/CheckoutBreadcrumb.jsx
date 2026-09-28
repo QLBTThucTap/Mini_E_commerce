@@ -9,13 +9,13 @@ export default function CheckoutBreadcrumb() {
           className="hover:text-[#006948] transition-colors flex items-center gap-1"
         >
           <span className="material-symbols-outlined text-[16px]">home</span>
-          <span>Home</span>
+          <span>Trang chủ</span>
         </Link>
         <span className="material-symbols-outlined text-[14px] text-slate-400">
           chevron_right
         </span>
         <Link to="/cart" className="hover:text-[#006948] transition-colors">
-          Shop Cart
+          Giỏ hàng
         </Link>
         <span className="material-symbols-outlined text-[14px] text-slate-400">
           chevron_right

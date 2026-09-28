@@ -7,7 +7,7 @@ export default function PaymentMethods({
   return (
     <div className="flex flex-col gap-3">
       <h3 className="text-sm font-bold text-[#0b1c30]">
-        Select Payment Gateway
+        Lựa chọn phương thức thanh toán
       </h3>
 
       {/* Option 1: QR Code & Online Banking (Primary) */}
@@ -69,10 +69,13 @@ export default function PaymentMethods({
               </div>
               <div>
                 <span className="text-slate-500">Chủ tài khoản: </span>
-                <strong className="text-slate-900">{bankInfo.accountName}</strong>
+                <strong className="text-slate-900">
+                  {bankInfo.accountName}
+                </strong>
               </div>
               <p className="text-[11px] text-emerald-800 italic pt-1">
-                Bấm "TIẾN HÀNH THANH TOÁN QR" để mở mã QR chính thức kèm mã đơn hàng và hoàn tất thanh toán.
+                Bấm "TIẾN HÀNH THANH TOÁN QR" để mở mã QR chính thức kèm mã đơn
+                hàng và hoàn tất thanh toán.
               </p>
             </div>
           </div>
@@ -98,7 +101,7 @@ export default function PaymentMethods({
           />
           <div>
             <span className="text-xs sm:text-sm font-bold text-[#0b1c30]">
-              Cash on Express Delivery (COD)
+              Tiền mặt (COD)
             </span>
             <p className="text-xs text-[#565e74]">
               Thanh toán tiền mặt tận nơi khi nhận hàng

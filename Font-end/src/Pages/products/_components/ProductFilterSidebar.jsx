@@ -91,7 +91,7 @@ export default function ProductFilterSidebar({
               onClick={() => onSelectCategory("all")}
               className="text-[11px] font-bold text-slate-400 hover:text-emerald-600 transition-colors cursor-pointer"
             >
-              Xem tất cả
+              ALL
             </button>
           )}
         </div>
@@ -121,7 +121,7 @@ export default function ProductFilterSidebar({
                 />
                 <span>Tất cả danh mục</span>
               </span>
-              <span className="text-[10px] text-slate-400 font-normal">All</span>
+              {/* <span className="text-[10px] text-slate-400 font-normal">All</span> */}
             </button>
           </li>
 

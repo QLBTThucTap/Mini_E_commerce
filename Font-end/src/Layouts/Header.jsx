@@ -160,32 +160,32 @@ export default function Header({ onSearch }) {
               to="/"
               className="flex items-center space-x-1 cursor-pointer hover:text-emerald-600 transition shrink-0"
             >
-              <span>HOMES</span>
+              <span>TRANG CHỦ</span>
             </Link>
-            <Link
+            {/* <Link
               to="/cart"
               onClick={handleProtectedLink}
               className="flex items-center space-x-1 cursor-pointer hover:text-emerald-600 transition shrink-0"
             >
               <span>PAGES</span>
-            </Link>
+            </Link> */}
             <Link
               to="/products"
               className="flex items-center space-x-1 cursor-pointer hover:text-emerald-600 transition shrink-0"
             >
-              <span>PRODUCTS</span>
+              <span>SẢN PHẨM</span>
             </Link>
             <Link
               to="/contact"
               className="hover:text-emerald-600 transition shrink-0"
             >
-              CONTACT
+              LIÊN HỆ
             </Link>
             <Link
               to="/about"
               className="flex items-center space-x-1 cursor-pointer hover:text-emerald-600 transition shrink-0"
             >
-              <span>About us</span>
+              <span>VỀ CHÚNG TÔI</span>
             </Link>
           </nav>
 
@@ -229,7 +229,7 @@ export default function Header({ onSearch }) {
                   className="cursor-pointer group"
                 >
                   <div className="text-[10px] uppercase font-semibold text-slate-400">
-                    WELCOME BACK
+                    CHÀO MỪNG
                   </div>
                   <div className="text-xs font-bold text-slate-900 group-hover:text-emerald-600 transition">
                     {user.fullName ||
@@ -252,13 +252,13 @@ export default function Header({ onSearch }) {
             ) : (
               <div className="text-left leading-tight">
                 <div className="text-[10px] uppercase font-semibold text-slate-400">
-                  WELCOME
+                  XIN CHÀO
                 </div>
                 <Link
                   to="/login"
                   className="text-xs font-bold text-slate-900 cursor-pointer hover:text-emerald-600 transition"
                 >
-                  LOG IN
+                  ĐĂNG NHẬP
                 </Link>
 
                 <label> / </label>
@@ -266,7 +266,7 @@ export default function Header({ onSearch }) {
                   to="/register"
                   className="text-xs font-bold text-slate-900 cursor-pointer hover:text-emerald-600 transition"
                 >
-                  REGISTER
+                  ĐĂNG KÝ
                 </Link>
               </div>
             )}
@@ -287,7 +287,7 @@ export default function Header({ onSearch }) {
               </div>
               <div className="leading-tight">
                 <span className="block text-[10px] font-semibold text-slate-400 uppercase">
-                  CART
+                  GIỎ HÀNG
                 </span>
                 <span className="font-extrabold text-sm text-slate-900 group-hover:text-emerald-600 transition">
                   ${cartTotal.toFixed(2)}
@@ -312,7 +312,7 @@ export default function Header({ onSearch }) {
                 onChange={(e) => setCategoryInput(e.target.value)}
                 className="appearance-none bg-transparent pr-5 text-xs font-bold text-slate-800 focus:outline-none cursor-pointer border-none"
               >
-                <option value="all">All Categories</option>
+                <option value="all">Tất cả</option>
                 <option value="laptop">Laptop</option>
                 <option value="phone">Smartphones</option>
                 <option value="headphone">Audio & Visual</option>
@@ -341,15 +341,15 @@ export default function Header({ onSearch }) {
           <div className="flex flex-wrap items-center justify-center md:justify-end gap-4 sm:gap-6 text-xs font-bold tracking-wider uppercase">
             <div className="flex items-center space-x-2">
               <i className="fa-solid fa-truck-fast text-sm" />
-              <span>FREE SHIPPING OVER $199</span>
+              <span>FREESHIP CHO ĐƠN HÀNG TỪ $199</span>
             </div>
             <div className="flex items-center space-x-2">
               <i className="fa-solid fa-rotate-left text-sm" />
-              <span>30 DAYS MONEY BACK</span>
+              <span>HOÀN TRẢ TRONG 30 NGÀY</span>
             </div>
             <div className="flex items-center space-x-2">
               <i className="fa-solid fa-shield-halved text-sm" />
-              <span>100% SECURE PAYMENT</span>
+              <span>THANH TOÁN AN TOÀN</span>
             </div>
           </div>
         </div>

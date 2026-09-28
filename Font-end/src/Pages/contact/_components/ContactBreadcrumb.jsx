@@ -9,17 +9,17 @@ export default function ContactBreadcrumb() {
           className="hover:text-emerald-600 transition-colors flex items-center gap-1.5"
         >
           <i className="fa-solid fa-house text-[11px]" />
-          <span>Home</span>
+          <span>Trang chủ</span>
         </Link>
         <span className="text-slate-300">/</span>
         <Link
           to="/products"
           className="hover:text-emerald-600 transition-colors"
         >
-          Shop
+          Sản phẩm
         </Link>
         <span className="text-slate-300">/</span>
-        <span className="text-slate-900 font-bold">Contact</span>
+        <span className="text-slate-900 font-bold">Liên hệ</span>
       </div>
     </div>
   );

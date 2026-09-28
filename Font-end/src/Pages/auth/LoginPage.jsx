@@ -37,14 +37,14 @@ export default function LoginPage() {
             <div className="flex items-center gap-6 sm:gap-8">
               <div className="flex items-center gap-2 text-sm font-extrabold text-slate-900 border-b-2 border-emerald-600 pb-4 -mb-[18px]">
                 <i className="fa-solid fa-arrow-right-to-bracket text-emerald-600" />
-                <span>Login to Account</span>
+                <span>Đăng nhập vào tài khoản</span>
               </div>
               <Link
                 to="/register"
                 className="flex items-center gap-2 text-sm font-semibold text-slate-400 hover:text-slate-700 transition-colors pb-4 -mb-[18px]"
               >
                 <i className="fa-regular fa-user" />
-                <span>Create Account</span>
+                <span>Tạo tài khoản</span>
               </Link>
             </div>
 
@@ -65,10 +65,10 @@ export default function LoginPage() {
             <div className="lg:col-span-6 max-w-md mx-auto w-full">
               <div className="mb-6">
                 <h1 className="text-3xl sm:text-4xl font-black text-emerald-600 tracking-tight my-0">
-                  Welcome Back
+                  Chào mừng quay trở lại
                 </h1>
                 <div className="text-xs font-bold uppercase tracking-wider text-slate-400 mt-1">
-                  LOGIN TO CONTINUE
+                  ĐĂNG NHẬP ĐỂ TIẾP TỤC
                 </div>
               </div>
 
@@ -96,7 +96,7 @@ export default function LoginPage() {
                     htmlFor="name"
                     className="block text-xs font-bold text-slate-700 mb-1.5"
                   >
-                    Name
+                    Họ và tên
                   </label>
                   <input
                     id="name"
@@ -119,7 +119,7 @@ export default function LoginPage() {
                       htmlFor="password"
                       className="block text-xs font-bold text-slate-700"
                     >
-                      Password
+                      Mật khẩu
                     </label>
                     <a
                       href="#forgot-password"
@@ -131,7 +131,7 @@ export default function LoginPage() {
                       }}
                       className="text-xs text-slate-400 hover:text-emerald-600 font-medium transition-colors"
                     >
-                      Forgot Password ?
+                      Quên mật khẩu ?
                     </a>
                   </div>
 
@@ -179,7 +179,7 @@ export default function LoginPage() {
                     htmlFor="rememberDevice"
                     className="text-xs text-slate-600 select-none cursor-pointer font-medium"
                   >
-                    Remember this device for 30 days
+                    Đăng nhập trên thiết bị này trong 30 ngày
                   </label>
                 </div>
 
@@ -193,7 +193,7 @@ export default function LoginPage() {
                     disabled={!isValid || isSubmitting}
                     className="w-full py-3 text-sm font-bold uppercase tracking-wider shadow-sm"
                   >
-                    LOGIN
+                    ĐĂNG NHẬP
                   </Button>
                 </div>
               </form>
@@ -204,7 +204,7 @@ export default function LoginPage() {
                   <div className="w-full border-t border-slate-200" />
                 </div>
                 <div className="relative inline-block bg-white px-3 text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                  OR CONTINUE WITH
+                  HOẶC ĐĂNG NHẬP BẰNG
                 </div>
               </div>
 
@@ -213,12 +213,12 @@ export default function LoginPage() {
 
               {/* New User Link */}
               <div className="text-center text-xs text-slate-500 mt-6 pt-2">
-                <span>NEW USER ?</span>{" "}
+                <span>CHƯA CÓ TÀI KHOẢN ?</span>{" "}
                 <Link
                   to="/register"
                   className="font-bold text-emerald-600 hover:text-emerald-700 uppercase tracking-wide hover:underline ml-1"
                 >
-                  SIGN UP
+                  ĐĂNG KÝ
                 </Link>
               </div>
             </div>

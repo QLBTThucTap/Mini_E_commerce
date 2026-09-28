@@ -27,7 +27,7 @@ export default function AboutWhoWeAre() {
               SWOO TECH EXPRESS
             </span>
             <span className="text-[10px] text-slate-500 tracking-wider font-semibold uppercase leading-none mt-1 block">
-              100% AUTHORIZED LOGISTICS
+              VẬN CHUYỂN CHÍNH HÃNG 100%
             </span>
           </div>
         </div>
@@ -40,7 +40,7 @@ export default function AboutWhoWeAre() {
       >
         <div className="inline-flex items-center gap-2 text-xs font-bold text-emerald-600 uppercase tracking-wider mb-3">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
-          Who We Are / Chúng Tôi Là Ai
+          Chúng Tôi Là Ai
         </div>
 
         <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight leading-snug my-0">

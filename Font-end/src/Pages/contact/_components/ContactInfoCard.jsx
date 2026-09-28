@@ -8,7 +8,7 @@ export default function ContactInfoCard() {
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span className="text-[11px] font-extrabold tracking-wider text-slate-500 uppercase">
-              Headquarters (Trụ sở chính)
+              Trụ sở chính
             </span>
           </div>
 
@@ -47,7 +47,7 @@ export default function ContactInfoCard() {
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-blue-500" />
             <span className="text-[11px] font-extrabold tracking-wider text-slate-500 uppercase">
-              Showroom & Service Center
+              Showroom & Trung tâm Dịch vụ
             </span>
           </div>
 
@@ -76,17 +76,17 @@ export default function ContactInfoCard() {
           <div className="flex items-center gap-2">
             <i className="fa-solid fa-clock text-amber-500 text-xs shrink-0 w-4 text-center" />
             <span className="text-[11px] font-extrabold tracking-wider text-slate-500 uppercase">
-              Working Hours (Giờ làm việc)
+              Giờ làm việc
             </span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-600 pl-0 sm:pl-6">
             <div className="bg-white/80 border border-slate-200/60 rounded-lg p-2.5">
               <span className="block font-semibold text-slate-800">Thứ 2 - Thứ 7:</span>
-              <span className="text-slate-500">08:00 AM - 09:00 PM</span>
+              <span className="text-slate-500">08:00 - 21:00</span>
             </div>
             <div className="bg-white/80 border border-slate-200/60 rounded-lg p-2.5">
               <span className="block font-semibold text-slate-800">Chủ Nhật:</span>
-              <span className="text-slate-500">09:00 AM - 06:00 PM</span>
+              <span className="text-slate-500">09:00 - 18:00</span>
             </div>
           </div>
         </div>
@@ -94,7 +94,7 @@ export default function ContactInfoCard() {
         {/* Social Links */}
         <div className="pt-2 border-t border-slate-200/70">
           <div className="text-[11px] font-extrabold tracking-wider text-slate-400 uppercase mb-3">
-            Connect With Us
+            Kết nối với chúng tôi
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <a
@@ -147,7 +147,7 @@ export default function ContactInfoCard() {
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/30 to-transparent flex flex-col justify-end p-5">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/90 text-white text-[10px] font-bold tracking-wide uppercase w-fit mb-1.5 backdrop-blur-xs">
             <i className="fa-solid fa-check text-[9px]" />
-            Official Tech Hub
+            Trung Tâm Công Nghệ Chính Hãng
           </div>
           <p className="text-white text-xs font-semibold">
             Trải nghiệm các sản phẩm công nghệ mới nhất tại showroom của chúng tôi
