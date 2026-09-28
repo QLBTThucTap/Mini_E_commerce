@@ -4,15 +4,13 @@ import { useNavigate } from "react-router-dom";
 
 import Header from "../../Layouts/Header";
 import Footer from "../../Layouts/Footer";
-import useCartStore from "../../Stores/cartStore";
-import useWishlistStore from "../../Stores/wishlistStore";
 import { getProducts } from "../../Services/productService";
+import useProducts from "../../Hooks/useProducts";
 
 import HeroShowcase from "./_components/HeroShowcase";
 import DealsOfDaySection from "./_components/DealsOfDaySection";
 
 import ProductCard from "../../Components/product/ProductCard";
-import { toast } from "react-toastify";
 import SectionHeader from "../../Components/common/SectionHeader";
 
 import { HERO_SLIDES } from "./_constants/hero";
@@ -21,10 +19,10 @@ import { CATEGORY_LINKS } from "./_constants/category_link";
 
 export default function HomePage() {
   const navigate = useNavigate();
-  const addItem = useCartStore((s) => s.addItem);
 
-  const wishlistItems = useWishlistStore((s) => s.items);
-  const toggleWishlist = useWishlistStore((s) => s.toggleItem);
+  // Sử dụng Custom Hook chung cho các thao tác giỏ hàng & wishlist
+  const { handleAddToCart, handleToggleWishlist, checkIsWishlisted } = useProducts();
+
   const [timeLeft, setTimeLeft] = useState({
     days: 12,
     hours: 8,
@@ -32,7 +30,7 @@ export default function HomePage() {
     seconds: 20,
   });
 
-  // 1. SỬ DỤNG setTimeLeft: Bộ đếm ngược thời gian thực cho Deals of the Day
+  // Bộ đếm ngược thời gian thực cho Deals of the Day
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
@@ -82,34 +80,10 @@ export default function HomePage() {
       badge: { tone: "sale", label: (p.category || "TECH").toUpperCase() },
       tags: ["FREESHIP"],
       stockStatus: "in_stock",
-      isWishlisted: wishlistItems.some((item) => item.id === p.id),
+      isWishlisted: checkIsWishlisted(p.id),
       original: p,
     }));
-  }, [allProducts, wishlistItems]);
-
-  const handleAddToCart = (product) => {
-    const item = product.original || product;
-    addItem(
-      {
-        id: item.id,
-        title: item.title || item.name,
-        price: item.price,
-        image: item.image,
-      },
-      1,
-    );
-    toast.success(`Đã thêm "${item.title || item.name}" vào giỏ hàng!`);
-  };
-
-  const handleToggleWishlist = (product) => {
-    const item = product.original || product;
-    const added = toggleWishlist(item);
-    if (added) {
-      toast.success(`Đã thêm "${item.title || item.name}" vào danh sách yêu thích!`);
-    } else {
-      toast.info(`Đã xóa "${item.title || item.name}" khỏi danh sách yêu thích.`);
-    }
-  };
+  }, [allProducts, checkIsWishlisted]);
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
@@ -128,7 +102,6 @@ export default function HomePage() {
         <section className="space-y-4">
           <SectionHeader title="BÁN CHẠY NHẤT" viewAllHref="/products" />
 
-          {/* 2. SỬ DỤNG isLoading: Hiển thị trạng thái loading khi tải API */}
           {isLoading ? (
             <div className="py-16 text-center text-slate-500 text-sm font-semibold flex items-center justify-center gap-2">
               <i className="fa-solid fa-spinner fa-spin text-emerald-600 text-lg" />

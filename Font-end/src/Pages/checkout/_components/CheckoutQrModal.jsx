@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { formatMoney, formatVND } from "../_utils/checkoutUtils";
+import Modal from "../../../Hooks/formatters";
 
 export default function CheckoutQrModal({
   show,
@@ -15,8 +16,14 @@ export default function CheckoutQrModal({
   if (!show || !orderData) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-100 my-8 animate-in fade-in zoom-in duration-200">
+    <Modal
+      show={show}
+      onClose={onClose}
+      size="lg"
+      overlayClassName="bg-slate-900/70 backdrop-blur-xs"
+      className="rounded-3xl sm:p-8 border border-slate-100 my-8 animate-in fade-in zoom-in duration-200"
+      showCloseButton={false}
+    >
         {/* Header modal */}
         <div className="text-center pb-4 border-b border-slate-100">
           <div className="inline-flex items-center gap-2 bg-emerald-50 text-[#006948] px-3 py-1 rounded-full text-xs font-extrabold mb-2">
@@ -155,7 +162,6 @@ export default function CheckoutQrModal({
             Để thanh toán sau & Về trang chủ
           </button>
         </div>
-      </div>
-    </div>
+    </Modal>
   );
 }

@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import useAdminNotificationStore from "../../../../Stores/adminNotificationStore";
 
 import { productSchema } from "../_schema/productSchema";
+import Modal from "../../../../Hooks/formatters";
 
 const emptyProduct = {
   title: "",
@@ -85,22 +86,11 @@ function ProductFormModal({ product, onClose, onSaved }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4">
-      <div className="w-full max-w-2xl rounded-2xl bg-white p-6 shadow-xl">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-extrabold text-slate-900">
-            {product ? "Cập nhật sản phẩm" : "Thêm sản phẩm"}
-          </h2>
-
-          <button
-            type="button"
-            onClick={onClose}
-            className="text-slate-400 hover:text-slate-700"
-          >
-            <i className="fa-solid fa-xmark text-xl" />
-          </button>
-        </div>
-
+    <Modal
+      title={product ? "Cập nhật sản phẩm" : "Thêm sản phẩm"}
+      onClose={onClose}
+      size="2xl"
+    >
         {serverError && (
           <p className="mt-4 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-600">
             {serverError}
@@ -220,8 +210,7 @@ function ProductFormModal({ product, onClose, onSaved }) {
             </button>
           </div>
         </form>
-      </div>
-    </div>
+    </Modal>
   );
 }
 

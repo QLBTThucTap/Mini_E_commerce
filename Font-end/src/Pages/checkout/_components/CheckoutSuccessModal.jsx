@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { formatMoney } from "../_utils/checkoutUtils";
+import Modal from "../../../Hooks/formatters";
 
 export default function CheckoutSuccessModal({
   show,
@@ -11,8 +12,13 @@ export default function CheckoutSuccessModal({
   if (!show || !orderData) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-100 animate-in fade-in zoom-in duration-200">
+    <Modal
+      show={show}
+      size="lg"
+      overlayClassName="bg-slate-900/60 backdrop-blur-xs"
+      className="sm:p-8 border border-slate-100 animate-in fade-in zoom-in duration-200"
+      showCloseButton={false}
+    >
         <div className="w-16 h-16 rounded-full bg-emerald-100 text-[#006948] flex items-center justify-center mx-auto mb-4">
           <span className="material-symbols-outlined text-4xl">check_circle</span>
         </div>
@@ -91,7 +97,6 @@ export default function CheckoutSuccessModal({
             Tiếp tục mua hàng
           </button>
         </div>
-      </div>
-    </div>
+    </Modal>
   );
 }

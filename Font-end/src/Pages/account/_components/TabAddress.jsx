@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "../../../Components/ui/Button";
 import { useAccountAddress } from "../_hooks/useAccountAddress";
+import Modal from "../../../Hooks/formatters";
 
 export default function TabAddress() {
   const {
@@ -189,21 +190,13 @@ export default function TabAddress() {
 
       {/* MODAL POPUP CẬP NHẬT / THÊM ĐỊA CHỈ */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 space-y-5 shadow-2xl animate-in fade-in duration-200">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <h3 className="text-base font-bold text-slate-900">
-                {editingAddress ? "Cập nhật địa chỉ" : "Địa chỉ mới"}
-              </h3>
-              <button
-                type="button"
-                onClick={() => setIsModalOpen(false)}
-                className="text-slate-400 hover:text-slate-600 p-1"
-              >
-                <i className="fa-solid fa-xmark text-lg" />
-              </button>
-            </div>
-
+        <Modal
+          title={editingAddress ? "Cập nhật địa chỉ" : "Địa chỉ mới"}
+          onClose={() => setIsModalOpen(false)}
+          size="lg"
+          overlayClassName="bg-slate-900/40 backdrop-blur-xs"
+          className="space-y-5 animate-in fade-in duration-200"
+        >
             <form onSubmit={handleSubmitForm} className="space-y-4">
               <div className="grid grid-cols-2 gap-3">
                 <div>
@@ -329,8 +322,7 @@ export default function TabAddress() {
                 </Button>
               </div>
             </form>
-          </div>
-        </div>
+        </Modal>
       )}
     </div>
   );

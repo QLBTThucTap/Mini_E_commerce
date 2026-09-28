@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 import useAdminNotificationStore from "../../../../Stores/adminNotificationStore";
 import { createUserSchema, updateUserSchema } from "../_schema/userSchema";
 
+import Modal from "../../../../Hooks/formatters";
+
 const defaultValues = {
   fullName: "",
   email: "",
@@ -117,29 +119,16 @@ function UserFormModal({ user, currentUserId, onClose, onSaved }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-900/50 p-4">
-      <div className="w-full max-w-2xl rounded-2xl bg-white p-6 shadow-xl max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-          <div>
-            <h2 className="text-xl font-extrabold text-slate-900">
-              {isEditing ? "Chỉnh sửa tài khoản" : "Thêm tài khoản mới"}
-            </h2>
-            <p className="mt-1 text-xs text-slate-500">
-              {isEditing
-                ? `Cập nhật thông tin tài khoản #${user.id}`
-                : "Điền thông tin bên dưới để tạo tài khoản mới"}
-            </p>
-          </div>
-
-          <button
-            type="button"
-            onClick={onClose}
-            className="rounded-lg p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-700"
-          >
-            <i className="fa-solid fa-xmark text-lg" />
-          </button>
-        </div>
-
+    <Modal
+      title={isEditing ? "Chỉnh sửa tài khoản" : "Thêm tài khoản mới"}
+      subtitle={
+        isEditing
+          ? `Cập nhật thông tin tài khoản #${user.id}`
+          : "Điền thông tin bên dưới để tạo tài khoản mới"
+      }
+      onClose={onClose}
+      size="2xl"
+    >
         {serverError && (
           <div className="mt-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-600">
             <i className="fa-solid fa-circle-exclamation mr-2" />
@@ -353,8 +342,7 @@ function UserFormModal({ user, currentUserId, onClose, onSaved }) {
             </button>
           </div>
         </form>
-      </div>
-    </div>
+    </Modal>
   );
 }
 

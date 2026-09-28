@@ -55,7 +55,7 @@ export default function DealsOfDaySection({ product, timeLeft, onAddToCart }) {
           <div className="pt-2">
             <CountdownTimer
               value={timeLeft}
-              label="Hurry Up! Promotion will expire in:"
+              label="Nhanh lên! Khuyến mãi sẽ hết hạn trong:"
             />
           </div>
           <Button

@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import useCartStore from "../../Stores/cartStore";
-import useWishlistStore from "../../Stores/wishlistStore";
 import Header from "../../Layouts/Header";
 import Footer from "../../Layouts/Footer";
 import Button from "../../Components/ui/Button";
 
 import { getProductById } from "../../Services/productService";
 import { FOOTER_BRAND, FOOTER_COLUMNS } from "../home/_constants/footer";
-
+import useProducts from "../../Hooks/useProducts";
 import ProductBreadcrumb from "./_detail_components/ProductBreadcrumb";
 import ProductGallery from "./_detail_components/ProductGallery";
 import ProductInfo from "./_detail_components/ProductInfo";
@@ -16,7 +14,6 @@ import FrequentlyBoughtTogether from "./_detail_components/FrequentlyBoughtToget
 import ProductDetailTabs from "./_detail_components/ProductDetailTabs";
 import RelatedProducts from "./_detail_components/RelatedProducts";
 import RecentlyViewedProducts from "./_detail_components/RecentlyViewedProducts";
-import { toast } from "react-toastify";
 
 export default function ProductDetailPage() {
   const { productId } = useParams();
@@ -27,11 +24,9 @@ export default function ProductDetailPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const addItem = useCartStore((state) => state.addItem);
-  const toggleWishlist = useWishlistStore((state) => state.toggleItem);
-  const isWishlisted = useWishlistStore((state) =>
-    product ? state.items.some((item) => item.id === product.id) : false,
-  );
+  // Sử dụng custom hook
+  const { handleAddToCart, handleToggleWishlist, checkIsWishlisted } = useProducts();
+  const isWishlisted = checkIsWishlisted(product?.id);
 
   // Cuộn mượt lên đầu trang khi đổi productId
   useEffect(() => {
@@ -49,7 +44,7 @@ export default function ProductDetailPage() {
       } catch (err) {
         setError(
           err.response?.data?.message ||
-            "Không thể hiển thị thông tin sản phẩm lúc này!",
+            "Không thể hiển thị thông tin sản phẩm lúc này!"
         );
       } finally {
         setLoading(false);
@@ -67,34 +62,10 @@ export default function ProductDetailPage() {
     setQuantity((curr) => curr + 1);
   };
 
-  const handleAddToCart = () => {
-    if (!product) return;
-    addItem(product, quantity);
-    toast.success(
-      `Đã thêm ${quantity} sản phẩm "${product.title || product.name}" vào giỏ hàng!`,
-    );
-  };
-
-  const handleToggleWishlist = () => {
-    if (!product) return;
-    const added = toggleWishlist(product);
-    if (added) {
-      toast.success(
-        `Đã thêm "${product.title || product.name}" vào danh sách yêu thích`,
-      );
-    } else {
-      toast.error(
-        `Đã xóa "${product.title || product.name}" khỏi danh sách yêu thích`,
-      );
-    }
-  };
-
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
-      {/* 1. HEADER */}
       <Header />
 
-      {/* Loading state */}
       {loading && (
         <main className="flex-1 max-w-[1360px] mx-auto px-4 py-24 text-center">
           <i className="fa-solid fa-spinner fa-spin text-3xl text-emerald-600 mb-3 block" />
@@ -104,7 +75,6 @@ export default function ProductDetailPage() {
         </main>
       )}
 
-      {/* Error state */}
       {error && !loading && (
         <main className="flex-1 max-w-[1360px] mx-auto px-4 py-24 text-center">
           <div className="bg-white p-8 rounded-2xl border border-red-200 max-w-md mx-auto shadow-xs">
@@ -124,50 +94,37 @@ export default function ProductDetailPage() {
         </main>
       )}
 
-      {/* Content khi đã có dữ liệu sản phẩm */}
       {!loading && !error && product && (
         <>
-          {/* 2. BREADCRUMB */}
           <ProductBreadcrumb product={product} />
 
           <main className="max-w-[1360px] mx-auto px-4 flex-1 w-full pb-12">
-            {/* 3. KHU VỰC THÔNG TIN CHÍNH (Ảnh trái + Thông tin phải) */}
             <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
-              {/* Bên trái: Gallery ảnh */}
               <div className="lg:col-span-5">
                 <ProductGallery product={product} />
               </div>
 
-              {/* Bên phải: Thông tin sản phẩm, options, giá & nút mua */}
               <div className="lg:col-span-7">
                 <ProductInfo
                   product={product}
                   quantity={quantity}
                   onDecreaseQuantity={decreaseQuantity}
                   onIncreaseQuantity={increaseQuantity}
-                  onAddToCart={handleAddToCart}
-                  onToggleWishlist={handleToggleWishlist}
+                  onAddToCart={() => handleAddToCart(product, quantity)}
+                  onToggleWishlist={() => handleToggleWishlist(product)}
                   isWishlisted={isWishlisted}
                 />
               </div>
             </section>
 
-            {/* 4. FREQUENTLY BOUGHT TOGETHER */}
             <FrequentlyBoughtTogether product={product} />
-
-            {/* 5. THÔNG TIN CHI TIẾT SẢN PHẨM (Tabs Description / Specs / Reviews / Shipping) */}
             <ProductDetailTabs product={product} />
-
-            {/* 6. RELATED PRODUCTS (Sản phẩm liên quan) */}
             <RelatedProducts currentProduct={product} />
-
-            {/* 7. RECENTLY VIEWED (Sản phẩm vừa xem) */}
             <RecentlyViewedProducts currentProduct={product} />
           </main>
         </>
       )}
 
-      {/* 8. FOOTER */}
       <Footer brand={FOOTER_BRAND} columns={FOOTER_COLUMNS} />
     </div>
   );

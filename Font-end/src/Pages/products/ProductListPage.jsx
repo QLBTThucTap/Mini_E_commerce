@@ -4,22 +4,21 @@ import { useQuery, keepPreviousData } from "@tanstack/react-query";
 
 import Header from "../../Layouts/Header";
 import Footer from "../../Layouts/Footer";
-import useCartStore from "../../Stores/cartStore";
-import useWishlistStore from "../../Stores/wishlistStore";
 import { getProducts, getCategories } from "../../Services/productService";
+import useProducts from "../../Hooks/useProducts";
 
 import ProductCard from "../../Components/product/ProductCard";
 import Card from "../../Components/ui/Card";
 import Button from "../../Components/ui/Button";
 import Badge from "../../Components/ui/Badge";
 import PriceTag from "../../Components/ui/PriceTag";
+import Breadcrumb from "../../Components/common/Breadcrumb";
 
 import ProductFilterSidebar from "./_components/ProductFilterSidebar";
 import ProductToolbar from "./_components/ProductToolbar";
 import ActiveFilterChips from "./_components/ActiveFilterChips";
 import BestSellerSection from "./_components/BestSellerSection";
 import MobileFilterDrawer from "./_components/MobileFilterDrawer";
-import { toast } from "react-toastify";
 import { FOOTER_BRAND, FOOTER_COLUMNS } from "../home/_constants/footer";
 
 const PAGE_SIZE = 8;
@@ -45,13 +44,12 @@ export default function ProductListPage() {
   const currentSort = searchParams.get("sort") || "newest";
 
   // UI States
-  const [viewMode, setViewMode] = useState("grid"); // "grid" | "list"
+  const [viewMode, setViewMode] = useState("grid");
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
-  // Global Stores
-  const wishlistItems = useWishlistStore((state) => state.items);
-  const toggleWishlist = useWishlistStore((state) => state.toggleItem);
-  const addItem = useCartStore((state) => state.addItem);
+  // Custom Hook xử lý Cart & Wishlist
+  const { handleAddToCart, handleToggleWishlist, checkIsWishlisted } =
+    useProducts();
 
   // Fetch danh mục từ backend API
   const { data: categoriesData } = useQuery({
@@ -106,37 +104,6 @@ export default function ProductListPage() {
   const totalPages = data?.totalPages ?? 1;
   const total = data?.total ?? 0;
 
-  // Add to cart handler
-  const handleAddToCart = (product) => {
-    const itemData = product.original || product;
-    addItem(
-      {
-        id: itemData.id,
-        title: itemData.title || itemData.name,
-        price: itemData.price,
-        image: itemData.image,
-      },
-      1,
-    );
-
-    toast.success(`Đã thêm "${itemData.title || itemData.name}" vào giỏ hàng!`);
-  };
-
-  // Toggle wishlist handler
-  const handleToggleWishlist = (product) => {
-    const itemData = product.original || product;
-    const added = toggleWishlist(itemData);
-    if (added) {
-      toast.success(
-        `Đã thêm "${itemData.title || itemData.name}" vào danh sách yêu thích!`,
-      );
-    } else {
-      toast.info(
-        `Đã xóa "${itemData.title || itemData.name}" khỏi danh sách yêu thích.`,
-      );
-    }
-  };
-
   // Chuẩn hóa danh sách sản phẩm theo prop của ProductCard
   const mappedProducts = useMemo(() => {
     return products.map((p) => ({
@@ -152,10 +119,10 @@ export default function ProductListPage() {
       },
       tags: ["FREESHIP"],
       stockStatus: "in_stock",
-      isWishlisted: wishlistItems.some((item) => item.id === p.id),
+      isWishlisted: checkIsWishlisted(p.id),
       original: p,
     }));
-  }, [products, wishlistItems]);
+  }, [products, checkIsWishlisted]);
 
   // Phân trang helper
   const setPage = (page) => {
@@ -240,7 +207,6 @@ export default function ProductListPage() {
     setSearchParams(nextParams);
   };
 
-  // Đếm số lượng bộ lọc đang active
   const activeFilterCount =
     (currentCategory !== "all" ? 1 : 0) +
     (currentMinPrice !== "" ? 1 : 0) +
@@ -251,48 +217,46 @@ export default function ProductListPage() {
     <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
       <Header />
 
-      {/* Breadcrumb Navigation */}
-      <div className="bg-[#eff4ff] py-3 border-b border-slate-200/80">
-        <div className="max-w-[1360px] mx-auto px-4 flex items-center justify-between text-xs font-semibold text-slate-500">
-          <div className="flex items-center gap-2 flex-wrap">
-            <Link
-              to="/"
-              className="hover:text-emerald-600 transition-colors flex items-center gap-1"
-            >
-              <i className="fa-solid fa-house text-xs" />
-              <span>Trang chủ</span>
-            </Link>
-            <i className="fa-solid fa-chevron-right text-[10px] text-slate-400" />
-            <span className="text-slate-900 font-bold">Danh sách sản phẩm</span>
-            {currentCategory !== "all" && (
-              <>
-                <i className="fa-solid fa-chevron-right text-[10px] text-slate-400" />
-                <span className="text-emerald-700 font-extrabold capitalize">
-                  {CATEGORY_LABELS[currentCategory] || currentCategory}
-                </span>
-              </>
-            )}
-            {(currentMinPrice !== "" || currentMaxPrice !== "") && (
-              <>
-                <i className="fa-solid fa-chevron-right text-[10px] text-slate-400" />
-                <span className="text-emerald-700 font-bold">
-                  Khoảng giá:{" "}
-                  {currentMinPrice !== "" ? `$${currentMinPrice}` : "$0"} -{" "}
-                  {currentMaxPrice !== "" ? `$${currentMaxPrice}` : "∞"}
-                </span>
-              </>
-            )}
-          </div>
+      <Breadcrumb
+        items={[
+          {
+            label: "Danh sách sản phẩm",
+            to:
+              currentCategory !== "all" ||
+              currentMinPrice !== "" ||
+              currentMaxPrice !== ""
+                ? "/products"
+                : undefined,
+          },
+          ...(currentCategory !== "all"
+            ? [
+                {
+                  label: CATEGORY_LABELS[currentCategory] || currentCategory,
+                  to:
+                    currentMinPrice !== "" || currentMaxPrice !== ""
+                      ? `/products?category=${currentCategory}`
+                      : undefined,
+                  className: "capitalize",
+                },
+              ]
+            : []),
+          ...(currentMinPrice !== "" || currentMaxPrice !== ""
+            ? [
+                {
+                  label: `Khoảng giá: ${currentMinPrice !== "" ? `$${currentMinPrice}` : "$0"} - ${currentMaxPrice !== "" ? `$${currentMaxPrice}` : "∞"}`,
+                },
+              ]
+            : []),
+        ]}
+        rightContent={
           <span className="text-slate-500 hidden sm:inline">
             Tổng: <strong className="text-slate-800">{total}</strong> sản phẩm
           </span>
-        </div>
-      </div>
+        }
+      />
 
       <main className="max-w-[1360px] mx-auto px-4 py-6 sm:py-8 flex-1 w-full">
-        {/* Bố cục 2 cột: Sidebar bên trái & Product Listing bên phải */}
         <div className="flex flex-col lg:flex-row items-start gap-6">
-          {/* CỘT TRÁI: Filter Sidebar Desktop */}
           <aside className="w-full lg:w-72 shrink-0 hidden lg:block sticky top-[60px] self-start max-h-[calc(100vh-75px)] overflow-y-auto pr-1">
             <ProductFilterSidebar
               key={`desktop-${currentMinPrice}-${currentMaxPrice}-${currentCategory}`}
@@ -306,9 +270,7 @@ export default function ProductListPage() {
             />
           </aside>
 
-          {/* CỘT PHẢI: Product Listing Area */}
           <div className="flex-1 w-full min-w-0 space-y-5">
-            {/* 1. Best Seller Section (chỉ hiển thị khi không có search) */}
             {!currentSearch && (
               <BestSellerSection
                 products={bestSellerProducts}
@@ -317,7 +279,6 @@ export default function ProductListPage() {
               />
             )}
 
-            {/* 2. Product Toolbar (Result count, Sort, View mode, Mobile filter button) */}
             <ProductToolbar
               total={total}
               currentPage={currentPage}
@@ -330,7 +291,6 @@ export default function ProductListPage() {
               activeFilterCount={activeFilterCount}
             />
 
-            {/* 3. Active Filter Chips */}
             <ActiveFilterChips
               selectedCategory={currentCategory}
               onRemoveCategory={handleRemoveCategory}
@@ -343,7 +303,6 @@ export default function ProductListPage() {
               onResetAll={handleResetAll}
             />
 
-            {/* Loading state */}
             {isLoading && (
               <div className="py-24 text-center">
                 <i className="fa-solid fa-spinner fa-spin text-3xl text-emerald-600 mb-3 block" />
@@ -353,7 +312,6 @@ export default function ProductListPage() {
               </div>
             )}
 
-            {/* Error state */}
             {error && (
               <Card className="py-16 text-center border-red-200 p-6">
                 <i className="fa-solid fa-circle-exclamation text-3xl text-red-500 mb-2 block" />
@@ -372,7 +330,6 @@ export default function ProductListPage() {
               </Card>
             )}
 
-            {/* Empty state */}
             {!isLoading && !error && products.length === 0 && (
               <Card className="py-20 text-center p-8">
                 <i className="fa-solid fa-box-open text-5xl text-slate-300 mb-3 block" />
@@ -395,11 +352,9 @@ export default function ProductListPage() {
               </Card>
             )}
 
-            {/* Product Grid / List view */}
             {!isLoading && !error && mappedProducts.length > 0 && (
               <>
                 {viewMode === "grid" ? (
-                  /* Dạng lưới 2 - 3 - 4 cột */
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
                     {mappedProducts.map((prod) => (
                       <div key={prod.id} className="flex flex-col gap-2">
@@ -413,7 +368,6 @@ export default function ProductListPage() {
                     ))}
                   </div>
                 ) : (
-                  /* Dạng danh sách hàng ngang (List view) */
                   <div className="space-y-4">
                     {mappedProducts.map((prod) => (
                       <Card
@@ -423,7 +377,6 @@ export default function ProductListPage() {
                         onClick={() => navigate(`/product/${prod.id}`)}
                       >
                         <div className="flex flex-col sm:flex-row items-center gap-5 w-full sm:w-auto flex-1">
-                          {/* Image */}
                           <div className="w-full sm:w-36 h-36 shrink-0 bg-slate-50 rounded-xl p-3 flex items-center justify-center relative overflow-hidden">
                             {prod.badge && (
                               <span className="absolute top-2 left-2 z-10">
@@ -439,7 +392,6 @@ export default function ProductListPage() {
                             />
                           </div>
 
-                          {/* Info */}
                           <div className="space-y-1.5 text-center sm:text-left flex-1">
                             <div className="text-[11px] text-slate-400 font-medium">
                               ({prod.reviewCount} đánh giá)
@@ -456,7 +408,6 @@ export default function ProductListPage() {
                           </div>
                         </div>
 
-                        {/* Price & Actions */}
                         <div className="flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-44 shrink-0 gap-3 pt-3 sm:pt-0 border-t sm:border-t-0 border-slate-100">
                           <PriceTag
                             price={prod.price}
@@ -504,7 +455,6 @@ export default function ProductListPage() {
               </>
             )}
 
-            {/* Pagination Section */}
             {!isLoading && !error && totalPages > 1 && (
               <Card
                 padding="p-4 sm:p-5"
@@ -567,7 +517,6 @@ export default function ProductListPage() {
         </div>
       </main>
 
-      {/* Drawer bộ lọc trên Mobile/Tablet */}
       <MobileFilterDrawer
         isOpen={isMobileFilterOpen}
         onClose={() => setIsMobileFilterOpen(false)}

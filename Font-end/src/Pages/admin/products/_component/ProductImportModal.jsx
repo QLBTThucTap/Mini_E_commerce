@@ -5,6 +5,7 @@ import useAdminNotificationStore from "../../../../Stores/adminNotificationStore
 
 import { createProduct } from "../../../../Services/productService";
 import { productSchema } from "../_schema/productSchema";
+import Modal from "../../../../Hooks/formatters";
 
 function ProductImportModal({ onClose, onImported }) {
   const [rows, setRows] = useState([]);
@@ -104,27 +105,12 @@ function ProductImportModal({ onClose, onImported }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4">
-      <div className="w-full max-w-4xl rounded-2xl bg-white p-6 shadow-xl">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-xl font-extrabold text-slate-900">
-              Import sản phẩm từ Excel
-            </h2>
-            <p className="mt-1 text-sm text-slate-500">
-              Cột bắt buộc: title, price, category.
-            </p>
-          </div>
-
-          <button
-            type="button"
-            onClick={onClose}
-            className="text-slate-400 hover:text-slate-700"
-          >
-            <i className="fa-solid fa-xmark text-xl" />
-          </button>
-        </div>
-
+    <Modal
+      title="Import sản phẩm từ Excel"
+      subtitle="Cột bắt buộc: title, price, category."
+      onClose={onClose}
+      size="4xl"
+    >
         <input
           type="file"
           accept=".xlsx,.xls"
@@ -217,8 +203,7 @@ function ProductImportModal({ onClose, onImported }) {
               : `Import ${validRows.length} sản phẩm`}
           </button>
         </div>
-      </div>
-    </div>
+    </Modal>
   );
 }
 
