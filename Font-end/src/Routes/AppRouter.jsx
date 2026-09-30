@@ -46,7 +46,6 @@ function AppRouter() {
         </Route>
 
         <Route path="/product/:productId" element={<ProductDetailPage />} />
-        <Route path="/cart" element={<CartPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/about" element={<AboutPage />} />
 
@@ -55,6 +54,7 @@ function AppRouter() {
           <Route path="/account" element={<AccountPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/wishlist" element={<WishlistPage />} />
+          <Route path="/cart" element={<CartPage />} />
         </Route>
 
         {/* Trang admin — yêu cầu role admin */}

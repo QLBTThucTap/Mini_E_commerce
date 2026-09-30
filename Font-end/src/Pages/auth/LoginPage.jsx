@@ -101,6 +101,7 @@ export default function LoginPage() {
                   <input
                     id="name"
                     type="text"
+                    autoComplete="username"
                     placeholder="VD: nguyenvana@gmail.com hoặc Nguyen Van An"
                     className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all shadow-2xs"
                     {...register("name")}
@@ -139,6 +140,7 @@ export default function LoginPage() {
                     <input
                       id="password"
                       type={showPassword ? "text" : "password"}
+                      autoComplete="current-password"
                       placeholder="•••••••••••••"
                       className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 pr-10 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all shadow-2xs"
                       {...register("password")}
